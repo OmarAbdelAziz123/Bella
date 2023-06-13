@@ -1,0 +1,15 @@
+class DetailsErrorModel {
+  String? detail;
+
+  DetailsErrorModel({this.detail});
+
+  DetailsErrorModel.fromJson(Map<String, dynamic> json) {
+    detail = json['detail'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['detail'] = detail;
+    return data;
+  }
+}

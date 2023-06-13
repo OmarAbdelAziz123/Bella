@@ -1,0 +1,90 @@
+name: bella
+description: Bella Application
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+
+  # Show Message
+  fluttertoast: ^8.2.1
+
+  # To Check All Devices
+  device_preview: ^1.1.0
+
+  # To Make All Sizes Responsive
+  sizer: ^2.0.15
+  flutter_screenutil: any
+
+  # To Call Backend
+  dio: ^5.1.1
+
+  # To Create Animation Between Navigation
+  page_transition: ^2.0.9
+
+  # SVG Picture
+  flutter_svg: 1.1.5
+
+  # Lottie
+  lottie:
+
+  # Local Storage
+  shared_preferences: ^2.0.16
+
+  # StateManagement
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
+
+  # Font Family
+  google_fonts: ^4.0.4
+
+  # Slider
+  carousel_slider: ^4.0.0
+
+  # Navigation in Bottom Nav Bar
+  custom_navigation_bar: ^0.8.2
+
+  # Scanner In Mobile
+  qr_flutter: ^4.0.0
+  flutter_barcode_scanner: ^2.0.0
+
+  # Web View
+  webview_flutter: ^4.0.2
+
+  # To Go Another App
+  url_launcher: ^6.1.11
+
+  toast: ^0.3.0
+
+  pinput: any
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+
