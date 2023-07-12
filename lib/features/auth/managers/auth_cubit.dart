@@ -29,7 +29,19 @@ class AuthCubit extends Cubit<AuthState> {
   CheckVerificationCodeModel checkVerificationCodeModel =
       CheckVerificationCodeModel();
 
-  String tok = '';
+  // String tok = '';
+  
+  // Future<void> testFunc() async {
+  //   emit(TestLoadingState());
+  //   await dioHelper.getData(endPoint: 'https://dummyjson.com/products/').then((value) {
+  //     print(value.data['total']);
+  //     MyCache.putInt(key: CacheKeys.total, value: value.data['total']);
+  //     emit(TestSuccessState());
+  //   }).catchError((error) {
+  //     print(error);
+  //     emit(TestErrorState());
+  //   });
+  // }
 
   Future<void> loginBank(BuildContext context) async {
     emit(LoginBankLoadingState());
@@ -46,15 +58,11 @@ class AuthCubit extends Cubit<AuthState> {
       print(response.data['autoStartToken']);
       MyCache.putString(key: CacheKeys.tok, value: response.data['autoStartToken']);
       print('-------');
-      SnackBar snackBar = SnackBar(content: Text('Auth Success'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       emit(LoginBankSuccessState(
           loginBank: response.data['autoStartToken'],
           logged: loggedBank(context)));
     }).catchError((error) {
       if (kDebugMode) {
-        SnackBar snackBar = SnackBar(content: Text('Auth Failed'));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
         print('Error in Login Bank');
         emit(LoginBankErrorState());
       }
@@ -89,10 +97,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(CheckExistOrNotLoadingState());
     await dioHelper.postData(endPoint: 'api/v1/accounts/exists', body: {
       'social_security_number':
-          '${MyCache.getString(key: CacheKeys.personalNumber)}',
+          MyCache.getString(key: CacheKeys.personalNumber),
     }).then((response) {
       print('The Response of Check Exist is ${response.data}');
       MyCache.putString(key: CacheKeys.user_Id, value: response.data['user_id']);
+      print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
+      print(MyCache.getString(key: CacheKeys.user_Id));
+      print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
       emit(CheckVerificationCodeSuccessState());
 
       /// Create New Func ///
@@ -168,7 +179,8 @@ class AuthCubit extends Cubit<AuthState> {
         await BlocProvider.of<AuthCubit>(context).loggedBank(context);
       } else if (response.data['status'] == 'failed') {
         sleep(const Duration(seconds: 2));
-        Navigator.pushNamed(context, 'check-screen');
+        // Navigator.pushNamed(context, 'check-screen');
+        Navigator.pushNamed(context, 'on-boarding-screen');
         AppConstants.showMyDialogError(context);
       }
     }).catchError((error) {

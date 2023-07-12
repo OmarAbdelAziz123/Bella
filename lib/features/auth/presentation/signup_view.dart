@@ -1,4 +1,5 @@
 import 'package:bella/features/auth/presentation/widgets/signup_view_body.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,12 +19,7 @@ class SignupView extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Register',
-          style: GoogleFonts.darkerGrotesque(
-            height: 1.h,
-            color: AppColors.black3Color,
-            fontWeight: FontWeight.bold,
-            fontSize: 22.sp,
-          ),
+          style: AppFonts.titleScreen,
         ),
         leading: Container(),
       ),

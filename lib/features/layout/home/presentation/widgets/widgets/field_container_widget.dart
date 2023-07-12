@@ -1,4 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
+import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +14,7 @@ class FieldContainerWidget extends StatelessWidget {
   final String subText;
   void Function()? onTap;
   void Function()? onTapInLogo;
+  void Function()? onTapInAnyPlaceInCustomRecommendedCompany;
 
   FieldContainerWidget({
     Key? key,
@@ -18,99 +23,83 @@ class FieldContainerWidget extends StatelessWidget {
     required this.subText,
     required this.onTap,
     required this.onTapInLogo,
+    required this.onTapInAnyPlaceInCustomRecommendedCompany,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 70.h,
-      margin: EdgeInsets.only(top: 0.h, bottom: 12.h),
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.5.h),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0.5,
-            blurRadius: 0.5,
-            offset: const Offset(0, 1),
-          ),
-        ],
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(15.sp),
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: onTapInLogo,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(40.r),
-              child: Image.network(
-                image,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    AppAssets.notFound,
-                    height: 45.h,
-                    width: 45.w,
-                    fit: BoxFit.cover,
-                  );
-                },
-                height: 45.h,
-                width: 45.w,
+    return GestureDetector(
+      onTap: onTapInAnyPlaceInCustomRecommendedCompany,
+      child: Container(
+        height: 70.h,
+        margin: EdgeInsets.only(top: 0.h, bottom: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.5.h),
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.white2Color,
+              spreadRadius: 0.5,
+              blurRadius: 0.5,
+              offset: Offset(0, 1),
+            ),
+          ],
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(15.sp),
+        ),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: onTapInLogo,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40.r),
+                child: AppConstants.showNetworkImage(
+                  image: image,
+                  width: 45.h,
+                  height: 45.h,
+                  fit: BoxFit.scaleDown,
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 16.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                headText,
-                style: GoogleFonts.darkerGrotesque(
-                  height: 1.h,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.sp,
-                  color: AppColors.black3Color,
+            SizedBox(width: 16.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  headText,
+                  style: AppFonts.bodyLargeBold,
                 ),
-              ),
-              Text(
-                subText,
-                style: GoogleFonts.darkerGrotesque(
-                  height: 1.h,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                  color: AppColors.grey2Color.withOpacity(0.6),
+                Text(
+                  subText,
+                  style: AppFonts.bodyDefault.copyWith(
+                    color: AppColors.white3Color.withOpacity(0.80),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              height: 28.h,
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50.sp),
-                border: Border.all(
+              ],
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: onTap,
+              child: Container(
+                height: 29.h,
+                width: 53.w,
+                decoration: BoxDecoration(
                   color: AppColors.primaryColor,
-                  width: 1.2.w,
+                  borderRadius: BorderRadius.circular(300.r),
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  'Join',
-                  style: GoogleFonts.darkerGrotesque(
-                    height: 1.h,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.sp,
-                    color: AppColors.primaryColor,
+                child: Center(
+                  child: Text(
+                    'Join',
+                    style: AppFonts.joinText.copyWith(
+                      color: AppColors.whiteColor,
+                      height: 1.1.h,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@
 enum CacheKeys {
   userId,
   ///
+  total,
   tok,
   user_Id,
   token,
@@ -22,5 +23,7 @@ enum CacheKeys {
   email,
   emailVerified,
   id,
-  comp_id
+  comp_id,
+  comp_id_in_see_all,
+
 }

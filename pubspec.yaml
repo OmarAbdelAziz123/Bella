@@ -43,6 +43,7 @@ dependencies:
   # StateManagement
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
+  provider: ^6.0.1
 
   # Font Family
   google_fonts: ^4.0.4
@@ -56,6 +57,8 @@ dependencies:
   # Scanner In Mobile
   qr_flutter: ^4.0.0
   flutter_barcode_scanner: ^2.0.0
+  qr_code_scanner: any
+  barcode_scan2: ^4.2.4
 
   # Web View
   webview_flutter: ^4.0.2
@@ -66,6 +69,8 @@ dependencies:
   toast: ^0.3.0
 
   pinput: any
+
+  another_flushbar: ^1.10.28
 
 
 dev_dependencies:
@@ -80,7 +85,13 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lotties/
 
+  fonts:
+    - family: Futura LT Condensed Extra Bold
+      fonts:
+        - asset: assets/fonts/Futura LT Condensed Extra Bold.ttf
+          weight: 700
   # fonts:
   #   - family: Schyler
   #     fonts:

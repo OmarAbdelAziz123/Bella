@@ -120,15 +120,11 @@ class DioHelper {
     Map<String, dynamic>? body,
     // String? token,
   }) async {
-    return await dio.delete(
-      AppConstants.baseUrl + endPoint,
-      data: body,
-      options: Options(
-        headers: {
-          "authorization": "Bearer ${MyCache.getString(key: CacheKeys.token)}",
-        },
-      ),
-    );
+    return await dio.delete(AppConstants.baseUrl + endPoint,
+        data: body,
+        options: Options(headers: {
+          "x-api-key": "6c20f27d-1f96-4be9-ac5d-b582305474a6",
+        }));
   }
 
   static void logout(BuildContext context) async {

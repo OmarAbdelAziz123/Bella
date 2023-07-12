@@ -7,6 +7,12 @@ abstract class AuthState {}
 
 class AuthInitialState extends AuthState {}
 
+class TestLoadingState extends AuthState {}
+
+class TestSuccessState extends AuthState {}
+
+class TestErrorState extends AuthState {}
+
 /// Create Id and Verified Email and First Name
 class CreateIdAndLoadingState extends AuthState {}
 

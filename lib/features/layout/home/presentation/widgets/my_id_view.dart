@@ -1,5 +1,6 @@
 import 'package:bella/features/layout/home/presentation/profie_view.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,22 +16,13 @@ class MyIDView extends StatelessWidget {
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'My ID',
-                style: GoogleFonts.darkerGrotesque(
-                  color: AppColors.black3Color,
-                  fontSize: 25.sp,
-                  height: 1.h,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 54.h),
               Container(
-                height: 550,
+                height: 560,
                 width: 353,
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
@@ -42,22 +34,23 @@ class MyIDView extends StatelessWidget {
                     Container(),
                     Column(
                       children: [
-                        Image.asset(AppAssets.qrCode2),
+                        Image.asset(
+                          AppAssets.qrCode2,
+                          width: 228.w,
+                          height: 226.h,
+                        ),
                         SizedBox(height: 18.h),
                         Text(
                           'Mark AL-Jumaily',
-                          style: GoogleFonts.darkerGrotesque(
-                            height: 1.h,
-                            color: AppColors.black3Color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26.sp,
+                          style: AppFonts.titleSubsection.copyWith(
+                            color: AppColors.blackColor,
                           ),
                         ),
                       ],
                     ),
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 20.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -86,12 +79,31 @@ class MyIDView extends StatelessWidget {
                       navigatePop(context);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(28.55.sp),
+                      padding: EdgeInsets.only(
+                        left: 28.w,
+                        right: 24.h,
+                        top: 24.h,
+                        bottom: 24.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.whiteColor,
                         borderRadius: BorderRadius.circular(300.r),
                       ),
-                      child: SvgPicture.asset(AppAssets.close, height: 14.9.h, width: 14.9),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            AppAssets.close,
+                            height: 12.h,
+                            width: 12.w,
+                            color: AppColors.blackColor,
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            'Close',
+                            style: AppFonts.bodyLargeBold,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

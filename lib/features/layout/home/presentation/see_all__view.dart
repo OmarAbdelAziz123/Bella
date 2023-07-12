@@ -5,7 +5,7 @@
 // import 'package:bella/features/layout/home/data/models/see_all_model.dart';
 // import 'package:bella/features/layout/home/managers/home_cubit.dart';
 // import 'package:bella/features/layout/home/presentation/home_view.dart';
-// import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_hone.dart';
+// import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_home.dart';
 // import 'package:bella/features/layout/home/presentation/widgets/widgets/field_container_widget.dart';
 // import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget_in_see_all_screen.dart';
 // import 'package:bella/features/layout/my_brands/data/models/not_joined_model.dart';
@@ -325,9 +325,6 @@
 //   }
 // }
 
-
-
-
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/layout/home/data/models/all_companies.dart';
@@ -335,8 +332,9 @@ import 'package:bella/features/layout/home/data/models/get-recommended.dart';
 import 'package:bella/features/layout/home/data/models/see_all_model.dart';
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
 import 'package:bella/features/layout/home/presentation/home_view.dart';
-import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_hone.dart';
+import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_home.dart';
 import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_see_all.dart';
+import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/field_container_widget.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget_in_see_all_screen.dart';
 import 'package:bella/features/layout/my_brands/data/models/not_joined_model.dart';
@@ -350,14 +348,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SeeAllView extends StatelessWidget {
+class SeeAllView extends StatefulWidget {
   const SeeAllView({Key? key}) : super(key: key);
 
   @override
+  State<SeeAllView> createState() => _SeeAllViewState();
+}
+
+class _SeeAllViewState extends State<SeeAllView> {
+  @override
+  void initState() {
+    // print('comp id is //////////');
+    // print(MyCache.getString(key: CacheKeys.comp_id));
+    // print('comp id is //////////');
+    print('See All Screen');
+    print('All Companies');
+    print(BlocProvider.of<HomeCubit>(context).allCompanies!.companies!.length);
+    print('All Recommended');
+    // print(BlocProvider.of<HomeCubit>(context).recommended.length);
+    print('All Not Joined');
+    // print(BlocProvider.of<MyBrandsCubit>(context).notJoined.length);
+    print('See All Screen');
+    print('All Joined');
+    // print(BlocProvider.of<MyBrandsCubit>(context).joinedCompanies.length);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {
-      },
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
         return Scaffold(
@@ -365,18 +384,12 @@ class SeeAllView extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: GestureDetector(
-              onTap: () => navigateToSeeAllScreen(context),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 18.h,
-                  horizontal: 20.w,
-                ),
-                child: SvgPicture.asset(
-                  AppAssets.arrowBack,
-                  height: 10.h,
-                  width: 15.5,
-                ),
+            leading: IconButton(
+              onPressed: () => navigateToHomeScreen(),
+              icon: SvgPicture.asset(
+                AppAssets.arrowBack,
+                height: 13.2.h,
+                width: 15.5,
               ),
             ),
             centerTitle: true,
@@ -401,69 +414,75 @@ class SeeAllView extends StatelessWidget {
                 SizedBox(height: 21.h),
                 SizedBox(
                   height: 35.h,
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(left: 20.w),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        height: 35.h,
-                        // width: 91.18.w,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.9.w,
-                        ),
-                        margin: EdgeInsets.only(
-                          right: index == 0 ? 8.w : 8.w,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(6.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            AppConstants.texts[index],
-                            style: GoogleFonts.darkerGrotesque(
-                              height: 1.h,
-                              color: AppColors.black3Color,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      );
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification: (overscroll) {
+                      overscroll.disallowGlow();
+                      return false;
                     },
-                  ),
-                ),
-                SizedBox(height: 25.h),
-                state is GetAllCompaniesLoadingState
-                    ? const CircularProgressIndicator()
-                    : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: SizedBox(
-                    height: 530.h,
                     child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: cubit.allCompanies.length,
+                      padding: EdgeInsets.only(left: 13.w),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
                       itemBuilder: (context, index) {
-                        return FieldContainerWidget(
-                          image:
-                          cubit.allCompanies[index].logo.toString(),
-                          headText: cubit
-                              .allCompanies[index].displayName
-                              .toString(),
-                          subText: cubit.allCompanies[index].countryCode
-                              .toString(),
-                          onTapInLogo: () {},
-                          onTap: () {
-                            Companies oneCompany = cubit.allCompanies[index];
-                            // List<RecommendedCompanies> item = cubit.recommended;
-                            navigateToJoinScreen(context, oneCompany);
-                          },
+                        return Container(
+                          height: 35.h,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 13.w,
+                          ),
+                          margin: EdgeInsets.only(
+                            right: index == 0 ? 8.w : 8.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.bgColor,
+                            border: Border.all(
+                              width: 0.65.w,
+                              color: index == 0
+                                  ? AppColors.bgColor
+                                  : const Color(0xff444B67).withOpacity(0.6),
+                            ),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Center(
+                            child: AppConstants.texts[index],
+                          ),
                         );
                       },
                     ),
                   ),
                 ),
+                SizedBox(height: 25.h),
+                cubit.allCompanies == null
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: SizedBox(
+                          height: 530.h,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cubit.allCompanies!.companies!.length,
+                            itemBuilder: (context, index) {
+                              var list = cubit.allCompanies!.companies![index];
+                              return FieldContainerWidget(
+                                image: list.logo.toString(),
+                                headText: list.displayName.toString(),
+                                subText: list.countryCode.toString(),
+                                onTapInLogo: () {},
+                                onTap: () {
+                                  MyCache.putString(
+                                      key: CacheKeys.comp_id,
+                                      value: list.id.toString());
+                                  navigateToJoinScreen(
+                                      context, list.id.toString());
+                                },
+                                onTapInAnyPlaceInCustomRecommendedCompany:
+                                    () {},
+                              );
+                            },
+                          ),
+                        ),
+                      ),
               ],
             ),
 
@@ -599,7 +618,7 @@ class SeeAllView extends StatelessWidget {
     );
   }
 
-  void navigateToSeeAllScreen(BuildContext context) {
+  void navigateToHomeScreen() {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -618,12 +637,66 @@ class SeeAllView extends StatelessWidget {
     );
   }
 
-  void navigateToJoinScreen(BuildContext context, Companies item) {
-    Navigator.pushReplacement(
+  void navigateToJoinScreen(BuildContext context, String companyId) {
+    // bool isMyScreenOpen = Navigator.of(context).canPop() && ModalRoute.of(context)!.settings.name == TermsAndConditions(
+    //   companyId: companyId,
+    //   flow: 'Join',
+    //   hasJoined: false,
+    //   initialView: 'SeeAll',
+    //   onCancelButtonInFinalScreen: () {
+    //     Navigator.pop(context);
+    //     // Navigator.pushReplacement(
+    //     //   context,
+    //     //   MaterialPageRoute(
+    //     //     builder: (context) => SeeAllView(),
+    //     //   ),
+    //     // );
+    //   },
+    //   onTap: () {
+    //     Navigator.pop(context);
+    //     // Navigator.pushReplacement(
+    //     //   context,
+    //     //   MaterialPageRoute(
+    //     //     builder: (context) => SeeAllView(),
+    //     //   ),
+    //     // );
+    //   },
+    // ).toString();
+    // print('IsOpen');
+
+    // if(isMyScreenOpen) {
+    // } else {
+    // }
+    Navigator.push(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => JoinViewBodyInSeeAll(item: item),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return TermsAndConditions(
+            companyId: companyId,
+            flow: 'Join',
+            hasJoined: false,
+            initialView: 'SeeAll',
+            onCancelButtonInFinalScreen: () {
+              Navigator.pop(context);
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => SeeAllView(),
+              //   ),
+              // );
+            },
+            onTap: () {
+              Navigator.pop(context);
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => SeeAllView(),
+              //   ),
+              // );
+            },
+          );
+        },
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -635,5 +708,23 @@ class SeeAllView extends StatelessWidget {
         },
       ),
     );
+
+    // Navigator.pushReplacement(
+    //   context,
+    //
+    //   // PageRouteBuilder(
+    //   //   transitionDuration: const Duration(milliseconds: 250),
+    //   //   pageBuilder: (_, __, ___) => JoinViewBodyInSeeAll(item: item),
+    //   //   transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+    //   //     return SlideTransition(
+    //   //       position: Tween<Offset>(
+    //   //         begin: const Offset(1.0, 0.0),
+    //   //         end: Offset.zero,
+    //   //       ).animate(animation),
+    //   //       child: child,
+    //   //     );
+    //   //   },
+    //   // ),
+    // );
   }
 }

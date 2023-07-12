@@ -17,7 +17,7 @@ class bulidSliverAppBar extends StatelessWidget {
         //centerTitle: true,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
-          child: const SearchBarWidget(hintText: 'Search product or store'),
+          child: SearchBarWidget(hintText: 'Search product or store'),
         ),
 
       ),

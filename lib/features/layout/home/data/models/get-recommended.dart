@@ -4,9 +4,9 @@ class GetRecommendedModel {
   GetRecommendedModel({this.recommendedCompanies});
 
   GetRecommendedModel.fromJson(Map<String, dynamic> json) {
-    if (json['recommended_companies'] != null) {
+    if (json['companies'] != null) {
       recommendedCompanies = <RecommendedCompanies>[];
-      json['recommended_companies'].forEach((v) {
+      json['companies'].forEach((v) {
         recommendedCompanies!.add(new RecommendedCompanies.fromJson(v));
       });
     }
@@ -15,7 +15,7 @@ class GetRecommendedModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.recommendedCompanies != null) {
-      data['recommended_companies'] =
+      data['companies'] =
           this.recommendedCompanies!.map((v) => v.toJson()).toList();
     }
     return data;

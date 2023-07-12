@@ -1,4 +1,5 @@
 import 'package:bella/features/layout/my_brands/presentation/widgets/my_brand_view_body.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,20 +12,21 @@ class MyBrandsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'Brands',
-          style: GoogleFonts.darkerGrotesque(
-            height: 1.h,
-            fontWeight: FontWeight.bold,
-            fontSize: 28.sp,
-            color: AppColors.black3Color,
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 80.h),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Padding(
+            padding: EdgeInsets.only(top: 38.h),
+            child: Text(
+              'Brands',
+              style: AppFonts.titleScreen,
+            ),
           ),
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: MyBrandViewBody(),
       ),
     );

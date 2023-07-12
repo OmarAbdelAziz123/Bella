@@ -4,8 +4,19 @@ class AppAssets {
   /// SVG
   // static const String banner = '${AppConstants.baseImage}/banner.svg';
   static const String arrowBack = '${AppConstants.baseImage}/arrowBack.svg';
+  static const String hand = '${AppConstants.baseImage}/hand.png';
+  static const String hand2 = '${AppConstants.baseImage}/hand_in_scan.png';
+  static const String address = '${AppConstants.baseImage}/address.svg';
+  static const String dwon = '${AppConstants.baseImage}/dwon.svg';
+  static const String cupones = '${AppConstants.baseImage}/cupones.svg';
+  static const String minuse = '${AppConstants.baseImage}/minuse.svg';
+  static const String scanSuccessfully = '${AppConstants.baseImage}/Scanned successfully.png';
+  static const String way_to_go = '${AppConstants.baseImage}/Way to go!.png';
   static const String num = '${AppConstants.baseImage}/+46.svg';
   static const String layersIcon = '${AppConstants.baseImage}/layersIcon.svg';
+  static const String arrowbackblack = '${AppConstants.baseImage}/arrowbackblack.svg';
+  static const String cornerupleft = '${AppConstants.baseImage}/corner-up-left.svg';
+  static const String checkRight = '${AppConstants.baseImage}/check-right.svg';
   static const String X = '${AppConstants.baseImage}/X.svg';
   static const String gift = '${AppConstants.baseImage}/gift.svg';
   static const String present = '${AppConstants.baseImage}/present.svg';
@@ -18,9 +29,11 @@ class AppAssets {
   static const String userIcon = '${AppConstants.baseImage}/user.svg';
   static const String logoutIcon = '${AppConstants.baseImage}/Logout.svg';
   static const String icon = '${AppConstants.baseImage}/Icon.svg';
+  static const String icon2 = '${AppConstants.baseImage}/icon2.png';
   static const String notificationIcon = '${AppConstants.baseImage}/notification.svg';
   static const String checkVerifiedIcon = '${AppConstants.baseImage}/check-verified.svg';
   static const String searchIcon = '${AppConstants.baseImage}/search.svg';
+  static const String icon_insearch = '${AppConstants.baseImage}/icon_insearch.svg';
   static const String actionsInSearchIcon = '${AppConstants.baseImage}/actions-in-search.svg';
   // static const String main_container = '${AppConstants.baseImage}/main_container.svg';
   static const String arrow = '${AppConstants.baseImage}/arrow.svg';
@@ -29,6 +42,7 @@ class AppAssets {
   static const String infoCircle4 = '${AppConstants.baseImage}/info-circle4.svg';
   static const String blus = '${AppConstants.baseImage}/blus.svg';
   static const String qrCode = '${AppConstants.baseImage}/qr-code.svg';
+  static const String my_cards = '${AppConstants.baseImage}/my_cards.svg';
   static const String edit = '${AppConstants.baseImage}/edit.svg';
   static const String infoCircle = '${AppConstants.baseImage}/info-circle.svg';
   static const String infoCircle2 = '${AppConstants.baseImage}/info-circle2.svg';
@@ -46,12 +60,16 @@ class AppAssets {
   static const String logo = '${AppConstants.baseImage}/logo.svg';
   static const String listIcon = '${AppConstants.baseImage}/list-icon.svg';
   static const String add = '${AppConstants.baseImage}/add.svg';
+  static const String check2 = '${AppConstants.baseImage}/check2.svg';
+  static const String Vector = '${AppConstants.baseImage}/Vector.svg';
   static const String personalOffers = '${AppConstants.baseImage}/personal-offers.svg';
+  static const String reward = '${AppConstants.baseImage}/reward.svg';
   static const String award = '${AppConstants.baseImage}/award.svg';
   static const String coupons = '${AppConstants.baseImage}/coupons.svg';
   static const String discount = '${AppConstants.baseImage}/discount.svg';
   static const String close1 = '${AppConstants.baseImage}/close_1.svg';
   static const String check1 = '${AppConstants.baseImage}/check1.svg';
+  static const String more = '${AppConstants.baseImage}/more.svg';
   static const String container_close = '${AppConstants.baseImage}/container-close.svg';
 
   /// PNG
@@ -76,6 +94,7 @@ class AppAssets {
   static const String banner2 = '${AppConstants.baseImage}/banner2.png';
   static const String qrCode2 = '${AppConstants.baseImage}/qrCode.png';
   static const String one = '${AppConstants.baseImage}/one.png';
+  static const String cocacola = '${AppConstants.baseImage}/cocacola.png';
   static const String one_one = '${AppConstants.baseImage}/one-one.png';
   static const String offer = '${AppConstants.baseImage}/offer.png';
   static const String drop = '${AppConstants.baseImage}/drop.png';
@@ -85,4 +104,31 @@ class AppAssets {
   static const String offer20 = '${AppConstants.baseImage}/offer20.png';
   static const String frame = '${AppConstants.baseImage}/frame.png';
   static const String notFound = '${AppConstants.baseImage}/not-found.png';
+
+  /// Lottie
+  static const String scanSquare = 'assets/lotties/scanning.json';
+
+
+
+
+
+
+  /// NEWS IMAGES
+  // static const String bonozLogo = '${AppConstants.baseImage}/Bonoz Logo.svg';
+  static const String bonozLogo = '${AppConstants.baseImage}/Bonoz Logo.svg';
+  static const String bonoz = '${AppConstants.baseImage}/bonoz.svg';
+  static const String Horizontal = '${AppConstants.baseImage}/Horizontal.svg';
+  static const String bella22 = '${AppConstants.baseImage}/bella2.svg';
+  // static const String hands = '${AppConstants.baseImage}/hands.svg';
+  static const String hands = '${AppConstants.baseImage}/hands.png';
+  // static const String waleet = '${AppConstants.baseImage}/waleet.svg';
+  static const String waleet = '${AppConstants.baseImage}/waleet.png';
+  // static const String money = '${AppConstants.baseImage}/money.svg';
+  static const String money = '${AppConstants.baseImage}/money.png';
+  // static const String voot = '${AppConstants.baseImage}/voot.svg';
+  static const String voot = '${AppConstants.baseImage}/voot.png';
+  static const String oneAppText = '${AppConstants.baseImage}/One app all things discount & offers.png';
+  static const String sayByeText = '${AppConstants.baseImage}/say bye to your membership cards.png';
+  static const String saveMoneyText = '${AppConstants.baseImage}/Save money with loyalty program.png';
+  static const String sayAllText = '${AppConstants.baseImage}/Sync all your membership with all.png';
 }

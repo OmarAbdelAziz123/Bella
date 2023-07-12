@@ -27,10 +27,10 @@ class LoginButtonWidget extends StatelessWidget {
           onTap: onTap,
           child: Container(
             width: width,
-            height: 50.h,
+            height: 52.h,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(10.sp),
+              borderRadius: BorderRadius.circular(50.sp),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,17 +1,16 @@
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
-import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
+import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/scan/datat/check_model.dart';
-import 'package:bella/features/layout/scan/presentation/terms_and_conditions_view_in_scan.dart';
-import 'package:bella/features/layout/scan/presentation/widgets/terms_and_conditions_view_in_scan_body.dart';
-import 'package:bloc/bloc.dart';
+import 'package:bella/features/layout/scan/presentation/final_view_in_scan.dart';
+import 'package:bella/features/layout/scan/presentation/scan_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
 part 'scan_state.dart';
 
 class ScanCubit extends Cubit<ScanState> {
@@ -23,6 +22,8 @@ class ScanCubit extends Cubit<ScanState> {
 
   var getResult = 'QR Code Result';
 
+  int currentIndex = 0;
+
   bool? hasJoined;
 
   CheckModel checkModel = CheckModel();
@@ -33,30 +34,94 @@ class ScanCubit extends Cubit<ScanState> {
         .getData(
             endPoint:
                 '/api/v1/companies/has-joined/${MyCache.getString(key: CacheKeys.user_Id)}/${MyCache.getString(key: CacheKeys.comp_id)}')
-        // '/api/v1/companies/has-joined/${MyCache.getString(key: CacheKeys.user_Id)}/${MyCache.getString(key: CacheKeys.comp_id)}')
         .then((response) {
       print(response.data);
-      // hasJoined = response.data['has_joined'];
       if (response.data['has_joined'] == true) {
         /// Success
-      }
-      else if (response.data['has_joined'] == false) {
-        /// Error
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => TermsAndConditionsViewInScan(),
-        //   ),
-        // );
-        ///
-        BlocProvider.of<MyBrandsCubit>(context).getTermsAndConditions();
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => TermsAndConditionsViewInScanBody(),
+            builder: (context) => FinalViewInScan(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScanView(),
+                  ),
+                );
+              },
+              hasJoined: response.data['has_joined'],
+            ),
           ),
-        );      }
-      emit(ScanSuccessState());
+        );
+      }
+      else if (response.data['has_joined'] == false) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 250),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return TermsAndConditions(
+                companyId: MyCache.getString(key: CacheKeys.comp_id),
+                flow: 'Scan',
+                hasJoined: response.data['has_joined'],
+                onCancelButtonInFinalScreen: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScanView(),
+                    ),
+                  );
+                },
+                initialView: 'Scan', /// todo :
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 250),
+                      pageBuilder: (_, __, ___) {
+                        return FinalViewInScan(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ScanView(),
+                              ),
+                            );
+                          },
+                          hasJoined: response.data['has_joined'],
+                          // display_name: ,
+                        );
+                      },
+                      transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(1.0, 0.0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+            transitionsBuilder:
+                (_, Animation<double> animation, __, Widget child) {
+              return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              );
+            },
+          ),
+        );
+        print('False in Has Joined');
+        emit(ScanSuccessFalseState());
+      }
     }).catchError((error) {
       print(error);
       emit(ScanErrorState());
@@ -65,14 +130,16 @@ class ScanCubit extends Cubit<ScanState> {
 
   void scanQRCode() async {
     try {
+      const options = ScanOptions(
+        useCamera: 0,
+        autoEnableFlash: false,
+      );
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
+        '#8367F4',
         'Cancel',
-        true,
+        false,
         ScanMode.QR,
       );
-
-      // if (!mounted) return;
 
       getResult = qrCode;
       print("QRCode_Result:--");
@@ -94,9 +161,7 @@ class ScanCubit extends Cubit<ScanState> {
     await dioHelper.postData(endPoint: 'api/v1/companies/join', body: {
       "company_id": MyCache.getString(key: CacheKeys.comp_id),
       "user_id": MyCache.getString(key: CacheKeys.user_Id),
-      // "user_id": "517644bf-faf4-4568-8305-8ae77b07ebfc"
     }).then((response) {
-      print(response.data);
       emit(PostJoinCompanySuccessState());
     }).catchError((error) {
       print(error);

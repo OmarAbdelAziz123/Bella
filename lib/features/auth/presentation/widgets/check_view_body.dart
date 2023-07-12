@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 import 'dart:io';
 import 'dart:math';
+import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
+import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/login_button_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -25,6 +27,8 @@ class ScaleSize {
 class CheckViewBody extends StatefulWidget {
   CheckViewBody({Key? key}) : super(key: key);
 
+  // bool isClicked = false;
+
   int currentIndex = 0;
 
   List<String> images = [
@@ -39,14 +43,13 @@ class CheckViewBody extends StatefulWidget {
 }
 
 class _CheckViewBodyState extends State<CheckViewBody> {
+
+
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginBankSuccessState) {
-          SnackBar snackBar = const SnackBar(content: Text('Success'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
           AppConstants.launchURL(state.loginBank);
           sleep(const Duration(seconds: 2));
         } else if (state is LoginBankErrorState) {
@@ -82,7 +85,7 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                             color: AppColors.black3Color,
                             fontWeight: FontWeight.bold,
                             fontSize: 30.sp,
-                            height: 1.h,
+                            // height: 1.h,
                           ),
                         ),
                         Text(
@@ -91,7 +94,7 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                             color: AppColors.black3Color,
                             fontWeight: FontWeight.bold,
                             fontSize: 30.sp,
-                            height: 1.h,
+                            // height: 1.h,
                           ),
                         ),
                       ],
@@ -104,15 +107,16 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                       LoginButtonWidget(
                           textWidget: state is LoginBankLoadingState
                               ? Padding(
-                                padding: EdgeInsets.only(left: 2.w, top: 8.h, bottom: 8.h),
-                                child: const CircularProgressIndicator(
+                                  padding: EdgeInsets.only(
+                                      left: 2.w, top: 8.h, bottom: 8.h),
+                                  child: const CircularProgressIndicator(
                                     color: AppColors.whiteColor,
                                   ),
-                              )
+                                )
                               : Text(
                                   'Log in with BankID',
                                   style: GoogleFonts.darkerGrotesque(
-                                    height: 1.h,
+                                    // height: 1.h,
                                     color: AppColors.whiteColor,
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.bold,
@@ -124,13 +128,18 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                           // text: 'Log in with BankID',
                           width: 353.h,
                           onTap: () {
-                            AppConstants.showMyDialog(context);
+                            // setState(() {
+                            //   widget.isClicked = true;
+                            //   cubit.testFunc();
+                            // });
+                             AppConstants.showMyDialog(context);
                             BlocProvider.of<AuthCubit>(context)
-                                .loginBank(context);
+                             .loginBank(context);
                           }),
                     ],
                   ),
                   SizedBox(height: 16.h),
+                  // widget.isClicked == true ? Center(child: Text('Hello')) : Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -140,11 +149,20 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                           color: AppColors.black3Color,
                           fontWeight: FontWeight.w600,
                           fontSize: 14.sp,
-                          height: 1.h,
+                          // height: 1.h,
                         ),
                       ),
                     ],
                   ),
+                  // state is TestLoadingState
+                  //     ? CircularProgressIndicator()
+                  //     : Text(
+                  //         MyCache.getInt(key: CacheKeys.total).toString(),
+                  //         style: TextStyle(
+                  //           color: AppColors.primaryColor,
+                  //           fontSize: 50.sp,
+                  //         ),
+                  //       ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -156,7 +174,7 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                           decorationThickness: 2.0,
                           fontWeight: FontWeight.w800,
                           fontSize: 14.sp,
-                          height: 1.h,
+                          // height: 1.h,
                         ),
                       ),
                       Text(
@@ -165,7 +183,7 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                           color: AppColors.black3Color,
                           fontWeight: FontWeight.w600,
                           fontSize: 12.8.sp,
-                          height: 1,
+                          // height: 1,
                         ),
                       ),
                       Text(

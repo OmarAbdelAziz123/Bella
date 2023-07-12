@@ -29,7 +29,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(AppAssets.bella3),
+          SvgPicture.asset(AppAssets.bonozLogo),
         ],
       ),
     );
@@ -39,7 +39,8 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        Navigator.pushReplacementNamed(context, 'check-screen');
+        Navigator.pushReplacementNamed(context, 'on-boarding-screen');
+        // Navigator.pushReplacementNamed(context, 'check-screen');
       },
     );
   }

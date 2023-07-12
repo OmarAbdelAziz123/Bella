@@ -7,7 +7,9 @@ class ScanInitialState extends ScanState {}
 
 class ScanLoadingState extends ScanState {}
 
-class ScanSuccessState extends ScanState {}
+class ScanSuccessTrueState extends ScanState {}
+
+class ScanSuccessFalseState extends ScanState {}
 
 class ScanErrorState extends ScanState {}
 

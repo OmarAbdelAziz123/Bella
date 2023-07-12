@@ -32,3 +32,43 @@ class GetCompanyProfileLoadingState extends HomeState {}
 class GetCompanyProfileSuccessState extends HomeState {}
 
 class GetCompanyProfileErrorState extends HomeState {}
+
+/// Get All Recommended Products
+class GetAllRecommendedProductsLoadingState extends HomeState {}
+
+class GetAllRecommendedProductsSuccessState extends HomeState {}
+
+class GetAllRecommendedProductsErrorState extends HomeState {}
+
+/// Get Company Products
+class GetCompanyProductsLoadingState extends HomeState {}
+
+class GetCompanyProductsSuccessState extends HomeState {}
+
+class GetCompanyProductsErrorState extends HomeState {}
+
+// /// Get Wish List
+// class GetWishListLoadingState extends HomeState {}
+//
+// class GetWishListSuccessState extends HomeState {
+//   List<WishlistItem> wishList;
+//
+//   GetWishListSuccessState({required this.wishList});
+// }
+
+class GetWishListErrorState extends HomeState {}
+
+/// Delete From Cart
+class DeleteOneItemFromCartLoadingState extends HomeState {}
+
+class DeleteOneItemFromCartSuccessState extends HomeState {}
+
+class DeleteOneItemFromCartErrorState extends HomeState {}
+
+
+/// Add To Cart
+class AddCartLoadingState extends HomeState {}
+
+class AddCartSuccessState extends HomeState {}
+
+class AddCartErrorState extends HomeState {}

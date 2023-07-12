@@ -1,20 +1,25 @@
 // ignore_for_file: must_be_immutable
+import 'package:another_flushbar/flushbar.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
-import 'package:bella/features/layout/home/data/models/all_companies.dart';
-import 'package:bella/features/layout/home/data/models/get-recommended.dart';
-import 'package:bella/features/layout/home/data/models/see_all_model.dart';
+import 'package:bella/features/layout/home/data/models/get_recommended_products_model.dart';
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
+import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/profie_view.dart';
 import 'package:bella/features/layout/home/presentation/see_all__view.dart';
-import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_hone.dart';
+import 'package:bella/features/layout/home/presentation/widgets/product_details_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/products_in_company_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/banner/banner.dart';
-import 'package:bella/features/layout/home/presentation/widgets/widgets/dress_component.dart';
+import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
+import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_recommended_products.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/field_container_widget.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
+import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +38,12 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   PageController? pageController;
 
+  final int _selectedItemIndex = -1;
+
+  Color colorOfIconAddToCart = Colors.black;
+
+  Map<String, Color> buttonColors = {};
+
   @override
   void initState() {
     pageController = PageController(
@@ -43,326 +54,336 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {
-        // if (state is GetRecommendedErrorState) {
-        //   SnackBar snackBar = const SnackBar(
-        //       content: Text('Error in Get All Recommended List'));
-        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        // }
-      },
+    return BlocBuilder<WishListCubit, WishListState>(
       builder: (context, state) {
-        var cubit = HomeCubit.get(context);
+        var wishListCubit = BlocProvider.of<WishListCubit>(context);
 
-        if (cubit.recommended.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primaryColor),
-          );
-        }
-        else {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 2.h),
-                Column(
+        return BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            var cubit = HomeCubit.get(context);
+
+            return NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (overscroll) {
+                overscroll.disallowGlow();
+                return false;
+              },
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 18.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            // cubit.recommended.length.toString(),
-                            'Hi ${MyCache.getString(key: CacheKeys.firstName)}!',
-                            style: GoogleFonts.darkerGrotesque(
-                              height: 1.h,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28.sp,
-                              color: AppColors.black3Color,
-                            ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.h,
+                            bottom: 25.h,
+                            right: 20.w,
+                            left: 20.w,
+                            // horizontal: 20.w,
+                            // vertical: 18.h,
                           ),
-
-                          Row(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SvgPicture.asset(AppAssets.notificationIcon),
-                              SizedBox(width: 2.w),
+                              SvgPicture.asset(AppAssets.bonoz),
                               GestureDetector(
                                 onTap: () {
                                   navigatetoProfileScreen(context);
                                 },
-                                child: SvgPicture.asset(AppAssets.userIcon),
+                                child: SvgPicture.asset(
+                                  AppAssets.userIcon,
+                                  height: 26.h,
+                                  width: 26.w,
+                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    const VerificationAnEmailWidget(),
-                    const SearchBarWidget(
-                      hintText: 'Search product or store',
-                    ),
-                    SizedBox(height: 21.h),
-                    SizedBox(
-                      height: 35.h,
-                      child: ListView.builder(
-                        padding: EdgeInsets.only(left: 20.w),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: 35.h,
-                            // width: 91.18.w,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.9.w,
-                            ),
-                            margin: EdgeInsets.only(
-                              right: index == 0 ? 8.w : 8.w,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.whiteColor,
-                              borderRadius: BorderRadius.circular(6.r),
-                            ),
-                            child: Center(
-                              child: Text(
-                                AppConstants.texts[index],
-                                style: GoogleFonts.darkerGrotesque(
-                                  height: 1.h,
-                                  color: AppColors.black3Color,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: 25.h),
-                  ],
-                ),
-                Container(
-                  height: 324.h,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    left: 20.w,
-                    right: 20.w,
-                    top: 36.h,
-                  ),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(AppAssets.main_container),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      /// See All
-                      GestureDetector(
-                        onTap: () => navigateToSeeAllScreen(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'You might like',
-                              style: GoogleFonts.darkerGrotesque(
-                                fontWeight: FontWeight.bold,
-                                height: 1.h,
-                                fontSize: 24.sp,
-                                color: AppColors.black3Color,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'See All (33)',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    height: 1.h,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
-                                    color: AppColors.black3Color,
+                        ),
+                        const VerificationAnEmailWidget(),
+                        SearchBarWidget(
+                          hintText: 'Search',
+                        ),
+                        SizedBox(height: 20.h),
+                        SizedBox(
+                          height: 35.h,
+                          child: NotificationListener<OverscrollIndicatorNotification>(
+                            onNotification: (overscroll) {
+                              overscroll.disallowGlow();
+                              return false;
+                            },
+                            child: ListView.builder(
+                              padding: EdgeInsets.only(left: 13.w),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  height: 35.h,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 13.w,
                                   ),
-                                ),
-                                SvgPicture.asset(
-                                  AppAssets.arrow,
-                                  height: 18.h,
-                                ),
-                              ],
+                                  margin: EdgeInsets.only(
+                                    right: index == 0 ? 8.w : 8.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.bgColor,
+                                    border: Border.all(
+                                      width: 0.65.w,
+                                      color: index == 0
+                                          ? AppColors.bgColor
+                                          : const Color(0xff444B67)
+                                              .withOpacity(0.6),
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                  child: Center(
+                                    child: AppConstants.texts[index],
+                                  ),
+                                );
+                              },
                             ),
-                          ],
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                      ],
+                    ),
+                    Container(
+                      height: 324.h,
+                      width: double.infinity,
+                      padding: EdgeInsets.only(
+                        left: 20.w,
+                        right: 20.w,
+                        top: 29.h,
+                      ),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(AppAssets.main_container),
+                          fit: BoxFit.fill,
                         ),
                       ),
-                      SizedBox(height: 17.h),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: cubit.recommended.length,
-                        itemBuilder: (context, index) {
-                          return FieldContainerWidget(
-                            image: cubit.recommended[index].logo.toString(),
-                            headText:
-                                cubit.recommended[index].displayName.toString(),
-                            subText:
-                                cubit.recommended[index].countryCode.toString(),
-                            onTapInLogo: () {},
-                            onTap: () {
-                              List<RecommendedCompanies> item = BlocProvider.of<HomeCubit>(context).recommended;
-                             navigateToJoinScreen(item[index]);
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                CustomPageView(
-                  onPageChanged: (p0) {},
-                  pageController: pageController!,
-                ),
-                SizedBox(height: 17.h),
-                GridView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 13.w,
-                    mainAxisSpacing: 13.h,
-                    childAspectRatio: 1 / 1.5,
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 237.h,
-                      width: 170.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(15.r),
-                      ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.r),
-                                  topRight: Radius.circular(15.r),
-                                ),
-                                child: Image.asset(
-                                  AppAssets.one,
-                                  width: 170.w,
-                                  height: 173.h,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                top: 8.h,
-                                left: 8.w,
-                                child: Image.asset(
-                                  AppAssets.one_one,
-                                  width: 35.w,
-                                  height: 35.h,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 5.81.h,
-                                left: 8.w,
-                                child: Image.asset(
-                                  AppAssets.offer,
-                                  width: 35.w,
-                                  height: 35.h,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 6.41.h,
-                                right: 9.41.w,
-                                child: Container(
-                                  width: 30.18,
-                                  height: 30.18,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50.sp),
-                                    color: AppColors.whiteColor,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 9.81.w,
-                                    vertical: 9.81.w,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    AppAssets.add,
-                                    width: 10.56.w,
-                                    height: 10.56.h,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 10.h,
-                                // bottom: 2.h,
-                                left: 12.w,
-                                right: 9.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          /// See All
+                          GestureDetector(
+                            onTap: () => navigateToSeeAllScreen(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Shein Sjorta vinyl',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    color: AppColors.blackColor,
-                                    height: 1.h,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10.w),
+                                  child: Text(
+                                    'You might like',
+                                    style: AppFonts.titleSubsection,
                                   ),
                                 ),
-                                Text(
-                                  'awespme',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    color: AppColors.blackColor,
-                                    height: 1.h,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
-                                  ),
-                                ),
-                                SizedBox(height: 6.h),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      '1 218 kr',
-                                      style: GoogleFonts.darkerGrotesque(
-                                        color: AppColors.orangeColor,
-                                        height: 1.h,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    SizedBox(width: 6.w),
-                                    Text(
-                                      '1 718 kr',
-                                      style: GoogleFonts.darkerGrotesque(
-                                        color: AppColors.grey7Color,
-                                        decoration: TextDecoration.lineThrough,
-                                        height: 1.h,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16.sp,
-                                      ),
+                                    BlocBuilder<MyBrandsCubit, MyBrandsState>(
+                                      builder: (context, state) {
+                                        return Text(
+                                          'See all',
+                                          style: AppFonts.linkDefault.copyWith(
+                                            height: 1.5.h,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 17.h),
+
+                          /// Recommended Companies
+                          cubit.recommended == null
+                              ? const CircularProgressIndicator(
+                                  color: AppColors.primaryColor,
+                                )
+                              : cubit.recommended!.recommendedCompanies == null
+                                  ? const Text('Empty list')
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: cubit.recommended!
+                                          .recommendedCompanies!.length,
+                                      itemBuilder: (context, index) {
+                                        var recommendedCompany = cubit
+                                            .recommended!
+                                            .recommendedCompanies![index];
+                                        return FieldContainerWidget(
+                                          image: recommendedCompany.logo
+                                              .toString(),
+                                          headText: recommendedCompany
+                                              .displayName
+                                              .toString(),
+                                          subText: recommendedCompany
+                                              .countryCode
+                                              .toString(),
+                                          onTapInLogo: () {},
+                                          onTap: () {
+                                            MyCache.putString(
+                                                key: CacheKeys.comp_id,
+                                                value: recommendedCompany.id
+                                                    .toString());
+                                            print('COMPANY ID');
+                                            print(MyCache.getString(
+                                                key: CacheKeys.comp_id));
+                                            print('COMPANY ID');
+                                            navigateToJoinScreen(
+                                              recommendedCompany.id.toString(),
+                                            );
+                                          },
+                                          onTapInAnyPlaceInCustomRecommendedCompany:
+                                              () {
+                                            MyCache.putString(
+                                                key: CacheKeys.comp_id,
+                                                value: recommendedCompany.id
+                                                    .toString());
+                                            print(recommendedCompany.id
+                                                .toString());
+                                            navigateToProductsInCompany(
+                                              recommendedCompany.logo!,
+                                              recommendedCompany.displayName!,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                         ],
                       ),
-                    );
-                  },
+                    ),
+                    CustomPageView(
+                      onPageChanged: (p0) {},
+                      pageController: pageController!,
+                    ),
+                    SizedBox(height: 17.h),
+                    if (cubit.getRecommendedProductsModel == null)
+                      const CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      )
+                    else
+                      GridView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisSpacing: 13.w,
+                          mainAxisSpacing: 13.h,
+                          childAspectRatio: 1 / 1.72,
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: cubit.getRecommendedProductsModel!
+                            .recommendedProducts!.length,
+                        itemBuilder: (context, index) {
+                          var product = cubit.getRecommendedProductsModel!
+                              .recommendedProducts![index];
+
+                          bool isSelected = index == _selectedItemIndex;
+
+                          return BlocBuilder<WishListCubit, WishListState>(
+                            builder: (context, state) {
+                              var wishListCubit =
+                                  BlocProvider.of<WishListCubit>(context);
+
+                              return CustomRecommendedProducts(
+                                logoOfCompany: product.company_logo,
+                                imageOfProduct: product.imageLinks![0],
+                                title: product.title!,
+                                description: product.description!,
+                                currency: product.pricing!.currency!,
+                                regularPrice:
+                                    product.pricing!.regularPrice ?? 0.0,
+                                salePrice: product.pricing!.salePrice ?? 0.0,
+                                customMemberOnly: product.membersOnly == true
+                                    ? const CustomMemberOnly()
+                                    : Container(),
+                                widget: wishListCubit.checkProductInWishList(
+                                  productId: product.id!,
+                                )
+                                    ? SvgPicture.asset(
+                                        AppAssets.Vector,
+                                        width: 12.46.w,
+                                        height: 12.46.h,
+                                        color: AppColors.whiteColor,
+                                      )
+                                    : SvgPicture.asset(
+                                        AppAssets.add,
+                                        width: 12.46.w,
+                                        height: 12.46.h,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                buttonColor:
+                                    wishListCubit.checkProductInWishList(
+                                            productId: product.id!)
+                                        ? AppColors.primaryColor
+                                        : AppColors.whiteColor,
+                                onTap: () {
+                                  MyCache.putString(
+                                    key: CacheKeys.comp_id,
+                                    value: product.companyId.toString(),
+                                  );
+                                  navigateToProductDetailsScreen(product);
+                                },
+                                onTapAddToCart: () async {
+                                  Flushbar(
+                                    message: 'Item added in wishlist',
+                                    messageSize: 16.sp,
+                                    messageColor: AppColors.blackColor,
+                                    borderRadius: BorderRadius.circular(
+                                      12.r,
+                                    ),
+                                    duration: const Duration(seconds: 3),
+                                    margin: EdgeInsets.only(
+                                      bottom: 16.h,
+                                      left: 15.w,
+                                      right: 15.w,
+                                    ),
+                                    isDismissible: false,
+                                    animationDuration:
+                                        const Duration(milliseconds: 300),
+                                    icon: Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.black,
+                                      size: 22.sp,
+                                    ),
+                                    shouldIconPulse: false,
+                                    backgroundColor: AppColors.primaryColor,
+                                    boxShadows: const [
+                                      BoxShadow(
+                                        color: Colors.white38,
+                                        offset: Offset(0.0, 2.0),
+                                        blurRadius: 3.0,
+                                      ),
+                                    ],
+                                  ).show(context);
+                                  await wishListCubit.addToCart(
+                                    company_logo_link: product.company_logo!,
+                                    company_display_name:
+                                        product.company_display_name!,
+                                    product_id: product.id!,
+                                    product_image_link: product.imageLinks![0],
+                                    product_title: product.title!,
+                                    regular_price:
+                                        product.pricing!.regularPrice,
+                                    sale_price: product.pricing!.salePrice,
+                                    currency: product.pricing!.currency,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    SizedBox(height: 17.h),
+                  ],
                 ),
-                SizedBox(height: 17.h),
-              ],
-            ),
-          );
-        }
+              ),
+            );
+          },
+        );
       },
     );
   }
@@ -405,12 +426,94 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
-  void navigateToJoinScreen(RecommendedCompanies item) {
+  void navigatePop(BuildContext context) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => JoinViewBodyInHome(item: item),
+        pageBuilder: (_, __, ___) => const HomeView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigateToProductDetailsScreen(RecommendedProducts product) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return ProductDetailsScreen(product: product);
+        },
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigateToProductsInCompany(String logo, String display_name) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) {
+          return ProductsInCompanyScreen(
+            display_name: display_name,
+            logo: logo,
+          );
+        },
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigateToJoinScreen(String companyId) {
+    ///
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) {
+          return TermsAndConditions(
+            companyId: companyId,
+            flow: 'Join',
+            hasJoined: false,
+            initialView: 'Home',
+            onCancelButtonInFinalScreen: () {
+              Navigator.pop(context);
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .clearTermsAndConditionsState();
+            },
+            onTap: () {
+              Navigator.pop(context);
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .clearTermsAndConditionsState();
+            },
+          );
+        },
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(

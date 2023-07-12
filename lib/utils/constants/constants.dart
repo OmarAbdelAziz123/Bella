@@ -1,5 +1,6 @@
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,15 +16,67 @@ class AppConstants {
   static const String baseUrl = 'https://business-webapi.azurewebsites.net/';
 
   /// End Points
+  ///
+
+  static TextStyle getTextStyle({
+    required FontWeight fontWeight,
+    required double fontSize,
+    required double letterSpacing,
+    required double height,
+    required Color color,
+  }) {
+    return GoogleFonts.inter(
+      fontWeight: fontWeight,
+      fontSize: fontSize,
+      letterSpacing: letterSpacing,
+      height: height,
+      color: color,
+    );
+  }
 
   /// Shared Variables
-  static List<String> texts = [
-    'Fashion',
-    'Home',
-    'Electronics',
-    'Travel',
-    'health',
-    'Sports',
+  static List<Widget> texts = [
+    SvgPicture.asset(
+      AppAssets.Horizontal,
+      height: 24.h,
+      width: 24.w,
+    ),
+    Text(
+      'Fashion',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
+    Text(
+      'Home',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
+    Text(
+      'Electronics',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
+    Text(
+      'Travel',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
+    Text(
+      'health',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
+    Text(
+      'Sports',
+      style: AppFonts.productName.copyWith(
+        height: 1.2.h,
+      ),
+    ),
   ];
 
   /// Navigate To Another App.
@@ -61,28 +114,11 @@ class AppConstants {
                   children: <Widget>[
                     SizedBox(height: 1.2.h),
                     SvgPicture.asset(
-                      AppAssets.bella2,
+                      AppAssets.bella22,
                       height: 97.h,
                       width: 164.w,
                     ),
-                    SizedBox(height: 10.h),
-
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Waiting for BankID',
-                          style: GoogleFonts.darkerGrotesque(
-                            decorationColor: Colors.black,
-                            color: Colors.black,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 14.h),
+                    SizedBox(height: 73.21.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -92,7 +128,7 @@ class AppConstants {
                           },
                           child: Text(
                             'Cancel',
-                            style: GoogleFonts.darkerGrotesque(
+                            style: GoogleFonts.inter(
                               decoration: TextDecoration.underline,
                               decorationThickness: 2.0,
                               decorationColor: Colors.black,
@@ -140,7 +176,7 @@ class AppConstants {
                     children: [
                       Text(
                         'Well done!',
-                        style: GoogleFonts.darkerGrotesque(
+                        style: GoogleFonts.inter(
                           fontWeight: FontWeight.bold,
                           color: AppColors.blackColor,
                           fontSize: 25.sp,
@@ -160,7 +196,7 @@ class AppConstants {
                         children: [
                           Text(
                             'Your account has been created',
-                            style: GoogleFonts.darkerGrotesque(
+                            style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               color: AppColors.blackColor,
                               fontSize: 20.sp,
@@ -169,7 +205,7 @@ class AppConstants {
                           ),
                           Text(
                             'successfully',
-                            style: GoogleFonts.darkerGrotesque(
+                            style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               color: AppColors.blackColor,
                               fontSize: 20.sp,
@@ -185,7 +221,7 @@ class AppConstants {
                         },
                         child: Text(
                           'Take me home',
-                          style: GoogleFonts.darkerGrotesque(
+                          style: GoogleFonts.inter(
                             decoration: TextDecoration.underline,
                             decorationColor: AppColors.primaryColor,
                             fontWeight: FontWeight.w800,
@@ -229,33 +265,18 @@ class AppConstants {
                   children: <Widget>[
                     SizedBox(height: 1.2.h),
                     SvgPicture.asset(
-                      AppAssets.bella2,
+                      AppAssets.bella22,
                       height: 97.h,
                       width: 164.w,
                     ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Login interrupted!',
-                          style: GoogleFonts.darkerGrotesque(
-                            decorationColor: Colors.black,
-                            color: AppColors.errorColor,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(height: 10.h),
+                    SizedBox(height: 73.21.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
                           child: Text(
                             'Cancel',
-                            style: GoogleFonts.darkerGrotesque(
+                            style: GoogleFonts.inter(
                               decoration: TextDecoration.underline,
                               decorationThickness: 2.0,
                               decorationColor: Colors.black,
@@ -277,6 +298,32 @@ class AppConstants {
           ),
         );
       },
+    );
+  }
+
+  /// Network Image
+  static Widget showNetworkImage({
+    required String image,
+    required double height,
+    required double width,
+    required BoxFit fit,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(0.r),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.r),
+        ),
+        child: Image.network(
+          image,
+          fit: fit,
+          errorBuilder: (context, error, stackTrace) {
+            return SvgPicture.asset(AppAssets.errorIcon);
+          },
+          height: height,
+          width: width,
+        ),
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +87,14 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                   .checkVerificationCodeModel
                   .verificationStatus ==
               'pending') {
-            SnackBar snackBar = const SnackBar(
-                content: Text('Check OTB Again Something Wrong'));
+            SnackBar snackBar = SnackBar(
+              content: Text(
+                'Check OTB Again Something Wrong',
+                style: AppFonts.bodyDefault.copyWith(
+                  color: AppColors.error2Color,
+                ),
+              ),
+            );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         } else if (state is CheckVerificationCodeErrorState) {
@@ -118,43 +125,28 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                   // SizedBox(height: 13.h),
                   Text(
                     'Verify your mobile number',
-                    style: GoogleFonts.darkerGrotesque(
-                      height: 1.h,
-                      color: AppColors.black3Color,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28.sp,
-                    ),
+                    style: AppFonts.titleSubsection,
                   ),
                   SizedBox(height: 20.h),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    padding: EdgeInsets.symmetric(horizontal: 76.w),
                     child: Column(
                       children: [
                         Text(
-                          'Enter 6 digit code sent to mobile',
-                          style: GoogleFonts.darkerGrotesque(
-                            color: AppColors.black3Color,
-                            // fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                            height: 0.5.h,
-                          ),
-                        ),
-                        Text(
-                          '+20${MyCache.getString(key: CacheKeys.mobile_number)}',
-                          style: GoogleFonts.darkerGrotesque(
-                            color: AppColors.black3Color,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.sp,
+                          'Enter 6 digit code sent to mobile +20${MyCache.getString(key: CacheKeys.mobile_number)}',
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
+                          style: AppFonts.bodyLarge.copyWith(
                             height: 1.6.h,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 42.h),
+                  SizedBox(height: 32.h),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
+                    width: 270.w,
+                    height: 40.h,
                     child: Pinput(
                       androidSmsAutofillMethod:
                           AndroidSmsAutofillMethod.smsUserConsentApi,
@@ -165,12 +157,7 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                       focusedPinTheme: PinTheme(
                         height: 40.h,
                         width: 40.w,
-                        textStyle: GoogleFonts.darkerGrotesque(
-                          fontSize: 30.sp,
-                          height: 1.h,
-                          color: AppColors.black2Color,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        textStyle: AppFonts.textInPip,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.sp),
                           color: AppColors.whiteColor,
@@ -178,18 +165,12 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             width: 1.w,
                             color: AppColors.primaryColor,
                           ),
-                          // ),
                         ),
                       ),
                       defaultPinTheme: PinTheme(
                         height: 40.h,
                         width: 40.w,
-                        textStyle: GoogleFonts.darkerGrotesque(
-                          fontSize: 30.sp,
-                          height: 1.h,
-                          color: AppColors.black2Color,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        textStyle: AppFonts.textInPip,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.sp),
                           color: AppColors.whiteColor,
@@ -200,25 +181,25 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                           // ),
                         ),
                       ),
-                      errorPinTheme: PinTheme(
-                        height: 40.h,
-                        width: 40.w,
-                        textStyle: GoogleFonts.darkerGrotesque(
-                          fontSize: 30.sp,
-                          height: 1.h,
-                          color: AppColors.black2Color,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.sp),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            width: 1.w,
-                            color: AppColors.errorColor,
-                          ),
-                          // ),
-                        ),
-                      ),
+                      // errorPinTheme: PinTheme(
+                      //   height: 40.h,
+                      //   width: 40.w,
+                      //   textStyle: GoogleFonts.inter(
+                      //     fontSize: 30.sp,
+                      //     height: 1.h,
+                      //     color: AppColors.black2Color,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(10.sp),
+                      //     color: AppColors.whiteColor,
+                      //     border: Border.all(
+                      //       width: 1.w,
+                      //       color: AppColors.errorColor,
+                      //     ),
+                      //     // ),
+                      //   ),
+                      // ),
                       pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -227,12 +208,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                         return null;
                       },
                       onCompleted: (value) async {
-                        print('Personal Number is $personalNumber');
-                        print('First Name is $firstName');
-                        print('Last Name is $lastName');
-                        print('Email is $email');
-                        print('Phone Number is $phoneNumber');
-                        // sleep(Duration(milliseconds: 1500));
                         if (verifyKey.currentState!.validate()) {
                           BlocProvider.of<AuthCubit>(context).createFun(
                             social_security_number: personalNumber,
@@ -241,12 +216,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             full_name: fullName,
                             phone_number: phoneNumber,
                             surname: lastName,
-                            // personalNumber,
-                            // fullName,
-                            // firstName,
-                            // lastName,
-                            // email,
-                            // phoneNumber,
                           );
                           setState(() {
                             showErrorText = true;
@@ -256,37 +225,29 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             showErrorText = false;
                           });
                         }
-
-                        // BlocProvider.of<AuthCubit>(context)
-                        //     .checkVerificationCode(
-                        //   widget.pinController.toString(),
-                        //   MyCache.getString(
-                        //     key: CacheKeys.mobile_number,
-                        //   ),
-                        //
-                        // Navigator.pushReplacementNamed(context, 'layout-screen');
-                        // );
+                        Navigator.pushReplacementNamed(
+                            context, 'well-done-screen');
                       },
                     ),
                   ),
-                  showErrorText == false
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Oops! the code is wrong/expired \n Please verify your code again.',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.darkerGrotesque(
-                                fontSize: 15.sp,
-                                color: AppColors.errorColor,
-                                height: 1,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container(),
-                  SizedBox(height: 124.h),
+                  // showErrorText == false
+                  //     ? Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Text(
+                  //             'Oops! the code is wrong/expired \n Please verify your code again.',
+                  //             textAlign: TextAlign.center,
+                  //             style: GoogleFonts.inter(
+                  //               fontSize: 15.sp,
+                  //               color: AppColors.errorColor,
+                  //               height: 1,
+                  //               fontWeight: FontWeight.w600,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       )
+                  //     : Container(),
+                  SizedBox(height: 118.h),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 50,
                     child: Row(
@@ -307,16 +268,21 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                                 ? 'Resend code ($_counter) '
                                 : 'Resend code ',
                             overflow: TextOverflow.clip,
-                            style: GoogleFonts.darkerGrotesque(
-                              height: 1.h,
-                              fontWeight: FontWeight.bold,
-                              decoration: _isButtonDisabled
-                                  ? TextDecoration.none
-                                  : TextDecoration.underline,
+                            // style: GoogleFonts.inter(
+                            //   height: 1.h,
+                            //   fontWeight: FontWeight.bold,
+                            //   decoration: _isButtonDisabled
+                            //       ? TextDecoration.none
+                            //       : TextDecoration.underline,
+                            //   color: _isButtonDisabled
+                            //       ? AppColors.black3Color
+                            //       : AppColors.primaryColor,
+                            //   fontSize: 18.sp,
+                            // ),
+                            style: AppFonts.bodyLarge.copyWith(
                               color: _isButtonDisabled
-                                  ? AppColors.black3Color
+                                  ? AppColors.blackColor
                                   : AppColors.primaryColor,
-                              fontSize: 18.sp,
                             ),
                           ),
                         ),
@@ -324,11 +290,8 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                           _isButtonDisabled
                               ? 'if uou didn\'t receive a'
                               : 'if uou didn\'t receive a verification',
-                          style: GoogleFonts.darkerGrotesque(
-                            height: 1.h,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.black3Color,
-                            fontSize: 18.sp,
+                          style: AppFonts.bodyLarge.copyWith(
+                            color: AppColors.blackColor,
                           ),
                         ),
                       ],
@@ -339,20 +302,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // BlocProvider.of<AuthCubit>(context)
-                          //     .createVerificationCode(
-                          //   MyCache.getString(key: CacheKeys.mobile_number),
-                          // );
-                          // BlocProvider.of<AuthCubit>(context).createFun(
-                          //   MyCache.getString(key: CacheKeys.personalNumber),
-                          //   MyCache.getString(key: CacheKeys.fullName),
-                          //   MyCache.getString(key: CacheKeys.firstName),
-                          //   MyCache.getString(key: CacheKeys.lastName),
-                          //   MyCache.getString(key: CacheKeys.email),
-                          //   MyCache.getString(key: CacheKeys.phone_number),
-                          // );
-                          // Navigator.pushReplacementNamed(
-                          //     context, 'layout-screen');
                           BlocProvider.of<AuthCubit>(context).createFun(
                             social_security_number: personalNumber,
                             email: email,
@@ -360,24 +309,15 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             full_name: fullName,
                             phone_number: phoneNumber,
                             surname: lastName,
-                            // personalNumber,
-                            // fullName,
-                            // firstName,
-                            // lastName,
-                            // email,
-                            // phoneNumber,
                           );
                         },
                         child: Text(
                           _isButtonDisabled
                               ? 'verification code. Wait for the code to arrive.'
                               : 'code. Wait for the code to arrive.',
-                          style: GoogleFonts.darkerGrotesque(
-                            decorationColor: AppColors.black2Color,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.bodyLarge.copyWith(
+                            height: 1.6.h,
                             color: AppColors.blackColor,
-                            fontSize: 18.sp,
-                            // height: 1.h,
                           ),
                         ),
                       ),
@@ -391,27 +331,15 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                           )
                         : Text(
                             'Verify',
-                            style: GoogleFonts.darkerGrotesque(
-                              height: 1.h,
+                            style: AppFonts.bodyLargeBold.copyWith(
                               color: AppColors.whiteColor,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
-                            // textScaleFactor:
-                            //     ScaleSize.textScaleFactor(context),
                           ),
                     width: 353.w,
                     onTap: () {
                       if (verifyKey.currentState!.validate()) {
                         setState(() {});
-                        // BlocProvider.of<AuthCubit>(context)
-                        //     .checkVerificationCode(
-                        //   widget.pinController.toString(),
-                        //   MyCache.getString(
-                        //     key: CacheKeys.mobile_number,
-                        //   ),
-                        // );
                         if (verifyKey.currentState!.validate()) {
                           BlocProvider.of<AuthCubit>(context).createFun(
                             social_security_number: personalNumber,
@@ -420,12 +348,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             full_name: fullName,
                             phone_number: phoneNumber,
                             surname: lastName,
-                            // personalNumber,
-                            // fullName,
-                            // firstName,
-                            // lastName,
-                            // email,
-                            // phoneNumber,
                           );
                           setState(() {
                             showErrorText = true;
@@ -435,18 +357,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                             showErrorText = false;
                           });
                         }
-                        // Navigator.pushReplacementNamed(
-                        //     context, 'layout-screen');
-
-                        // AppConstants.showMyDialog2(context);
-                        // sleep(Duration(seconds: 2));
-
-                        // sleep(Duration(seconds: 1));
-                        // Navigator.pushReplacementNamed(context, 'layout-screen');
-                        // Future.delayed(Duration(seconds: 2), () {
-                        //   Navigator.of(context).pop();
-                        // });
-                        // Navigator.pushNamed(context, 'send-otb-screen');
                       }
                     },
                   ),
@@ -488,7 +398,7 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,
-          style: GoogleFonts.darkerGrotesque(
+          style: GoogleFonts.inter(
             height: 0.1.h,
             fontWeight: FontWeight.w800,
             fontSize: 18.sp,

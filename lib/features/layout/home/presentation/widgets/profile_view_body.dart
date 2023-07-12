@@ -1,6 +1,7 @@
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,183 +15,189 @@ class ProfileViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 75.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Row(
+            children: [
+              Text(
+                'Account',
+                style: AppFonts.titleScreen,
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 29.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(AppAssets.myProfile),
-            SizedBox(width: 13.w),
-            SvgPicture.asset(AppAssets.edit),
+            Image.asset(
+              AppAssets.myProfile,
+              height: 72.h,
+              width: 72.w,
+            ),
+            SizedBox(width: 8.w),
+            SvgPicture.asset(
+              AppAssets.edit,
+              width: 27.w,
+              height: 39.h,
+            ),
           ],
         ),
-        SizedBox(height: 18.h),
+        SizedBox(height: 16.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Mark AL-Jumaily',
-              style: GoogleFonts.darkerGrotesque(
-                fontSize: 26.sp,
-                height: 1.h,
-                fontWeight: FontWeight.bold,
-                color: AppColors.black3Color,
-              ),
+              style: AppFonts.titleBody,
             ),
           ],
         ),
-        SizedBox(height: 43.h),
+        SizedBox(height: 30.h),
         Expanded(
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 43.h),
-            decoration: const BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+          child: Column(
+            children: [
+              const VerificationAnEmailWidget(),
+              SizedBox(height: 25.h),
+              Padding(
+                padding: EdgeInsets.only(left: 26.h),
+                child: Row(
+                  children: [
+                    Text(
+                      'Details',
+                      style: AppFonts.bodyDefault,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child: Column(
-              children: [
-                const VerificationAnEmailWidget(),
-                SizedBox(height: 10.h),
-                GestureDetector(
-                  onTap: () {
-                    navigateToMyId(context);
-                  },
-                  child: ListTile(
-                    leading: Container(
-                      padding: EdgeInsets.all(10.sp),
-                      decoration: BoxDecoration(
-                        color: AppColors.grey4Color,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: SvgPicture.asset(AppAssets.qrCode),
-                    ),
-                    title: Text(
-                      'My ID',
-                      style: GoogleFonts.darkerGrotesque(
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.bold,
-                        height: 1.h,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    trailing: SvgPicture.asset(
-                      AppAssets.arrow,
-                      height: 20.h,
-                      width: 20.w,
-                    ),
-                  ),
+              SizedBox(height: 20.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Divider(
+                  height: 18.h,
+                  color: AppColors.grey5Color,
+                  thickness: 1,
                 ),
-                SizedBox(height: 0.6.h),
-                ListTile(
+              ),
+              GestureDetector(
+                onTap: () {
+                  navigateToMyId(context);
+                },
+                child: ListTile(
                   leading: Container(
-                    padding: EdgeInsets.all(10.sp),
+                    padding: EdgeInsets.all(10.5.sp),
                     decoration: BoxDecoration(
-                      color: AppColors.grey4Color,
-                      borderRadius: BorderRadius.circular(12.r),
+                      color: AppColors.grey8Color,
+                      borderRadius: BorderRadius.circular(300.r),
                     ),
-                    child: SvgPicture.asset(AppAssets.file),
+                    child: SvgPicture.asset(AppAssets.my_cards),
                   ),
                   title: Text(
-                    'Receipts',
-                    style: GoogleFonts.darkerGrotesque(
-                      color: AppColors.black3Color,
-                      fontWeight: FontWeight.bold,
-                      height: 1.h,
-                      fontSize: 18.sp,
-                    ),
+                    'My Cards',
+                    style: AppFonts.bodyLargeBold,
                   ),
                   trailing: SvgPicture.asset(
                     AppAssets.arrow,
-                    height: 17.sp,
+                    height: 25.h,
+                    width: 25.w,
                   ),
                 ),
-                SizedBox(height: 0.6.h),
-                ListTile(
-                  leading: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      color: AppColors.grey4Color,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: SvgPicture.asset(AppAssets.settings),
+              ),
+              SizedBox(height: 0.6.h),
+              ListTile(
+                leading: Container(
+                  padding: EdgeInsets.all(10.5.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey8Color,
+                    borderRadius: BorderRadius.circular(300.r),
                   ),
-                  title: Text(
-                    'Settings',
-                    style: GoogleFonts.darkerGrotesque(
-                      color: AppColors.black3Color,
-                      fontWeight: FontWeight.bold,
-                      height: 1.h,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                  trailing: SvgPicture.asset(
-                    AppAssets.arrow,
-                    height: 20.h,
-                    width: 20.w,
-                  ),
+                  child: SvgPicture.asset(AppAssets.file),
                 ),
-                SizedBox(height: 0.6.h),
-                ListTile(
-                  leading: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      color: AppColors.grey4Color,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: SvgPicture.asset(AppAssets.infoCircle4),
-                  ),
-                  title: Text(
-                    'Information',
-                    style: GoogleFonts.darkerGrotesque(
-                      color: AppColors.black3Color,
-                      fontWeight: FontWeight.bold,
-                      height: 1.h,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                  trailing: SvgPicture.asset(
-                    AppAssets.arrow,
-                    height: 17.sp,
-                  ),
+                title: Text(
+                  'Receipts',
+                  style: AppFonts.bodyLargeBold,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: Divider(
-                    height: 18.h,
-                    color: AppColors.grey5Color,
-                    thickness: 1,
-                  ),
+                trailing: SvgPicture.asset(
+                  AppAssets.arrow,
+                  height: 25.h,
+                  width: 25.w,
                 ),
-                // SizedBox(height: 0.6.h),
-                ListTile(
-                  leading: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      color: AppColors.grey4Color,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: SvgPicture.asset(AppAssets.logoutIcon),
+              ),
+              SizedBox(height: 0.6.h),
+              ListTile(
+                leading: Container(
+                  padding: EdgeInsets.all(10.5.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey8Color,
+                    borderRadius: BorderRadius.circular(300.r),
                   ),
-                  title: Text(
-                    'Log out',
-                    style: GoogleFonts.darkerGrotesque(
-                      color: AppColors.black3Color,
-                      fontWeight: FontWeight.bold,
-                      height: 1.h,
-                      fontSize: 18.sp,
-                    ),
-                  ),
-                  trailing: SvgPicture.asset(
-                    AppAssets.arrow,
-                    height: 20.h,
-                    width: 20.w,
-                  ),
+                  child: SvgPicture.asset(AppAssets.settings),
                 ),
-              ],
-            ),
+                title: Text(
+                  'Settings',
+                  // style: GoogleFonts.darkerGrotesque(
+                  //   color: AppColors.black3Color,
+                  //   fontWeight: FontWeight.bold,
+                  //   height: 1.h,
+                  //   fontSize: 18.sp,
+                  // ),
+                  style: AppFonts.bodyLargeBold,
+                ),
+                trailing: SvgPicture.asset(
+                  AppAssets.arrow,
+                  height: 25.h,
+                  width: 25.w,
+                ),
+              ),
+              SizedBox(height: 0.6.h),
+              ListTile(
+                leading: Container(
+                  padding: EdgeInsets.all(10.5.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey8Color,
+                    borderRadius: BorderRadius.circular(300.r),
+                  ),
+                  child: SvgPicture.asset(AppAssets.infoCircle4),
+                ),
+                title: Text(
+                  'Information',
+                  style: AppFonts.bodyLargeBold,
+                ),
+                trailing: SvgPicture.asset(
+                  AppAssets.arrow,
+                  height: 25.sp,
+                  width: 25.sp,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Divider(
+                  height: 18.h,
+                  color: AppColors.grey5Color,
+                  thickness: 1,
+                ),
+              ),
+              // SizedBox(height: 0.6.h),
+              ListTile(
+                leading: Container(
+                  padding: EdgeInsets.all(10.5.sp),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey8Color,
+                    borderRadius: BorderRadius.circular(300.r),
+                  ),
+                  child: SvgPicture.asset(AppAssets.logoutIcon),
+                ),
+                title: Text(
+                  'Log out',
+                  style: AppFonts.bodyLargeBold,
+                ),
+                trailing: SvgPicture.asset(
+                  AppAssets.arrow,
+                  height: 25.h,
+                  width: 25.w,
+                ),
+              ),
+            ],
           ),
         ),
       ],

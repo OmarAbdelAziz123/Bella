@@ -24,31 +24,31 @@ class ProfileView extends StatelessWidget {
           },
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 20.w,
-              vertical: 15.5.h,
+              horizontal: 10.w,
+              vertical: 10.h,
             ),
             child: SvgPicture.asset(
-              AppAssets.arrowBack,
-              width: 15.5.w,
-              height: 10.h,
+              AppAssets.arrowbackblack,
+              // width: 43.w,
+              // height: 43.h,
             ),
           ),
         ),
-        title: Text(
-          'Profile',
-          style: GoogleFonts.darkerGrotesque(
-            height: 1.h,
-            color: AppColors.black3Color,
-            fontWeight: FontWeight.bold,
-            fontSize: 22.sp,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(AppAssets.infoCircle2),
-          ),
-        ],
+        // title: Text(
+        //   'Profile',
+        //   style: GoogleFonts.darkerGrotesque(
+        //     height: 1.h,
+        //     color: AppColors.black3Color,
+        //     fontWeight: FontWeight.bold,
+        //     fontSize: 22.sp,
+        //   ),
+        // ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: SvgPicture.asset(AppAssets.infoCircle2),
+        //   ),
+        // ],
       ),
       body: const ProfileViewBody(),
     );

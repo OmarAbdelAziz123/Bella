@@ -41,7 +41,7 @@ class OffersViewBody extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20.h),
-          const SearchBarWidget(hintText: 'Search for brands'),
+          SearchBarWidget(hintText: 'Search for brands'),
           SizedBox(height: 23.h),
           SizedBox(
             height: 111.h,

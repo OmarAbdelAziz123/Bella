@@ -1,5 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
@@ -91,44 +92,29 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(height: 20.h),
                     Text(
                       'Welcome ${MyCache.getString(key: CacheKeys.firstName)}!',
-                      style: GoogleFonts.darkerGrotesque(
-                        height: 0.8.h,
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28.sp,
+                      style: AppFonts.titleSubsection,
+                    ),
+                    SizedBox(height: 14.h),
+                    SizedBox(
+                      width: 241.w,
+                      child: Text(
+                        'Fill in your mobile number and email to get started!',
+                        textAlign: TextAlign.center,
+                        style: AppFonts.bodyLarge.copyWith(
+                          fontSize: 16.sp,
+                          height: 1.6.h,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 22.h),
-                    Text(
-                      'Fill in your mobile number and email',
-                      style: GoogleFonts.darkerGrotesque(
-                        height: 0.5.h,
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    // SizedBox(height: 4.h),
-                    Text(
-                      'to get started!',
-                      style: GoogleFonts.darkerGrotesque(
-                        height: 1.1.h,
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    SizedBox(height: 38.h),
+                    SizedBox(height: 24.h),
                     Row(
                       children: [
                         Text(
                           'Mobile Number',
-                          style: GoogleFonts.darkerGrotesque(
-                            height: 1.h,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+                          style: AppFonts.bodyDefault.copyWith(
                             color: AppColors.black2Color,
                           ),
                         ),
@@ -157,11 +143,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                         }
                         return null;
                       },
-                      style: GoogleFonts.darkerGrotesque(
-                        fontSize: 20.sp,
-                        height: 1.h,
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.linkDefault.copyWith(
+                        height: 1.5.h,
+                        fontSize: 15.sp,
                       ),
                       decoration: InputDecoration(
                         suffixIcon: Column(
@@ -169,11 +153,8 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                           children: [
                             Text(
                               '${mobileController.text.length}/$maxLength',
-                              style: GoogleFonts.darkerGrotesque(
-                                fontWeight: FontWeight.w500,
-                                height: 1.h,
+                              style: AppFonts.bodyDefault.copyWith(
                                 color: AppColors.black3Color,
-                                fontSize: 20.sp,
                               ),
                             ),
                           ],
@@ -188,11 +169,8 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                           children: [
                             Text(
                               '+20',
-                              style: GoogleFonts.darkerGrotesque(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20.sp,
-                                height: 1.h,
-                                color: Colors.grey[500],
+                              style: AppFonts.bodyDefault.copyWith(
+                                color: AppColors.black2Color,
                               ),
                             ),
                           ],
@@ -232,10 +210,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       children: [
                         Text(
                           'Email',
-                          style: GoogleFonts.darkerGrotesque(
-                            height: 1.h,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
+                          style: AppFonts.bodyDefault.copyWith(
                             color: AppColors.black2Color,
                           ),
                         ),
@@ -255,11 +230,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                         }
                         return null;
                       },
-                      style: GoogleFonts.darkerGrotesque(
-                        fontSize: 20.sp,
-                        height: 1.h,
-                        color: AppColors.black3Color,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.linkDefault.copyWith(
+                        height: 1.5.h,
+                        fontSize: 15.sp,
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
@@ -269,7 +242,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                         ),
                         filled: true,
                         fillColor: AppColors.whiteColor.withOpacity(0.9),
-                        // hintText: 'Ex: example@gmail.com',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.sp),
                           borderSide: BorderSide(
@@ -318,11 +290,8 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                         : CustomButton(
                             widget: Text(
                               'Next',
-                              style: GoogleFonts.darkerGrotesque(
-                                height: 1.h,
+                              style: AppFonts.bodyLargeBold.copyWith(
                                 color: AppColors.whiteColor,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
                             ),
