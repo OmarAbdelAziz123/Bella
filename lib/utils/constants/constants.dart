@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
@@ -299,6 +300,39 @@ class AppConstants {
         );
       },
     );
+  }
+
+  static void showFlushBar(BuildContext context, String message) async {
+    return Flushbar(
+      message: message,
+      messageSize: 16.sp,
+      messageColor: AppColors.whiteColor,
+      borderRadius: BorderRadius.circular(
+        12.r,
+      ),
+      duration: const Duration(seconds: 3),
+      margin: EdgeInsets.only(
+        bottom: 16.h,
+        left: 15.w,
+        right: 15.w,
+      ),
+      isDismissible: false,
+      animationDuration: const Duration(milliseconds: 300),
+      icon: Icon(
+        Icons.check_circle_outline,
+        color: AppColors.whiteColor,
+        size: 22.sp,
+      ),
+      shouldIconPulse: false,
+      backgroundColor: AppColors.primaryColor,
+      boxShadows: const [
+        BoxShadow(
+          color: Colors.white38,
+          offset: const Offset(0.0, 2.0),
+          blurRadius: 3.0,
+        ),
+      ],
+    ).show(context);
   }
 
   /// Network Image

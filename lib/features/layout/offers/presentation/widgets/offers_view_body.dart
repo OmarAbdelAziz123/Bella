@@ -1,5 +1,8 @@
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
+import 'package:bella/features/layout/offers/presentation/offers_view.dart';
+import 'package:bella/features/layout/offers/presentation/template.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +14,40 @@ class OffersViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void navigateToTemplate({
+      required Color bgColor,
+      required String companyLogo,
+      required Widget widgetInCenter,
+      required String precentageNumber,
+      required String title,
+      required void Function()? onCloseTap,
+    }) {
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 250),
+          pageBuilder: (_, __, ___) => Template(
+            bgColor: bgColor,
+            companyLogo: companyLogo,
+            widgetInCenter: widgetInCenter,
+            precentageNumber: precentageNumber,
+            title: title,
+            onCloseTap: onCloseTap,
+          ),
+          transitionsBuilder:
+              (_, Animation<double> animation, __, Widget child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            );
+          },
+        ),
+      );
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -75,12 +112,7 @@ class OffersViewBody extends StatelessWidget {
                     // SizedBox(height: .h),
                     Text(
                       'Starbucks',
-                      style: GoogleFonts.darkerGrotesque(
-                        height: 1.h,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blackColor,
-                      ),
+                      style: AppFonts.capsolButton,
                     ),
                   ],
                 );
@@ -96,18 +128,13 @@ class OffersViewBody extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   AppAssets.gift,
-                  height: 16.67.h,
-                  width: 16.67.w,
+                  height: 20.h,
+                  width: 20.w,
                 ),
                 SizedBox(width: 8.17.w),
                 Text(
                   'Gåva (1)',
-                  style: GoogleFonts.darkerGrotesque(
-                    height: 1.h,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black3Color,
-                  ),
+                  style: AppFonts.titleBody,
                 )
               ],
             ),
@@ -119,79 +146,107 @@ class OffersViewBody extends StatelessWidget {
             child: ListView.builder(
               padding: EdgeInsets.only(left: 12.w),
               scrollDirection: Axis.horizontal,
-              itemCount: 4,
+              itemCount: 1,
               itemBuilder: (context, index) {
-                return Container(
-                  width: 280.w,
-                  height: 150.h,
-                  margin: EdgeInsets.only(right: 12.w),
-                  padding: EdgeInsets.only(
-                    top: 18.h,
-                    left: 16.w,
-                    bottom: 15.h,
-                    right: 23.18.w,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.r),
-                    color: AppColors.black3Color,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '400:-',
-                            style: GoogleFonts.darkerGrotesque(
-                              color: AppColors.mintGreenColor,
-                              height: 1.h,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 35.sp,
-                            ),
-                          ),
-                          SvgPicture.asset(AppAssets.present),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
+                return GestureDetector(
+                  onTap: () {
+                    navigateToTemplate(
+                      bgColor: AppColors.new2Color,
+                      companyLogo: AppAssets.starbucks,
+                      widgetInCenter: Padding(
+                        padding: EdgeInsets.only(bottom: 26.h),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
                             children: [
-                              Image.asset(AppAssets.image4,
-                                  height: 35.h, width: 35.w),
-                              SizedBox(width: 10.w),
-                              Text(
-                                'SEPHORA',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.bgColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp,
-                                ),
+                              Image.asset(
+                                AppAssets.barcode,
+                                height: 124.h,
+                                width: 126.w,
                               ),
+                              SizedBox(height: 5.h),
+                              Text(
+                                'Förfalle Om 2 dagar',
+                                style: AppFonts.bodySmallBold,
+                              )
                             ],
                           ),
-                          Container(
-                            width: 24,
-                            height: 24.h,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                              vertical: 3.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.black5Color,
-                              borderRadius: BorderRadius.circular(78.82.r),
-                            ),
-                            child: SvgPicture.asset(
-                              AppAssets.arrow,
-                              color: AppColors.mintGreenColor,
-                              height: 18.h,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ],
+                      precentageNumber: '200:-',
+                      title: 'På varfritt meny',
+                      onCloseTap: () {
+                        navigatePop(context);
+                      },
+                    );
+                  },
+                  child: Container(
+                    width: 280.w,
+                    height: 150.h,
+                    // margin: EdgeInsets.only(right: 12.w),
+                    padding: EdgeInsets.only(
+                      top: 18.h,
+                      left: 16.w,
+                      bottom: 14.h,
+                      right: 20.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.r),
+                      // color: AppColors.black3Color,
+                      image: const DecorationImage(
+                        image: AssetImage(AppAssets.gava),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '400 kr',
+                              style: AppFonts.cardPrice.copyWith(
+                                color: AppColors.newColor,
+                              ),
+                            ),
+                            Container(
+                              width: 24,
+                              height: 24.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.w,
+                                vertical: 3.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor.withOpacity(0.08),
+                                borderRadius: BorderRadius.circular(78.82.r),
+                              ),
+                              child: SvgPicture.asset(
+                                AppAssets.arrow,
+                                color: AppColors.newColor,
+                                height: 18.h,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'SEPHORA',
+                              style: AppFonts.bodyLargeBold.copyWith(
+                                color: AppColors.newColor,
+                              ),
+                            ),
+                            Image.asset(
+                              AppAssets.present2,
+                              width: 92.w,
+                              height: 86.h,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -205,23 +260,18 @@ class OffersViewBody extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   AppAssets.personalOffers,
-                  height: 16.67.h,
-                  width: 16.67.w,
+                  height: 18.h,
+                  width: 18.w,
                 ),
                 SizedBox(width: 8.17.w),
                 Text(
                   'Bonus Checks (3)',
-                  style: GoogleFonts.darkerGrotesque(
-                    height: 1.h,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black3Color,
-                  ),
+                  style: AppFonts.titleBody,
                 )
               ],
             ),
           ),
-          SizedBox(height: 9.81.h),
+          SizedBox(height: 16.h),
           SizedBox(
             height: 150.h,
             width: 379.w,
@@ -230,119 +280,121 @@ class OffersViewBody extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: 4,
               itemBuilder: (context, index) {
-                return Container(
-                  width: 280.w,
-                  height: 150.h,
-                  margin: EdgeInsets.only(right: 12.w),
-                  padding: EdgeInsets.only(
-                    top: 18.h,
-                    left: 16.w,
-                    bottom: 15.h,
-                    right: 23.18.w,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.r),
-                    color: AppColors.mintGreen3Color,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '20:-',
-                            style: GoogleFonts.darkerGrotesque(
-                              color: AppColors.blackColor,
-                              height: 1.h,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 35.sp,
+                return GestureDetector(
+                  onTap: () {
+                    navigateToTemplate(
+                      bgColor: AppColors.newColor,
+                      companyLogo: AppAssets.starbucks,
+                      widgetInCenter: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.barcode2,
+                              height: 69.h,
+                              width: 269.w,
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Förfaller',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              Text(
-                                'Om 2 dagar',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            SizedBox(height: 49.h),
+                            Text(
+                              'Förfalle Om 2 dagar',
+                              style: AppFonts.bodySmallBold,
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Köp 2 få 20:- rabatt',
-                            style: GoogleFonts.darkerGrotesque(
-                              color: AppColors.blackColor,
-                              height: 1.h,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(AppAssets.kintaky,
-                                  height: 35.h, width: 35.w),
-                              SizedBox(width: 10.w),
-                              Text(
-                                'KFC',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.13.sp,
-                                ),
+                      precentageNumber: '50%',
+                      title: 'På varfritt meny',
+                      onCloseTap: () {
+                        navigatePop(context);
+                      },
+                    );
+                  },
+                  child: Container(
+                    width: 280.w,
+                    height: 150.h,
+                    margin: EdgeInsets.only(right: 12.w),
+                    padding: EdgeInsets.only(
+                      top: 18.h,
+                      left: 16.w,
+                      bottom: 15.h,
+                      right: 23.18.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.r),
+                      color: AppColors.newColor,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '20 kr',
+                              style: AppFonts.cardPrice.copyWith(
+                                color: AppColors.black3Color,
                               ),
-                            ],
-                          ),
-                          Container(
-                            width: 24,
-                            height: 24.h,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                              vertical: 3.h,
                             ),
-                            decoration: BoxDecoration(
-                              color: AppColors.mintGreen4Color,
-                              borderRadius: BorderRadius.circular(78.82.r),
+                            Container(
+                              width: 24,
+                              height: 24.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.w,
+                                vertical: 3.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor.withOpacity(0.20),
+                                borderRadius: BorderRadius.circular(78.82.r),
+                              ),
+                              child: SvgPicture.asset(
+                                AppAssets.arrow,
+                                color: AppColors.blackColor,
+                                height: 18.h,
+                              ),
                             ),
-                            child: SvgPicture.asset(
-                              AppAssets.arrow,
-                              color: AppColors.blackColor,
-                              height: 18.h,
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Köp 2 få 20:- rabatt',
+                              style: AppFonts.productName,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        Row(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Apotea.se',
+                              style: AppFonts.bodyLargeBold.copyWith(
+                                color: AppColors.grey13Color,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Förfaller',
+                                  style: AppFonts.date,
+                                ),
+                                Text(
+                                  'Om 2 dagar',
+                                  style: AppFonts.date,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
             ),
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: 24.19.h),
           Padding(
             padding: EdgeInsets.only(left: 20.w),
             child: Row(
@@ -350,23 +402,18 @@ class OffersViewBody extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   AppAssets.discount,
-                  height: 16.67.h,
-                  width: 16.67.w,
+                  height: 18.h,
+                  width: 18.w,
                 ),
                 SizedBox(width: 8.17.w),
                 Text(
                   'Discount Codes (3)',
-                  style: GoogleFonts.darkerGrotesque(
-                    height: 1.h,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black3Color,
-                  ),
-                )
+                  style: AppFonts.titleBody,
+                ),
               ],
             ),
           ),
-          SizedBox(height: 9.81.h),
+          SizedBox(height: 10.h),
           SizedBox(
             height: 150.h,
             width: 379.w,
@@ -375,116 +422,113 @@ class OffersViewBody extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: 4,
               itemBuilder: (context, index) {
-                return Container(
-                  width: 280.w,
-                  height: 150.h,
-                  margin: EdgeInsets.only(right: 12.w),
-                  padding: EdgeInsets.only(
-                    top: 18.h,
-                    left: 16.w,
-                    bottom: 15.h,
-                    right: 23.18.w,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.r),
-                    color: AppColors.mintGreen2Color,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '20:-',
-                            style: GoogleFonts.darkerGrotesque(
-                              color: AppColors.blackColor,
-                              height: 1.h,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 35.sp,
+                return GestureDetector(
+                  onTap: () {
+                    navigateToTemplate(
+                      bgColor: AppColors.mintGreen2Color,
+                      companyLogo: AppAssets.starbucks,
+                      widgetInCenter: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.copy,
+                              height: 69.h,
+                              width: 269.w,
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Expiry date',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                              Text(
-                                '30-04-2023',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            SizedBox(height: 49.h),
+                            Text(
+                              'Förfalle Om 2 dagar',
+                              style: AppFonts.bodySmallBold,
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Köp 2 få 20:- rabatt',
-                            style: GoogleFonts.darkerGrotesque(
-                              color: AppColors.blackColor,
-                              height: 1.h,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.sp,
+                      precentageNumber: '50%',
+                      title: 'På varfritt meny',
+                      onCloseTap: () {
+                        navigatePop(context);
+                      },
+                    );
+                  },
+                  child: Container(
+                    width: 280.w,
+                    height: 150.h,
+                    margin: EdgeInsets.only(right: 12.w),
+                    padding: EdgeInsets.only(
+                      top: 18.h,
+                      left: 16.w,
+                      bottom: 15.h,
+                      right: 23.18.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.r),
+                      color: AppColors.mintGreen2Color,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '50%',
+                              style: AppFonts.cardPrice
+                                  .copyWith(color: AppColors.black3Color),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                AppAssets.mac,
-                                height: 35.h,
-                                width: 35.w,
+                            Container(
+                              width: 24,
+                              height: 24.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.w,
+                                vertical: 3.h,
                               ),
-                              SizedBox(width: 10.w),
-                              Text(
-                                'Mc Donalds',
-                                style: GoogleFonts.darkerGrotesque(
-                                  color: AppColors.blackColor,
-                                  height: 1.h,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.13.sp,
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor.withOpacity(0.20),
+                                borderRadius: BorderRadius.circular(69.r),
+                              ),
+                              child: SvgPicture.asset(
+                                AppAssets.arrow,
+                                color: AppColors.blackColor,
+                                height: 8.h,
+                                width: 4.w,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Köp 2 få 20:- rabatt',
+                              style: AppFonts.productName,
+                            ),
+                          ],
+                        ),
+                        Row(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Mc Donald\'s',
+                              style: AppFonts.bodyLargeBold,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Expiry date',
+                                  style: AppFonts.date,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            width: 24,
-                            height: 24.h,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                              vertical: 3.h,
+                                Text(
+                                  '30-04-2023',
+                                  style: AppFonts.date,
+                                ),
+                              ],
                             ),
-                            decoration: BoxDecoration(
-                              color: AppColors.mintGreen5Color,
-                              borderRadius: BorderRadius.circular(78.82.r),
-                            ),
-                            child: SvgPicture.asset(
-                              AppAssets.arrow,
-                              color: AppColors.blackColor,
-                              height: 18.h,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -499,159 +543,177 @@ class OffersViewBody extends StatelessWidget {
                 SvgPicture.asset(
                   AppAssets.offersIcon,
                   color: AppColors.blackColor,
-                  height: 16.67.h,
-                  width: 16.67.w,
+                  height: 16.07.h,
+                  width: 16.07.w,
                 ),
                 SizedBox(width: 8.17.w),
                 Text(
-                  'Discount Codes (3)',
-                  style: GoogleFonts.darkerGrotesque(
-                    height: 1.h,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.black3Color,
-                  ),
+                  'Coupons (5)',
+                  style: AppFonts.titleBody,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 9.81.h),
+          SizedBox(height: 16.h),
           SizedBox(
-            height: 170.h,
+            height: 180.h,
             width: 340.w,
             child: ListView.builder(
-              // padding: EdgeInsets.only(left: 12.w),
+              padding: EdgeInsets.zero,
               scrollDirection: Axis.horizontal,
               itemCount: 5,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 170.h,
-                  width: 340.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.r),
-                    color: AppColors.whiteColor,
-                  ),
-                  child: Row(
-                    children: [
-                      Stack(
-                        children: [
-                          Image.asset(AppAssets.img_offer),
-                          Positioned(
-                            top: 5.h,
-                            left: 5.w,
-                            child: Image.asset(
-                              AppAssets.offer20,
-                              width: 54.w,
-                              height: 54.h,
+                return GestureDetector(
+                  onTap: () {
+                    navigateToTemplate(
+                      bgColor: AppColors.bgColor,
+                      companyLogo: AppAssets.starbucks,
+                      widgetInCenter: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              AppAssets.barcode,
+                              height: 124.h,
+                              width: 126.w,
                             ),
-                          ),
-                          Positioned(
-                            bottom: 12.h,
-                            left: 12.w,
-                            right: 14.w,
-                            child: Image.asset(AppAssets.frame),
-                          ),
-                        ],
+                            SizedBox(height: 5.h),
+                            Text(
+                              'Förfalle Om 2 dagar',
+                              style: AppFonts.bodySmallBold,
+                            ),
+                          ],
+                        ),
                       ),
-                      // padding: EdgeInsets.only(left: 15.h, right: 15.w, bottom: 9.h, top: 15.32.h),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 24,
-                                height: 24.h,
-                                margin:
-                                    EdgeInsets.only(left: 132.h, top: 15.32.h),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 5.w,
-                                  vertical: 3.h,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.grey5Color,
-                                  borderRadius: BorderRadius.circular(78.82.r),
-                                ),
-                                child: SvgPicture.asset(
-                                  AppAssets.arrow,
-                                  color: AppColors.blackColor,
-                                  height: 18.h,
-                                ),
+                      precentageNumber: 'Gåva',
+                      title: 'På varfritt meny',
+                      onCloseTap: () {
+                        navigatePop(context);
+                      },
+                    );
+                  },
+                  child: Container(
+                    height: 170.h,
+                    width: 360.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.r),
+                      color: AppColors.whiteColor,
+                    ),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(15.r),
+                                topLeft: Radius.circular(15.r),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 28.68.h),
-                          Padding(
-                            padding: EdgeInsets.only(left: 14.w),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Buy 2 and get 20 kr',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    fontSize: 16.sp,
-                                    height: 1.h,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+                              child: Image.asset(
+                                AppAssets.img_offer,
+                                width: 169.w,
+                                height: 170.h,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 14.w),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'discount',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    fontSize: 16.sp,
-                                    height: 1.h,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 14.h),
-                          Padding(
-                            padding: EdgeInsets.only(left: 14.w),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Förfaller om 2 dagar',
-                                  style: GoogleFonts.darkerGrotesque(
-                                    fontSize: 14.sp,
-                                    height: 1.h,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 13.h),
-                          Container(
-                            height: 28.h,
-                            width: 141.w,
-                            margin: EdgeInsets.symmetric(horizontal: 13.3.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(45.r),
-                            ),
-                            child: Center(
+                            Positioned(
+                              bottom: 18.h,
+                              left: 16.w,
                               child: Text(
-                                'Collect',
-                                style: GoogleFonts.darkerGrotesque(
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.h,
-                                  fontSize: 14.sp,
+                                'Rituals',
+                                style: AppFonts.bodyDefault.copyWith(
                                   color: AppColors.whiteColor,
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 14.w, right: 15.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 15.w, top: 15.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: 118.w,
+                                      child: Text(
+                                        '20 kr',
+                                        style: AppFonts.cardPrice.copyWith(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 24,
+                                      height: 24.h,
+                                      // margin:
+                                      //     EdgeInsets.only(top: 15.32.h, right: 15.w),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 5.w,
+                                        vertical: 3.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.blackColor
+                                            .withOpacity(0.03),
+                                        borderRadius: BorderRadius.circular(69.r),
+                                      ),
+                                      child: SvgPicture.asset(
+                                        AppAssets.arrow,
+                                        color: AppColors.blackColor,
+                                        height: 8.h,
+                                        width: 4.w,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                'Discount',
+                                style: AppFonts.date,
+                              ),
+                              SizedBox(height: 20.h),
+                              Text(
+                                'Buy 2 and get 20 kr',
+                                style: AppFonts.productName,
+                              ),
+                              Text(
+                                'discount',
+                                style: AppFonts.productName,
+                              ),
+                              SizedBox(height: 12.h),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Förfaller om 2 dagar',
+                                    style: AppFonts.date,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 12.h),
+                              Container(
+                                height: 28.h,
+                                width: 141.w,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: BorderRadius.circular(45.r),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Collect',
+                                    style: AppFonts.linkDefault.copyWith(
+                                        color: AppColors.whiteColor,
+                                        fontSize: 12.sp),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -659,6 +721,25 @@ class OffersViewBody extends StatelessWidget {
           ),
           SizedBox(height: 100.h),
         ],
+      ),
+    );
+  }
+
+  void navigatePop(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => const OffersView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
       ),
     );
   }

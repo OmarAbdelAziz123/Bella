@@ -254,15 +254,30 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                         ///
                         Row(
                           children: [
-                            ClipRRect(
-                              // borderRadius: BorderRadius.circular(40.r),
-                              child: Image.network(
-                                cubit.logo ?? AppAssets.errorIcon,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(AppAssets.errorIcon);
-                                },
-                                height: 64.h,
-                                width: 64.w,
+                            Container(
+                              width: 45.h,
+                              height: 45.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 3.r,
+                                    color: AppColors.blackColor.withOpacity(0.14),
+                                    offset: const Offset(0, 0.66),
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(40.r),
+                                child: Image.network(
+                                  cubit.logo ?? AppAssets.errorIcon,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(AppAssets.errorIcon);
+                                  },
+                                  height: 64.h,
+                                  width: 64.w,
+                                ),
                               ),
                             ),
                             SizedBox(width: 15.w),
@@ -297,7 +312,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                             interactive: true,
                             isAlwaysShown: true,
                             child: SizedBox(
-                              height: 525,
+                              height: 500.h,
                               child: NotificationListener<
                                   OverscrollIndicatorNotification>(
                                 onNotification: (overscroll) {
@@ -311,7 +326,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                                   shrinkWrap: true,
                                   itemCount: 1,
                                   separatorBuilder: (context, index) {
-                                    return SizedBox(height: 54.h);
+                                    return SizedBox(height: 20.h);
                                   },
                                   itemBuilder: (context, index) {
                                     return Column(

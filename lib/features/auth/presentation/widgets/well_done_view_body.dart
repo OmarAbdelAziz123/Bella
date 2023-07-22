@@ -5,6 +5,7 @@ import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WellDoneViewBody extends StatelessWidget {
   const WellDoneViewBody({Key? key}) : super(key: key);
@@ -16,17 +17,17 @@ class WellDoneViewBody extends StatelessWidget {
         SizedBox(height: 88.h),
         Image.asset(
           AppAssets.hand,
-          height: 382.h,
-          width: 382.w,
+          height: 286.h,
+          width: 286.w,
         ),
-        SizedBox(height: 33.h),
+        SizedBox(height: 57.h),
         SizedBox(
           width: 351.w,
           height: 158.h,
           child: Column(
             children: [
               Text(
-                'Well done!\n :)'.toUpperCase(),
+                'Well done!\n You are ready'.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Futura LT Condensed Extra Bold',
@@ -37,37 +38,32 @@ class WellDoneViewBody extends StatelessWidget {
                   height: 1.16.h,
                 ),
               ),
-              SizedBox(height: 5.h),
-              SizedBox(
-                width: 246.w,
-                child: Text(
-                  'Your account has been created \n successfully!',
-                  textAlign: TextAlign.center,
-                  style: AppFonts.bodyLarge.copyWith(
-                    height: 1.5.h,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
-        SizedBox(height: 102.h),
+        SizedBox(height: 166.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LoginButtonWidget(
-                textWidget: Text(
-                  'Log in with BankID',
-                  style: AppFonts.bodyLargeBold.copyWith(
-                    color: AppColors.whiteColor,
-                  ),
-                  textAlign: TextAlign.center,
-                  textScaleFactor: ScaleSize.textScaleFactor(context),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, 'layout-screen'),
+              child: Container(
+                width: 353.w,
+                height: 52.h,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(50.sp),
                 ),
-                width: 353.h,
-                onTap: () {
-                  Navigator.pushNamed(context, 'layout-screen');
-                }),
+                child: Center(
+                  child: Text(
+                    'Take me Home',
+                    style: AppFonts.bodyLargeBold.copyWith(
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ],

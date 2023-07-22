@@ -35,12 +35,12 @@ class FieldContainerWidget extends StatelessWidget {
         margin: EdgeInsets.only(top: 0.h, bottom: 12.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.5.h),
         decoration: BoxDecoration(
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: AppColors.white2Color,
-              spreadRadius: 0.5,
-              blurRadius: 0.5,
-              offset: Offset(0, 1),
+              color: AppColors.whiteColor.withOpacity(0.08),
+              spreadRadius: 0,
+              blurRadius: 4.r,
+              offset: const Offset(1, 2),
             ),
           ],
           color: AppColors.whiteColor,
@@ -50,13 +50,41 @@ class FieldContainerWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: onTapInLogo,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.r),
-                child: AppConstants.showNetworkImage(
-                  image: image,
-                  width: 45.h,
-                  height: 45.h,
-                  fit: BoxFit.scaleDown,
+              child: Container(
+                width: 45.h,
+                height: 45.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.r),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3.r,
+                      color: AppColors.blackColor.withOpacity(0.14),
+                      offset: const Offset(0, 0.66),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40.r),
+                  child: Container(
+                    width: 45.h,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.r),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 3.r,
+                          color: AppColors.blackColor.withOpacity(0.14),
+                          offset: const Offset(0, 0.66),
+                        ),
+                      ],
+                    ),
+                    child: AppConstants.showNetworkImage(
+                      image: image,
+                      fit: BoxFit.scaleDown,
+                      width: 45.h,
+                      height: 45.h,
+                    ),
+                  ),
                 ),
               ),
             ),

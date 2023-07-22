@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 import 'package:another_flushbar/flushbar.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({Key? key}) : super(key: key);
@@ -89,10 +88,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                 onTap: () {
                                   navigatetoProfileScreen(context);
                                 },
-                                child: SvgPicture.asset(
-                                  AppAssets.userIcon,
+                                child: Container(
+                                  width: 30.h,
                                   height: 26.h,
-                                  width: 26.w,
+                                  child: SvgPicture.asset(
+                                    AppAssets.userIcon,
+                                    height: 26.h,
+                                    width: 26.w,
+                                  ),
                                 ),
                               ),
                             ],
@@ -105,7 +108,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         SizedBox(height: 20.h),
                         SizedBox(
                           height: 35.h,
-                          child: NotificationListener<OverscrollIndicatorNotification>(
+                          child: NotificationListener<
+                              OverscrollIndicatorNotification>(
                             onNotification: (overscroll) {
                               overscroll.disallowGlow();
                               return false;
@@ -328,49 +332,34 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                   navigateToProductDetailsScreen(product);
                                 },
                                 onTapAddToCart: () async {
-                                  Flushbar(
-                                    message: 'Item added in wishlist',
-                                    messageSize: 16.sp,
-                                    messageColor: AppColors.blackColor,
-                                    borderRadius: BorderRadius.circular(
-                                      12.r,
-                                    ),
-                                    duration: const Duration(seconds: 3),
-                                    margin: EdgeInsets.only(
-                                      bottom: 16.h,
-                                      left: 15.w,
-                                      right: 15.w,
-                                    ),
-                                    isDismissible: false,
-                                    animationDuration:
-                                        const Duration(milliseconds: 300),
-                                    icon: Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.black,
-                                      size: 22.sp,
-                                    ),
-                                    shouldIconPulse: false,
-                                    backgroundColor: AppColors.primaryColor,
-                                    boxShadows: const [
-                                      BoxShadow(
-                                        color: Colors.white38,
-                                        offset: Offset(0.0, 2.0),
-                                        blurRadius: 3.0,
-                                      ),
-                                    ],
-                                  ).show(context);
-                                  await wishListCubit.addToCart(
-                                    company_logo_link: product.company_logo!,
-                                    company_display_name:
-                                        product.company_display_name!,
-                                    product_id: product.id!,
-                                    product_image_link: product.imageLinks![0],
-                                    product_title: product.title!,
-                                    regular_price:
-                                        product.pricing!.regularPrice,
-                                    sale_price: product.pricing!.salePrice,
-                                    currency: product.pricing!.currency,
-                                  );
+                                  if (wishListCubit.checkProductInWishList(
+                                      productId: product.id!)) {
+                                    await wishListCubit.deleteOneItemInCart(
+                                      id: wishListCubit.wishListModel[index]
+                                          .products![index].id!,
+                                      companyDisplayName: wishListCubit
+                                          .wishListModel[index]
+                                          .companyDisplayName!,
+                                    );
+                                    AppConstants.showFlushBar(
+                                        context, 'Item has been removed');
+                                  } else {
+                                    await wishListCubit.addToCart(
+                                      company_logo_link: product.company_logo!,
+                                      company_display_name:
+                                          product.company_display_name!,
+                                      product_id: product.id!,
+                                      product_image_link:
+                                          product.imageLinks![0],
+                                      product_title: product.title!,
+                                      regular_price:
+                                          product.pricing!.regularPrice,
+                                      sale_price: product.pricing!.salePrice,
+                                      currency: product.pricing!.currency,
+                                    );
+                                    AppConstants.showFlushBar(
+                                        context, 'Item added to wishlist');
+                                  }
                                 },
                               );
                             },

@@ -5,6 +5,7 @@ import 'package:bella/features/layout/home/presentation/widgets/terms_and_condit
 import 'package:bella/features/layout/home/presentation/widgets/widgets/field_container_widget.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
 import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
+import 'package:bella/features/layout/my_brands/presentation/my_brands/company_details_view.dart';
 import 'package:bella/features/layout/my_brands/presentation/my_brands/my_brands_view.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
@@ -41,14 +42,21 @@ class _MyBrandViewBodyState extends State<MyBrandViewBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // SizedBox(height: 10.h),
               SizedBox(height: 10.h),
               Container(
                 height: 50.h,
-                // width: 353.w,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 0.w),
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4.r,
+                      spreadRadius: 0,
+                      color: AppColors.whiteColor.withOpacity(0.08),
+                      offset: const Offset(0, 0.66),
+                    ),
+                  ],
                   borderRadius: BorderRadius.circular(100.r),
                 ),
                 child: Container(
@@ -192,54 +200,84 @@ class _MyBrandViewBodyState extends State<MyBrandViewBody> {
 
 class CustomContainerInMyBrands extends StatelessWidget {
   final String image, text;
+  void Function()? onTap;
 
-  const CustomContainerInMyBrands(
-      {Key? key, required this.image, required this.text})
-      : super(key: key);
+  CustomContainerInMyBrands({
+    Key? key,
+    required this.image,
+    required this.text,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100.h,
-      width: 110.w,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 0.5,
-            blurRadius: 0.5,
-            offset: const Offset(0, 1),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10.r),
-        color: AppColors.whiteColor,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(
-            image,
-            errorBuilder: (context, error, stackTrace) {
-              return Image.asset(
-                AppAssets.notFound,
-                height: 45.h,
-                width: 45.w,
-                fit: BoxFit.cover,
-              );
-            },
-            height: 45.h,
-            width: 45.w,
-          ),
-          SizedBox(height: 6.h),
-          Text(
-            text,
-            style: AppFonts.capsolButton.copyWith(
-              letterSpacing: -0.2,
-              height: 1.h,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 100.h,
+        width: 110.w,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.08),
+              spreadRadius: 0,
+              blurRadius: 4.r,
+              offset: const Offset(1, 2),
             ),
-          ),
-          SizedBox(height: 12.h),
-        ],
+          ],
+          borderRadius: BorderRadius.circular(10.r),
+          color: AppColors.whiteColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 45.h,
+              height: 45.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40.r),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3.r,
+                    color: AppColors.blackColor.withOpacity(0.14),
+                    offset: const Offset(0, 0.66),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(40.r),
+                child: Image.network(
+                  image,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AppAssets.notFound,
+                      height: 45.h,
+                      width: 45.w,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                  height: 45.h,
+                  width: 45.w,
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+            Container(
+              width: 96.w,
+              child: Text(
+                text,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: AppFonts.capsolButton.copyWith(
+                  letterSpacing: -0.2,
+                  height: 1.h,
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+          ],
+        ),
       ),
     );
   }
@@ -284,6 +322,10 @@ class TabBarView1 extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var list = cubit.allJoined!.companies![index];
                           return CustomContainerInMyBrands(
+                            onTap: () {
+                              print('44');
+                              navigateToCompanyDetails(context);
+                            },
                             image: list.logo.toString(),
                             text: list.displayName.toString(),
                           );
@@ -294,6 +336,25 @@ class TabBarView1 extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void navigateToCompanyDetails(BuildContext context) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => const CompanyDetailsView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
     );
   }
 }

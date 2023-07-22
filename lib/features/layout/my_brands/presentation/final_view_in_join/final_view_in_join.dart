@@ -58,8 +58,24 @@ class _FinalViewInJoinState extends State<FinalViewInJoin>
             child: Column(
               children: [
                 Image.asset(AppAssets.hand, height: 382.h, width: 382.w),
-                Image.asset(AppAssets.way_to_go, height: 158.h, width: 335.w),
-                SizedBox(height: 12.h),
+                // Image.asset(AppAssets.way_to_go, height: 158.h, width: 335.w),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 29.w),
+                  child: Text(
+                    'Way to go!'.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily:
+                      'Futura LT Condensed Extra Bold',
+                      color: AppColors.black3Color,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 50.sp,
+                      letterSpacing: -2.sp,
+                      height: 1.16.h,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 55.h),
                 Text(
                   '${cubit.display_name} has been added to your brands',
                   textAlign: TextAlign.center,

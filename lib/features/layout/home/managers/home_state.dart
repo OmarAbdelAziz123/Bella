@@ -65,10 +65,16 @@ class DeleteOneItemFromCartSuccessState extends HomeState {}
 
 class DeleteOneItemFromCartErrorState extends HomeState {}
 
-
 /// Add To Cart
 class AddCartLoadingState extends HomeState {}
 
 class AddCartSuccessState extends HomeState {}
 
 class AddCartErrorState extends HomeState {}
+
+/// Reward
+class CompanyProfileLoadingState extends HomeState {}
+
+class CompanyProfileSuccessState extends HomeState {}
+
+class CompanyProfileErrorState extends HomeState {}

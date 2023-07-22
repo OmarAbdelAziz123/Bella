@@ -55,6 +55,7 @@ import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_li
 import 'package:bella/features/layout/wish_list/presentation/widgets/custom_wish_list_when_empty.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
+import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -194,152 +195,6 @@ class _WishlistViewState extends State<WishlistView> {
                                                     15.r,
                                                   ),
                                                 ),
-                                                // child: ListTile(
-                                                //   leading: Image.network(
-                                                //     cubit
-                                                //         .wishListModel[index]
-                                                //         .products![index2]
-                                                //         .productImageLink!,
-                                                //     height: 59.h,
-                                                //     width: 59.w,
-                                                //   ),
-                                                //   title: Text(
-                                                //     cubit.wishListModel[index]
-                                                //         .companyDisplayName!,
-                                                //     style:
-                                                //         AppFonts.bodyLargeBold,
-                                                //   ),
-                                                //   subtitle: Text(
-                                                //     cubit
-                                                //         .wishListModel[index]
-                                                //         .products![index2]
-                                                //         .productTitle!,
-                                                //     style: AppFonts.bodyDefault
-                                                //         .copyWith(
-                                                //       color: AppColors
-                                                //           .grey11Color
-                                                //           .withOpacity(0.60),
-                                                //     ),
-                                                //   ),
-                                                //   trailing: GestureDetector(
-                                                //     onTap: () async {
-                                                //       Flushbar(
-                                                //         message:
-                                                //             'Item removed everywhere',
-                                                //         messageSize: 16.sp,
-                                                //         messageColor: AppColors
-                                                //             .blackColor,
-                                                //         borderRadius:
-                                                //             BorderRadius
-                                                //                 .circular(
-                                                //           12.r,
-                                                //         ),
-                                                //         duration:
-                                                //             const Duration(
-                                                //                 seconds: 3),
-                                                //         margin: EdgeInsets.only(
-                                                //           bottom: 16.h,
-                                                //           left: 15.w,
-                                                //           right: 15.w,
-                                                //         ),
-                                                //         isDismissible: false,
-                                                //         animationDuration:
-                                                //             const Duration(
-                                                //                 milliseconds:
-                                                //                     300),
-                                                //         icon: Icon(
-                                                //           Icons
-                                                //               .check_circle_outline,
-                                                //           color: Colors.black,
-                                                //           size: 22.sp,
-                                                //         ),
-                                                //         shouldIconPulse: false,
-                                                //         backgroundColor:
-                                                //             const Color(
-                                                //                 0xff88fea5),
-                                                //         boxShadows: const [
-                                                //           BoxShadow(
-                                                //             color:
-                                                //                 Colors.white38,
-                                                //             offset:
-                                                //                 const Offset(
-                                                //                     0.0, 2.0),
-                                                //             blurRadius: 3.0,
-                                                //           ),
-                                                //         ],
-                                                //         mainButton: Text(
-                                                //           'Undo',
-                                                //           style:
-                                                //               GoogleFonts.inter(
-                                                //             decoration:
-                                                //                 TextDecoration
-                                                //                     .underline,
-                                                //             color: AppColors
-                                                //                 .blackColor,
-                                                //             fontWeight:
-                                                //                 FontWeight.w600,
-                                                //             fontSize: 14.sp,
-                                                //           ),
-                                                //         ),
-                                                //       ).show(context);
-                                                //       await cubit
-                                                //           .deleteOneItemInCart(
-                                                //         id: cubit
-                                                //             .wishListModel[
-                                                //                 index]
-                                                //             .products![index2]
-                                                //             .id!,
-                                                //         companyDisplayName: cubit
-                                                //             .wishListModel[
-                                                //                 index]
-                                                //             .companyDisplayName!,
-                                                //       );
-                                                //       // cubit.getWishList();
-                                                //     },
-                                                //     child: Container(
-                                                //       width: 81.w,
-                                                //       height: 30.h,
-                                                //       decoration: BoxDecoration(
-                                                //         borderRadius:
-                                                //             BorderRadius
-                                                //                 .circular(
-                                                //                     300.r),
-                                                //         border: Border.all(
-                                                //           color: AppColors
-                                                //               .grey12Color,
-                                                //           width: 1.w,
-                                                //         ),
-                                                //       ),
-                                                //       child: Center(
-                                                //         child: Row(
-                                                //           mainAxisAlignment:
-                                                //               MainAxisAlignment
-                                                //                   .spaceEvenly,
-                                                //           children: [
-                                                //             Image.asset(
-                                                //               AppAssets.minuse,
-                                                //               color: AppColors
-                                                //                   .black3Color,
-                                                //             ),
-                                                //             Text(
-                                                //               'Remove',
-                                                //               style: GoogleFonts
-                                                //                   .inter(
-                                                //                 color: AppColors
-                                                //                     .black3Color,
-                                                //                 height: 1.h,
-                                                //                 fontSize: 12.sp,
-                                                //                 fontWeight:
-                                                //                     FontWeight
-                                                //                         .w600,
-                                                //               ),
-                                                //             ),
-                                                //           ],
-                                                //         ),
-                                                //       ),
-                                                //     ),
-                                                //   ),
-                                                // ),
                                                 child: Container(
                                                   width: 353.w,
                                                   height: 70.h,
@@ -419,57 +274,7 @@ class _WishlistViewState extends State<WishlistView> {
                                                         padding: EdgeInsets.only(right: 7.w),
                                                         child: GestureDetector(
                                                           onTap: () async {
-                                                            Flushbar(
-                                                              message:
-                                                                  'Item removed everywhere',
-                                                              messageSize: 16.sp,
-                                                              messageColor:
-                                                                  AppColors
-                                                                      .blackColor,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                12.r,
-                                                              ),
-                                                              duration:
-                                                                  const Duration(
-                                                                      seconds: 3),
-                                                              margin:
-                                                                  EdgeInsets.only(
-                                                                bottom: 16.h,
-                                                                left: 15.w,
-                                                                right: 15.w,
-                                                              ),
-                                                              isDismissible:
-                                                                  false,
-                                                              animationDuration:
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          300),
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .check_circle_outline,
-                                                                color:
-                                                                    Colors.black,
-                                                                size: 22.sp,
-                                                              ),
-                                                              shouldIconPulse:
-                                                                  false,
-                                                              backgroundColor:
-                                                                  const Color(
-                                                                      0xff88fea5),
-                                                              boxShadows: const [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .white38,
-                                                                  offset:
-                                                                      const Offset(
-                                                                          0.0,
-                                                                          2.0),
-                                                                  blurRadius: 3.0,
-                                                                ),
-                                                              ],
-                                                            ).show(context);
+                                                            AppConstants.showFlushBar(context, 'Item has been removed');
                                                             await cubit
                                                                 .deleteOneItemInCart(
                                                               id: cubit

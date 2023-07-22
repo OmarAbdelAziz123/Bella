@@ -88,11 +88,28 @@ class CustomRecommendedProducts extends StatelessWidget {
                   Positioned(
                     top: 5.h,
                     right: 5.w,
-                    child: AppConstants.showNetworkImage(
-                      image: logoOfCompany,
+                    child: Container(
                       width: 35.h,
                       height: 35.h,
-                      fit: BoxFit.cover,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40.r),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3.r,
+                            color: AppColors.blackColor.withOpacity(0.14),
+                            offset: const Offset(0, 0.66),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40.r),
+                        child: AppConstants.showNetworkImage(
+                          image: logoOfCompany,
+                          width: 35.w,
+                          height: 35.h,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                 ],

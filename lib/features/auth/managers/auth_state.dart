@@ -77,3 +77,17 @@ class CreateLoadingState extends AuthState {}
 class CreateSuccessState extends AuthState {}
 
 class CreateErrorState extends AuthState {}
+
+/// Add Credit Card
+class AddCreditCardLoadingState extends AuthState {}
+
+class AddCreditCardSuccessState extends AuthState {}
+
+class AddCreditCardErrorState extends AuthState {}
+
+/// Read Credit Card
+class ReadCreditCardLoadingState extends AuthState {}
+
+class ReadCreditCardSuccessState extends AuthState {}
+
+class ReadCreditCardErrorState extends AuthState {}

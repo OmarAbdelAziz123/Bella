@@ -324,7 +324,6 @@
 //     );
 //   }
 // }
-
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/layout/home/data/models/all_companies.dart';
@@ -334,6 +333,7 @@ import 'package:bella/features/layout/home/managers/home_cubit.dart';
 import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_home.dart';
 import 'package:bella/features/layout/home/presentation/widgets/join_view_body_in_see_all.dart';
+import 'package:bella/features/layout/home/presentation/widgets/products_in_company_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/field_container_widget.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget_in_see_all_screen.dart';
@@ -358,19 +358,13 @@ class SeeAllView extends StatefulWidget {
 class _SeeAllViewState extends State<SeeAllView> {
   @override
   void initState() {
-    // print('comp id is //////////');
-    // print(MyCache.getString(key: CacheKeys.comp_id));
-    // print('comp id is //////////');
     print('See All Screen');
     print('All Companies');
     print(BlocProvider.of<HomeCubit>(context).allCompanies!.companies!.length);
     print('All Recommended');
-    // print(BlocProvider.of<HomeCubit>(context).recommended.length);
     print('All Not Joined');
-    // print(BlocProvider.of<MyBrandsCubit>(context).notJoined.length);
     print('See All Screen');
     print('All Joined');
-    // print(BlocProvider.of<MyBrandsCubit>(context).joinedCompanies.length);
     super.initState();
   }
 
@@ -464,6 +458,9 @@ class _SeeAllViewState extends State<SeeAllView> {
                             itemCount: cubit.allCompanies!.companies!.length,
                             itemBuilder: (context, index) {
                               var list = cubit.allCompanies!.companies![index];
+                              var recommendedCompany = cubit
+                                  .allCompanies!
+                                  .companies![index];
                               return FieldContainerWidget(
                                 image: list.logo.toString(),
                                 headText: list.displayName.toString(),
@@ -477,7 +474,18 @@ class _SeeAllViewState extends State<SeeAllView> {
                                       context, list.id.toString());
                                 },
                                 onTapInAnyPlaceInCustomRecommendedCompany:
-                                    () {},
+                                    () {
+                                      MyCache.putString(
+                                          key: CacheKeys.comp_id,
+                                          value: recommendedCompany.id
+                                              .toString());
+                                      print(recommendedCompany.id
+                                          .toString());
+                                      navigateToProductsInCompany(
+                                        recommendedCompany.logo!,
+                                        recommendedCompany.displayName!,
+                                      );
+                                    },
                               );
                             },
                           ),
@@ -726,5 +734,29 @@ class _SeeAllViewState extends State<SeeAllView> {
     //   //   },
     //   // ),
     // );
+  }
+
+  void navigateToProductsInCompany(String logo, String display_name) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) {
+          return ProductsInCompanyScreen(
+            display_name: display_name,
+            logo: logo,
+          );
+        },
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
   }
 }

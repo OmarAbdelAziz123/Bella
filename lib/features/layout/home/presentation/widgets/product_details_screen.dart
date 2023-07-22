@@ -2,14 +2,15 @@
 import 'package:bella/features/layout/home/data/models/get_recommended_products_model.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_container_in_products_details.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
+import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   RecommendedProducts? product;
@@ -41,27 +42,33 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          // ClipOval(
-          //   // borderRadius: BorderRadius.circular(40.r),
-          //   child: Image.network(
-          //     product!.company_logo!,
-          //     fit: BoxFit.cover,
-          //     errorBuilder: (context, error, stackTrace) {
-          //       return SvgPicture.asset(AppAssets.errorIcon);
-          //     },
-          //     height: 40.h,
-          //     width: 40.w,
-          //   ),
-          // ),
-          AppConstants.showNetworkImage(
-            image: product!.company_logo!,
-            width: 40.h,
-            height: 40.h,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(
-            width: 30.w,
-            height: 10.h,
+          //     Container(
+          //       width: 40.h,
+          //       height: 40.h,
+          //       // padding: EdgeInsets.only(right: 20.w, top: 10.h, bottom: 8.h),
+          //       decoration: BoxDecoration(
+          //         // shape: BoxShape.circle,
+          //         borderRadius: BorderRadius.circular(40.r),
+          //       ),
+          //       child: AppConstants.showNetworkImage(
+          //         image: product!.company_logo!,
+          //         width: 40.h,
+          //         height: 40.h,
+          //         fit: BoxFit.cover,
+          //       ),
+          //     ),
+          CircleAvatar(
+            radius: 40.r,
+            backgroundColor: AppColors.bgColor,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40.r),
+              child: AppConstants.showNetworkImage(
+                image: product!.company_logo!,
+                width: 40.h,
+                height: 40.h,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ],
       ),
@@ -121,14 +128,8 @@ class ProductDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${product!.pricing!.regularPrice} ${product!.pricing!.currency!}',
-                          // style: GoogleFonts.inter(
-                          //   color: AppColors.grey9Color,
-                          //   decoration: TextDecoration.lineThrough,
-                          //   height: 1.h,
-                          //   fontWeight: FontWeight.w400,
-                          //   fontSize: 15.sp,
-                          // ),
+                          '${product!.pricing!.regularPrice} ${product!.pricing!
+                              .currency!}',
                           style: AppFonts.strickedTextBig.copyWith(
                             color: AppColors.darkGreyColor,
                             decoration: TextDecoration.lineThrough,
@@ -136,44 +137,87 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                          '${product!.pricing!.salePrice} ${product!.pricing!.currency!}',
-                          // style: GoogleFonts.inter(
-                          //   color: AppColors.black7Color,
-                          //   height: 1.h,
-                          //   fontWeight: FontWeight.w400,
-                          //   fontSize: 18.sp,
-                          // ),
+                          '${product!.pricing!.salePrice} ${product!.pricing!
+                              .currency!}',
                           style: AppFonts.productNameBig.copyWith(
                             color: AppColors.black7Color,
                             height: 1.h,
                           ),
                         ),
                       ],
-                    ),
-                    Container(
-                      width: 47.2,
-                      height: 47.2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.sp),
-                        color: AppColors.whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff000000).withOpacity(0.08),
-                            blurRadius: 4,
-                            spreadRadius: 0,
-                            offset: const Offset(1, 2),
+                    ), BlocBuilder<WishListCubit, WishListState>(
+                      builder: (context, state) {
+                        var wishListCubit =
+                        BlocProvider.of<WishListCubit>(context);
+
+                        return GestureDetector(
+                          onTap: () async {
+                            if (wishListCubit.checkProductInWishList(
+                                productId: product!.id!)) {
+                              AppConstants.showFlushBar(
+                                  context, 'Item has been removed');
+                              await wishListCubit.deleteOneItemInCart(
+                                id: product!.id!,
+                                companyDisplayName: product!.company_display_name!,
+                              );
+                            } else {
+                              AppConstants.showFlushBar(
+                                  context, 'Item added to wishlist');
+                              await wishListCubit.addToCart(
+                                company_logo_link: product!.company_logo!,
+                                company_display_name:
+                                product!.company_display_name!,
+                                product_id: product!.id!,
+                                product_image_link: product!.imageLinks![0],
+                                product_title: product!.title!,
+                                regular_price:
+                                product!.pricing!.regularPrice,
+                                sale_price: product!.pricing!.salePrice,
+                                currency: product!.pricing!.currency,
+                              );
+                            }
+                          },
+                          child: Container(
+                            width: 47.2,
+                            height: 47.2,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50.sp),
+                              color: wishListCubit.checkProductInWishList(
+                                  productId: product!.id!)
+                                  ? AppColors.primaryColor
+                                  : AppColors.whiteColor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xff000000).withOpacity(
+                                      0.08),
+                                  blurRadius: 4,
+                                  spreadRadius: 0,
+                                  offset: const Offset(1, 2),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15.34.w,
+                              vertical: 15.34.w,
+                            ),
+                            child: wishListCubit.checkProductInWishList(
+                              productId: product!.id!,
+                            )
+                                ? SvgPicture.asset(
+                              AppAssets.Vector,
+                              width: 12.46.w,
+                              height: 12.46.h,
+                              color: AppColors.whiteColor,
+                            )
+                                : SvgPicture.asset(
+                              AppAssets.add,
+                              width: 12.46.w,
+                              height: 12.46.h,
+                              color: AppColors.primaryColor,
+                            ),
                           ),
-                        ],
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15.34.w,
-                        vertical: 15.34.w,
-                      ),
-                      child: SvgPicture.asset(
-                        AppAssets.add,
-                        width: 16.52.w,
-                        height: 16.52.h,
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),

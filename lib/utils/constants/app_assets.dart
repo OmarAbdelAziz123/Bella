@@ -4,7 +4,19 @@ class AppAssets {
   /// SVG
   // static const String banner = '${AppConstants.baseImage}/banner.svg';
   static const String arrowBack = '${AppConstants.baseImage}/arrowBack.svg';
+  static const String creditCard = '${AppConstants.baseImage}/credit-card.svg';
   static const String hand = '${AppConstants.baseImage}/hand.png';
+  static const String barcode = '${AppConstants.baseImage}/barcode.png';
+  static const String visa = '${AppConstants.baseImage}/visa.png';
+  static const String master = '${AppConstants.baseImage}/master.png';
+  static const String PAYMEMNTCARD = '${AppConstants.baseImage}/PAYMEMNT CARD.png';
+  static const String mastercard = '${AppConstants.baseImage}/mastercard.png';
+  static const String visaIcon = '${AppConstants.baseImage}/visaIcon.svg';
+  static const String arrow_vert_icon = '${AppConstants.baseImage}/arrow_vert_icon.svg';
+  static const String card1 = '${AppConstants.baseImage}/card1.png';
+  static const String card2 = '${AppConstants.baseImage}/card2.png';
+  static const String barcode2 = '${AppConstants.baseImage}/barcode2.png';
+  static const String copy = '${AppConstants.baseImage}/copy.png';
   static const String hand2 = '${AppConstants.baseImage}/hand_in_scan.png';
   static const String address = '${AppConstants.baseImage}/address.svg';
   static const String dwon = '${AppConstants.baseImage}/dwon.svg';
@@ -20,6 +32,11 @@ class AppAssets {
   static const String X = '${AppConstants.baseImage}/X.svg';
   static const String gift = '${AppConstants.baseImage}/gift.svg';
   static const String present = '${AppConstants.baseImage}/present.svg';
+  static const String gift2 = '${AppConstants.baseImage}/gift.png';
+  static const String gift2white = '${AppConstants.baseImage}/gift2white.png';
+  static const String giftSvgDark = '${AppConstants.baseImage}/giftSvgDark.svg';
+  static const String giftSvgLight = '${AppConstants.baseImage}/giftSvgLight.svg';
+  static const String gava = '${AppConstants.baseImage}/gava.png';
   static const String homeIcon = '${AppConstants.baseImage}/homeIcon.svg';
   static const String bellaIcon = '${AppConstants.baseImage}/Bella.svg';
   static const String close = '${AppConstants.baseImage}/close.svg';
@@ -63,7 +80,7 @@ class AppAssets {
   static const String check2 = '${AppConstants.baseImage}/check2.svg';
   static const String Vector = '${AppConstants.baseImage}/Vector.svg';
   static const String personalOffers = '${AppConstants.baseImage}/personal-offers.svg';
-  static const String reward = '${AppConstants.baseImage}/reward.svg';
+  static const String reward = '${AppConstants.baseImage}/reward.png';
   static const String award = '${AppConstants.baseImage}/award.svg';
   static const String coupons = '${AppConstants.baseImage}/coupons.svg';
   static const String discount = '${AppConstants.baseImage}/discount.svg';
@@ -79,6 +96,8 @@ class AppAssets {
   static const String dress2 = '${AppConstants.baseImage}/dress2.png';
   static const String dress3 = '${AppConstants.baseImage}/dress3.png';
   static const String banner = '${AppConstants.baseImage}/banner.png';
+  static const String americanexpress = '${AppConstants.baseImage}/americanexpress.png';
+  static const String meastro = '${AppConstants.baseImage}/meastro.png';
   static const String starbucks = '${AppConstants.baseImage}/Starbucks.png';
   static const String kintaky = '${AppConstants.baseImage}/kintaky.png';
   static const String KICKS = '${AppConstants.baseImage}/KICKS.png';
@@ -98,7 +117,9 @@ class AppAssets {
   static const String one_one = '${AppConstants.baseImage}/one-one.png';
   static const String offer = '${AppConstants.baseImage}/offer.png';
   static const String drop = '${AppConstants.baseImage}/drop.png';
+  static const String drop2 = '${AppConstants.baseImage}/drop2.png';
   static const String image4 = '${AppConstants.baseImage}/image4.png';
+  static const String present2 = '${AppConstants.baseImage}/present2.png';
   static const String mac = '${AppConstants.baseImage}/mac.png';
   static const String img_offer = '${AppConstants.baseImage}/img_offer.png';
   static const String offer20 = '${AppConstants.baseImage}/offer20.png';

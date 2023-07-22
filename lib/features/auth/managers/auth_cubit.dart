@@ -1,10 +1,11 @@
-// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously
+// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously, non_constant_identifier_names
 
 import 'dart:io';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
 import 'package:bella/features/auth/data/models/DetailsErrorModel.dart';
 import 'package:bella/features/auth/data/models/LoggedModel.dart';
+import 'package:bella/features/layout/home/data/models/read_credit_card_model.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,8 +30,12 @@ class AuthCubit extends Cubit<AuthState> {
   CheckVerificationCodeModel checkVerificationCodeModel =
       CheckVerificationCodeModel();
 
+  ReadCreditCardModel readCreditCardModel = ReadCreditCardModel();
+
+  // List<LinkedCards> linkedCard = [];
+
   // String tok = '';
-  
+
   // Future<void> testFunc() async {
   //   emit(TestLoadingState());
   //   await dioHelper.getData(endPoint: 'https://dummyjson.com/products/').then((value) {
@@ -56,7 +61,8 @@ class AuthCubit extends Cubit<AuthState> {
       print('-------');
       print('The Response is ${response.data}');
       print(response.data['autoStartToken']);
-      MyCache.putString(key: CacheKeys.tok, value: response.data['autoStartToken']);
+      MyCache.putString(
+          key: CacheKeys.tok, value: response.data['autoStartToken']);
       print('-------');
       emit(LoginBankSuccessState(
           loginBank: response.data['autoStartToken'],
@@ -100,7 +106,8 @@ class AuthCubit extends Cubit<AuthState> {
           MyCache.getString(key: CacheKeys.personalNumber),
     }).then((response) {
       print('The Response of Check Exist is ${response.data}');
-      MyCache.putString(key: CacheKeys.user_Id, value: response.data['user_id']);
+      MyCache.putString(
+          key: CacheKeys.user_Id, value: response.data['user_id']);
       print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
       print(MyCache.getString(key: CacheKeys.user_Id));
       print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
@@ -173,8 +180,7 @@ class AuthCubit extends Cubit<AuthState> {
         else {
           Navigator.pushReplacementNamed(context, 'signup-screen');
         }
-      }
-      else if (response.data['status'] == 'pending') {
+      } else if (response.data['status'] == 'pending') {
         // sleep(const Duration(seconds: 2));
         await BlocProvider.of<AuthCubit>(context).loggedBank(context);
       } else if (response.data['status'] == 'failed') {
@@ -284,13 +290,51 @@ class AuthCubit extends Cubit<AuthState> {
           key: CacheKeys.emailVerified, value: response.data['email_verified']);
       MyCache.putString(
           key: CacheKeys.userId, value: response.data['id'].toString());
-      print(MyCache.getBoolean(key: CacheKeys.emailVerified, defaultValue: false));
+      print(MyCache.getBoolean(
+          key: CacheKeys.emailVerified, defaultValue: false));
       print(MyCache.getString(key: CacheKeys.userId));
       print('--------------------');
       emit(CreateSuccessState());
     }).catchError((error) {
       print('Error in Create is $error');
       emit(CreateErrorState());
+    });
+  }
+
+  Future<void> addCreditCard({
+    required String credit_card_number,
+    required String expiry_date,
+  }) async {
+    emit(AddCreditCardLoadingState());
+    await dioHelper.postData(endPoint: 'api/v1/credit_card/', body: {
+      "user_id": MyCache.getString(key: CacheKeys.userId),
+      // "user_id": MyCache.getString(key: CacheKeys.userId),
+      "credit_card_number": credit_card_number,
+      // "credit_card_number": credit_card_number,
+      "expiry_date": expiry_date,
+      // "expiry_date": expiry_date,
+    }).then((response) {
+      print(response.data);
+      emit(AddCreditCardSuccessState());
+    }).catchError((error) {
+      print('Error in Add Credit Card is $error');
+      emit(AddCreditCardErrorState());
+    });
+  }
+
+  Future<void> readCreditCard() async {
+    emit(ReadCreditCardLoadingState());
+    await dioHelper
+        .getData(
+            endPoint:
+                'api/v1/credit_card/${MyCache.getString(key: CacheKeys.userId)}')
+        .then((response) {
+      print(response.data);
+      readCreditCardModel = ReadCreditCardModel.fromJson(response.data);
+      emit(ReadCreditCardSuccessState());
+    }).catchError((error) {
+      print('Error in Read Credit card is $error');
+      emit(ReadCreditCardErrorState());
     });
   }
 }

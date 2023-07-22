@@ -75,7 +75,7 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
               phone_number: MyCache.getString(key: CacheKeys.phone_number),
               surname: MyCache.getString(key: CacheKeys.lastName),
             );
-            Navigator.pushReplacementNamed(context, 'layout-screen');
+            Navigator.pushReplacementNamed(context, 'add-card-screen');
             Timer? timer = Timer(const Duration(seconds: 1), () {
               Navigator.of(context, rootNavigator: true).pop();
             });
@@ -226,7 +226,9 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                           });
                         }
                         Navigator.pushReplacementNamed(
-                            context, 'well-done-screen');
+                            context, 'add-card-screen');
+                        // Navigator.pushReplacementNamed(
+                        //     context, 'well-done-screen');
                       },
                     ),
                   ),
@@ -326,8 +328,15 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                   const Spacer(),
                   CustomButton(
                     widget: state is CreateLoadingState
-                        ? const CircularProgressIndicator(
-                            color: AppColors.whiteColor,
+                        ? SizedBox(
+                            width: 24.w,
+                            height: 24.h,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4.w,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                AppColors.whiteColor,
+                              ),
+                            ),
                           )
                         : Text(
                             'Verify',

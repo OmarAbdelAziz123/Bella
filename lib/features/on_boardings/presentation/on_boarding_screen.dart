@@ -113,8 +113,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
           AppConstants.launchURL(state.loginBank);
           sleep(const Duration(seconds: 2));
         } else if (state is LoginBankErrorState) {
-          // SnackBar snackBar = const SnackBar(content: Text('Login Failure'));
-          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
           print('error');
         }
       },
@@ -213,6 +211,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                                         color: AppColors.whiteColor,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 0.05.sp,
+                                        height: 1.h,
                                         fontSize: 16.sp,
                                       ),
                                       textAlign: TextAlign.center,

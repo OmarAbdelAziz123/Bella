@@ -281,44 +281,39 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     ),
                     // const Spacer(),
                     SizedBox(height: 39.h),
-                    state is CreateVerificationCodeLoadingState
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            ),
-                          )
-                        : CustomButton(
-                            widget: Text(
+
+                    CustomButton(
+                      widget: state is RegisterLoadingState
+                          ? SizedBox(
+                              width: 24.w,
+                              height: 24.h,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 4.w,
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  AppColors.whiteColor,
+                                ),
+                              ),
+                            )
+                          : Text(
                               'Next',
                               style: AppFonts.bodyLargeBold.copyWith(
                                 color: AppColors.whiteColor,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            // text: 'Next',
-                            width: 353.w,
-                            onTap: () async {
-                              MyCache.putString(
-                                  key: CacheKeys.mobile_number,
-                                  value: mobileController.text);
-                              if (signupKey.currentState!.validate()) {
-                                await BlocProvider.of<AuthCubit>(context)
-                                    .registerFun(
-                                  emailController.text,
-                                  mobileController.text,
-                                );
-                                // await BlocProvider.of<AuthCubit>(context)
-                                //     .createVerificationCode(MyCache.getString(key: CacheKeys.mobile_number));
-                                ///
-                                // BlocProvider.of<AuthCubit>(context)
-                                //     .createVerificationCode(
-                                //         '+20${mobileController.text}');
-                                // Navigator.pushReplacementNamed(
-                                //     context, 'send-otb-screen');
-                                // Navigator.pushNamed(context, 'send-otb-screen');
-                              }
-                            },
-                          ),
+                      width: 353.w,
+                      onTap: () async {
+                        MyCache.putString(
+                            key: CacheKeys.mobile_number,
+                            value: mobileController.text);
+                        if (signupKey.currentState!.validate()) {
+                          await BlocProvider.of<AuthCubit>(context).registerFun(
+                            emailController.text,
+                            mobileController.text,
+                          );
+                        }
+                      },
+                    ),
                     SizedBox(height: 2.8.h),
                   ],
                 ),
@@ -378,9 +373,12 @@ class _SignupViewBodyState extends State<SignupViewBody> {
       ),
       backgroundColor: const Color(0xFFF6EAEA),
       behavior: SnackBarBehavior.floating,
-      padding: EdgeInsets.only(top: 13.5.h, bottom: 13.h, left:  12.w, right: 7.w),
+      padding:
+          EdgeInsets.only(top: 13.5.h, bottom: 13.h, left: 12.w, right: 7.w),
       margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height - 85, right: 32.w, left: 25.w),
+          bottom: MediaQuery.of(context).size.height - 85,
+          right: 32.w,
+          left: 25.w),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.sp),
         side: BorderSide(

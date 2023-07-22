@@ -22,9 +22,9 @@ class BellaApp extends StatelessWidget {
       builder: (BuildContext context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => AuthCubit()),
+            BlocProvider(create: (context) => AuthCubit()..readCreditCard()),
             BlocProvider(create: (context) => ScanCubit()),
-            BlocProvider(create: (context) => HomeCubit()..getRecommended()..getRecommendedProducts()..getCompanyProducts()),
+            BlocProvider(create: (context) => HomeCubit()..getRecommended()..getRecommendedProducts()..getCompanyProducts()..companyProfileFunc()),
             BlocProvider(create: (context) => MyBrandsCubit()),
             BlocProvider(create: (context) => WishListCubit()..getWishList()),
           ],
@@ -34,6 +34,7 @@ class BellaApp extends StatelessWidget {
             onGenerateRoute: RouteGenerator.getRoute,
             // initialRoute: 'finalViewInScan',
             initialRoute: 'splash-screen',
+            // initialRoute: 'my-cards-screen',
             // home: Test(),
           ),
         );

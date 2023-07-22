@@ -1,9 +1,11 @@
+import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,7 +83,8 @@ class ProfileViewBody extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  navigateToMyId(context);
+                  // BlocProvider.of<AuthCubit>(context).readCreditCard();
+                  navigateToMyCard(context);
                 },
                 child: ListTile(
                   leading: Container(
@@ -204,16 +207,16 @@ class ProfileViewBody extends StatelessWidget {
     );
   }
 
-  void navigateToMyId(BuildContext context) {
-    Navigator.pushReplacement(
+  void navigateToMyCard(BuildContext context) {
+    Navigator.push(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => const MyIDView(),
+        pageBuilder: (_, __, ___) => MyCardView(),
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(0, 1),
+              begin: const Offset(1, 0),
               end: Offset.zero,
             ).animate(animation),
             child: child,

@@ -1,3 +1,4 @@
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,15 +13,16 @@ class TextFormFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       cursorColor: AppColors.primaryColor,
-      style: TextStyle(fontSize: 14.sp, color: AppColors.black3Color),
+      style: AppFonts.bodyDefault.copyWith(
+        color: AppColors.black2Color,
+      ),
+      // style: TextStyle(fontSize: 14.sp, color: AppColors.black3Color),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.whiteColor.withOpacity(0.9),
         hintText: hintText,
-        hintStyle: GoogleFonts.darkerGrotesque(
-          color: AppColors.greyColor,
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
+        hintStyle: AppFonts.bodyDefault.copyWith(
+          color: AppColors.black2Color,
         ),
         prefixIcon: Text(preffixText),
         border: OutlineInputBorder(

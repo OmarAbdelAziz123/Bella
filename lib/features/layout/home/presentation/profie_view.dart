@@ -34,21 +34,6 @@ class ProfileView extends StatelessWidget {
             ),
           ),
         ),
-        // title: Text(
-        //   'Profile',
-        //   style: GoogleFonts.darkerGrotesque(
-        //     height: 1.h,
-        //     color: AppColors.black3Color,
-        //     fontWeight: FontWeight.bold,
-        //     fontSize: 22.sp,
-        //   ),
-        // ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: SvgPicture.asset(AppAssets.infoCircle2),
-        //   ),
-        // ],
       ),
       body: const ProfileViewBody(),
     );

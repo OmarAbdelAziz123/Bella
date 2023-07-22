@@ -5,11 +5,13 @@ import 'dart:io';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
+import 'package:bella/features/layout/home/data/models/company_profile.dart';
 import 'package:bella/features/layout/home/data/models/error_model.dart';
 import 'package:bella/features/layout/home/data/models/get-recommended.dart';
 import 'package:bella/features/layout/home/data/models/get_company_products_model.dart';
 import 'package:bella/features/layout/home/data/models/get_recommended_products_model.dart';
 import 'package:bella/features/layout/home/data/models/get_wish_list_model.dart';
+import 'package:bella/features/layout/home/data/models/read_credit_card_model.dart';
 import 'package:bella/features/layout/home/data/models/see_all_model.dart';
 import 'package:bella/features/layout/wish_list/data/get_wish_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
   GetRecommendedProductsModel? getRecommendedProductsModel;
   GetCompanyProductsModel? getCompanyProductsModel;
   ErrorModel? errorModel;
+  CompanyProfile? companyProfile;
 
   // List<WishlistItem> wishListModel = [];
 
@@ -249,4 +252,20 @@ class HomeCubit extends Cubit<HomeState> {
   //     emit(DeleteOneItemFromCartErrorState());
   //   });
   // }
+
+  Future<void> companyProfileFunc() async {
+    emit(CompanyProfileLoadingState());
+    await dioHelper
+        .getData(
+            endPoint:
+                'api/v1/companies/${MyCache.getString(key: CacheKeys.comp_id)}')
+        .then((response) {
+      print('Response in Reward is ${response.data}');
+      companyProfile = CompanyProfile.fromJson(response.data);
+      emit(CompanyProfileSuccessState());
+    }).catchError((error) {
+      print('Error in Reward is $error');
+      emit(CompanyProfileErrorState());
+    });
+  }
 }
