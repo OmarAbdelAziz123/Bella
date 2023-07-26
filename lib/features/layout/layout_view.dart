@@ -6,9 +6,6 @@ import 'package:bella/features/layout/my_brands/presentation/my_brands/my_brands
 import 'package:bella/features/layout/offers/presentation/offers_view.dart';
 import 'package:bella/features/layout/scan/managers/scan_cubit.dart';
 import 'package:bella/features/layout/scan/presentation/scan_view.dart';
-import 'package:bella/features/layout/wish_list/managers/connect_with_api.dart';
-import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
-import 'package:bella/features/layout/wish_list/presentation/widgets/lists_view_body.dart';
 import 'package:bella/features/layout/wish_list/presentation/wish_list.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/styles/colors.dart';

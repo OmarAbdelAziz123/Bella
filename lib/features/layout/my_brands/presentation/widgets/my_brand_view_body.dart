@@ -115,7 +115,6 @@ class _MyBrandViewBodyState extends State<MyBrandViewBody> {
                                           )
                                         : AppFonts.bodySmallBold.copyWith(
                                             color: AppColors.whiteColor,
-                                            fontWeight: FontWeight.w600,
                                           ),
                                   ),
                                 ),
@@ -305,7 +304,25 @@ class TabBarView1 extends StatelessWidget {
               var cubit = BlocProvider.of<MyBrandsCubit>(context);
 
               return cubit.allJoined == null
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 144.h),
+                        Text(
+                          'No brands found yet',
+                          style: AppFonts.titleSection.copyWith(
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          'All your joined brands will appear here',
+                          style: AppFonts.bodyLarge.copyWith(
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                      ],
+                    )
                   : NotificationListener<OverscrollIndicatorNotification>(
                       onNotification: (overscroll) {
                         overscroll.disallowGlow();

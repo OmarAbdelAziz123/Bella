@@ -47,15 +47,6 @@ class GetCompanyProductsSuccessState extends HomeState {}
 
 class GetCompanyProductsErrorState extends HomeState {}
 
-// /// Get Wish List
-// class GetWishListLoadingState extends HomeState {}
-//
-// class GetWishListSuccessState extends HomeState {
-//   List<WishlistItem> wishList;
-//
-//   GetWishListSuccessState({required this.wishList});
-// }
-
 class GetWishListErrorState extends HomeState {}
 
 /// Delete From Cart

@@ -92,23 +92,6 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             padding: EdgeInsets.only(top: 15.h),
             decoration: const BoxDecoration(
               color: AppColors.whiteColor,
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: Colors.white.withOpacity(1),
-              //     blurRadius: 20,
-              //     offset: const Offset(2, 2),
-              //   ),
-              //   BoxShadow(
-              //     color: Colors.white.withOpacity(1),
-              //     blurRadius: 30,
-              //     offset: const Offset(3, 3),
-              //   ),
-              //   BoxShadow(
-              //     color: Colors.white.withOpacity(1),
-              //     blurRadius: 40,
-              //     offset: const Offset(4, 4),
-              //   ),
-              // ],
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,16 +100,11 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                   listener: (context, state) {
                     if (state is PostJoinCompanySuccessState) {
                       print('My Print 1');
-                      // setState(() {
-                      // BlocProvider.of<MyBrandsCubit>(context).notJoined.clear();
-                      // BlocProvider.of<MyBrandsCubit>(context).joinedCompanies.clear();
-                      // BlocProvider.of<HomeCubit>(context).recommended.clear();
                       BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
                       BlocProvider.of<MyBrandsCubit>(context)
                           .notJoinedFunction(context);
                       BlocProvider.of<HomeCubit>(context).getRecommended();
                       BlocProvider.of<HomeCubit>(context).getAllCompanies();
-                      // });
                       print('My Print2');
                       if (widget.flow == 'Join') {
                         Navigator.push(
@@ -138,9 +116,8 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                             ),
                           ),
                         );
-                        // SnackBar snackBar = SnackBar(content: Text('Success'));
-                        // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else {
+                      }
+                      else {
                         Navigator.push(
                           termsAndConditionsContext,
                           MaterialPageRoute(
@@ -172,12 +149,24 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                           borderRadius: BorderRadius.circular(300.r),
                         ),
                         child: Center(
-                          child: Text(
-                            'Accept',
-                            style: AppFonts.bodyLargeBold.copyWith(
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
+                          child: state is PostJoinCompanyLoadingState
+                              ? SizedBox(
+                                  width: 24.w,
+                                  height: 24.h,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 4.w,
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                      AppColors.whiteColor,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  'Accept',
+                                  style: AppFonts.bodyLargeBold.copyWith(
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
                         ),
                       ),
                     );
@@ -262,7 +251,8 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 3.r,
-                                    color: AppColors.blackColor.withOpacity(0.14),
+                                    color:
+                                        AppColors.blackColor.withOpacity(0.14),
                                     offset: const Offset(0, 0.66),
                                   ),
                                 ],

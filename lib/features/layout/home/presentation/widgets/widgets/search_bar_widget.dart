@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
@@ -19,7 +21,7 @@ class SearchBarWidget extends StatelessWidget {
       height: 50.h,
       width: 353.w,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.sp),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: TextFormField(
         cursorColor: AppColors.primaryColor,

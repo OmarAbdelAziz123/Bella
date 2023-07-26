@@ -56,15 +56,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
         ),
         elevation: 0,
         backgroundColor: AppColors.bgColor,
-        // centerTitle: true,
-        //       title: Padding(
-        //       padding: EdgeInsets.only(top: 28.h),
-        //   child: Text(
-        //     'Almost done!',
-        //     textAlign: TextAlign.center,
-        //     style: AppFonts.titleScreen,
-        //   ),
-        // ),
       ),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -143,7 +134,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                       fillColor: AppColors.whiteColor.withOpacity(0.9),
                       hintText: '4539 5534 0002 0169',
                       hintStyle: AppFonts.bodyDefault.copyWith(
-                        color: AppColors.black2Color,
+                        color: AppColors.black2Color.withOpacity(0.4),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r),
@@ -174,20 +165,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                         ),
                       ),
                     ),
-                    // onChanged: (value) {
-                    //   String formattedValue = value.replaceAll(RegExp(r'\D'), '');
-                    //   // Remove all non-digits
-                    //   if (formattedValue.length > 0) {
-                    //     formattedValue = formattedValue.replaceAllMapped(
-                    //       RegExp(r'.{4}'),
-                    //           (match) => '${match.group(0)} ',
-                    //     ); // Add a space after every 4 digits
-                    //   }
-                    //   creditCardController.value = TextEditingValue(
-                    //     text: formattedValue,
-                    //     selection: TextSelection.collapsed(offset: formattedValue.length),
-                    //   );
-                    // },
                     onChanged: (value) {
                       String formattedValue =
                           value.replaceAll(RegExp(r'\D'), '');
@@ -270,7 +247,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                             fillColor: AppColors.whiteColor.withOpacity(0.9),
                             hintText: 'MM / YY',
                             hintStyle: AppFonts.bodyDefault.copyWith(
-                              color: AppColors.black2Color,
+                              color: AppColors.black2Color.withOpacity(0.4),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -361,7 +338,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                         cubit.addCreditCard(
                             credit_card_number: controller.text,
                             expiry_date: yearController.text.toString());
-                        // print('Expiry Date is = ${monthController.text}${yearController.text}');
                       }
                     },
                   ),

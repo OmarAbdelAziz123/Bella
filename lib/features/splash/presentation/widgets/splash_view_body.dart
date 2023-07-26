@@ -29,7 +29,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(AppAssets.bonozLogo),
+          SvgPicture.asset(AppAssets.bella3),
         ],
       ),
     );

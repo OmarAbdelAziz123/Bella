@@ -39,6 +39,7 @@ class AppAssets {
   static const String gava = '${AppConstants.baseImage}/gava.png';
   static const String homeIcon = '${AppConstants.baseImage}/homeIcon.svg';
   static const String bellaIcon = '${AppConstants.baseImage}/Bella.svg';
+  static const String BellaIcon = '${AppConstants.baseImage}/BellaIcon.svg';
   static const String close = '${AppConstants.baseImage}/close.svg';
   static const String scanIcon = '${AppConstants.baseImage}/scanIcon.svg';
   static const String arroww = '${AppConstants.baseImage}/arroww.svg';

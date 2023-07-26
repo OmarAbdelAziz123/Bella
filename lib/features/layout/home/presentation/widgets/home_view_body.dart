@@ -83,7 +83,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SvgPicture.asset(AppAssets.bonoz),
+                              SvgPicture.asset(AppAssets.BellaIcon),
                               GestureDetector(
                                 onTap: () {
                                   navigatetoProfileScreen(context);
@@ -102,8 +102,22 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           ),
                         ),
                         const VerificationAnEmailWidget(),
-                        SearchBarWidget(
-                          hintText: 'Search',
+                        Container(
+                          height: 50.h,
+                          width: 353.w,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.blackColor.withOpacity(0.15),
+                                spreadRadius: 0,
+                                blurRadius: 14,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: SearchBarWidget(
+                            hintText: 'Search',
+                          ),
                         ),
                         SizedBox(height: 20.h),
                         SizedBox(
@@ -202,8 +216,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
                           /// Recommended Companies
                           cubit.recommended == null
-                              ? const CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
+                              ? Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 110.h),
+                                    child:SizedBox(
+                                      width: 25.w,
+                                      height: 24.h,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 4.w,
+                                        valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                          AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 )
                               : cubit.recommended!.recommendedCompanies == null
                                   ? const Text('Empty list')

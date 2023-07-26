@@ -102,7 +102,7 @@ class AppFonts {
   );
 
   static final TextStyle bodySmallBold = AppConstants.getTextStyle(
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     fontSize: 12.sp,
     letterSpacing: 0.01.sp,
     height: 0,

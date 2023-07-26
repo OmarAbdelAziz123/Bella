@@ -3,12 +3,10 @@ import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
 import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
 import 'package:bella/features/layout/scan/managers/scan_cubit.dart';
-import 'package:bella/features/layout/wish_list/managers/connect_with_api.dart';
 import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 class BellaApp extends StatelessWidget {
   const BellaApp({Key? key}) : super(key: key);
@@ -28,13 +26,12 @@ class BellaApp extends StatelessWidget {
             BlocProvider(create: (context) => MyBrandsCubit()),
             BlocProvider(create: (context) => WishListCubit()..getWishList()),
           ],
-          child: MaterialApp(
+          child: const MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Bella App',
             onGenerateRoute: RouteGenerator.getRoute,
-            // initialRoute: 'finalViewInScan',
+            // initialRoute: 'layout-screen',
             initialRoute: 'splash-screen',
-            // initialRoute: 'my-cards-screen',
             // home: Test(),
           ),
         );

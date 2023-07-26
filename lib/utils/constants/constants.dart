@@ -115,7 +115,7 @@ class AppConstants {
                   children: <Widget>[
                     SizedBox(height: 1.2.h),
                     SvgPicture.asset(
-                      AppAssets.bella22,
+                      AppAssets.bella2,
                       height: 97.h,
                       width: 164.w,
                     ),
