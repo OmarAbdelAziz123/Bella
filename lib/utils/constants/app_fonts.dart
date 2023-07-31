@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';

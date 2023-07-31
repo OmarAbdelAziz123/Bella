@@ -18,8 +18,6 @@ class LoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double screenWidth = MediaQuery.of(context).size.width;
 
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {

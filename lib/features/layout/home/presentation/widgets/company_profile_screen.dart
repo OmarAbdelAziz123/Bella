@@ -1,7 +1,15 @@
-// ignore_for_file: must_be_immutable, unrelated_type_equality_checks, non_constant_identifier_names
+// ignore_for_file: must_be_immutable, unrelated_type_equality_checks, non_constant_identifier_names, void_checks
+import 'dart:io';
+import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
+import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
+import 'package:bella/features/layout/home/presentation/home_view.dart';
+import 'package:bella/features/layout/home/presentation/see_all__view.dart';
+import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_recommended_products.dart';
+import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
+import 'package:bella/features/layout/my_brands/presentation/my_brands/my_brands_view.dart';
 import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
@@ -13,22 +21,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductsInCompanyScreen extends StatefulWidget {
-  String logo, display_name;
+class CompanyProfileScreen extends StatefulWidget {
+  String logo, display_name, initialScreen;
 
-  ProductsInCompanyScreen(
-      {Key? key, required this.logo, required this.display_name})
+  void Function()? onBack;
+
+  CompanyProfileScreen(
+      {Key? key,
+      required this.logo,
+      required this.display_name,
+      this.onBack,
+      required this.initialScreen})
       : super(key: key);
 
   @override
-  State<ProductsInCompanyScreen> createState() =>
-      _ProductsInCompanyScreenState();
+  State<CompanyProfileScreen> createState() => _CompanyProfileScreenState();
 }
 
-class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
-  final int _currentIndex = 0;
+class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
   int selectedItem = 0;
-  final PageController _pageController = PageController();
 
   Color colorOfIconAddToCart = Colors.black;
 
@@ -37,6 +48,13 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
     BlocProvider.of<HomeCubit>(context).getCompanyProducts();
     BlocProvider.of<HomeCubit>(context).companyProfileFunc();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    BlocProvider.of<HomeCubit>(context).resetCompanyProfile();
+    super.dispose();
+
   }
 
   @override
@@ -72,7 +90,19 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                 ),
                 leading: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    widget.initialScreen == 'NewBrands' ||
+                            widget.initialScreen == 'MyBrands'
+                        ? navigatePopBrands(context)
+                        : widget.initialScreen == 'Home'
+                            ? navigatePopToHomeScreen(context)
+                            : widget.initialScreen == 'SeeAll'
+                                ? navigatePopToSeeAllScreen(context)
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Scaffold(),
+                                    ),
+                                  );
                   },
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -97,7 +127,7 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
               ),
               body: NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (overscroll) {
-                  overscroll.disallowGlow();
+                  overscroll.disallowIndicator();
                   return false;
                 },
                 child: SingleChildScrollView(
@@ -168,7 +198,7 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                           ),
                         ),
                         SizedBox(height: 19.h),
-                        Container(
+                        cubit.companyProfile!.has_loyalty_program == false ? Container() : Container(
                           width: 393.w,
                           height: 187.h,
                           padding: EdgeInsets.only(
@@ -185,14 +215,18 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                             children: [
                               SizedBox(height: 10.h),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    width: 83.w,
                                     height: 29.h,
+                                    constraints: BoxConstraints(
+                                      maxWidth: 144.w,
+                                    ),
+                                    // padding: EdgeInsets.all(10.sp),
                                     decoration: BoxDecoration(
-                                      color:
-                                          AppColors.primaryColor.withOpacity(0.1),
+                                      color: AppColors.primaryColor
+                                          .withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(7.r),
                                     ),
                                     child: Center(
@@ -207,8 +241,8 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                   Text(
                                     'Reset on: ${cubit.companyProfile!.validTo}',
                                     style: AppFonts.productTag.copyWith(
-                                      color:
-                                          AppColors.black3Color.withOpacity(0.7),
+                                      color: AppColors.black3Color
+                                          .withOpacity(0.7),
                                     ),
                                   ),
                                 ],
@@ -222,7 +256,8 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                     height: 6.h,
                                     width: 318.w,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(400.r),
+                                      borderRadius:
+                                          BorderRadius.circular(400.r),
                                     ),
                                     child: Stack(
                                       children: [
@@ -253,11 +288,13 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                       ],
                                     ),
                                   ),
+
                                   ///
                                   SizedBox(
                                     width: 318.w,
                                     child: Row(
-                                      children: cubit.companyProfile!.milestones!
+                                      children: cubit
+                                          .companyProfile!.milestones!
                                           .map((milestone) {
                                         double milestonePosition = (milestone
                                                     .limit! -
@@ -299,8 +336,10 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                                   child: Center(
                                                     child: SvgPicture.asset(
                                                       milestone.reached == true
-                                                          ? AppAssets.giftSvgLight
-                                                          : AppAssets.giftSvgDark,
+                                                          ? AppAssets
+                                                              .giftSvgLight
+                                                          : AppAssets
+                                                              .giftSvgDark,
                                                     ),
                                                   ),
                                                 ),
@@ -326,30 +365,36 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                           ),
                         ),
                         SizedBox(height: 44.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: GestureDetector(
-                            onTap: () {
-                              print('Click');
-                            },
-                            child: Container(
-                              width: 353.w,
-                              height: 52.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
-                                borderRadius: BorderRadius.circular(300.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Join',
-                                  style: AppFonts.bodyLargeBold.copyWith(
-                                    color: AppColors.whiteColor,
+                        cubit.companyProfile!.has_joined == true
+                            ? Container()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    navigateToJoinScreen(
+                                      context,
+                                      MyCache.getString(key: CacheKeys.comp_id),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 353.w,
+                                    height: 52.h,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius:
+                                          BorderRadius.circular(300.r),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Join',
+                                        style: AppFonts.bodyLargeBold.copyWith(
+                                          color: AppColors.whiteColor,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                         SizedBox(height: 46.h),
 
                         /// Get Company Products
@@ -361,8 +406,8 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                 ? const CircularProgressIndicator(
                                     color: AppColors.primaryColor,
                                   )
-                                : cubit.getCompanyProductsModel!.companyProducts!
-                                        .isEmpty
+                                : cubit.getCompanyProductsModel!
+                                        .companyProducts!.isEmpty
                                     ? Text(
                                         'No products',
                                         style: GoogleFonts.inter(
@@ -397,8 +442,6 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                               var products = cubit
                                                   .getCompanyProductsModel!
                                                   .companyProducts![index];
-                                              var wishList =
-                                                  wishListCubit.wishListModel;
 
                                               return CustomRecommendedProducts(
                                                 logoOfCompany:
@@ -410,19 +453,18 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                                     products.description!,
                                                 currency:
                                                     products.pricing!.currency!,
-                                                regularPrice: products
-                                                        .pricing!.regularPrice ??
+                                                regularPrice: products.pricing!
+                                                        .regularPrice ??
                                                     0.0,
-                                                salePrice:
-                                                    products.pricing!.salePrice ??
-                                                        0.0,
-                                                customMemberOnly:
-                                                    products.membersOnly == true
-                                                        ? const CustomMemberOnly()
-                                                        : Container(),
-                                                onTap: () {
-
-                                                },
+                                                salePrice: products
+                                                        .pricing!.salePrice ??
+                                                    0.0,
+                                                customMemberOnly: products
+                                                            .membersOnly ==
+                                                        true
+                                                    ? const CustomMemberOnly()
+                                                    : Container(),
+                                                onTap: () {},
                                                 widget: wishListCubit
                                                         .checkProductInWishList(
                                                   productId: products.id!,
@@ -431,8 +473,8 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
                                                         AppAssets.Vector,
                                                         width: 12.46.w,
                                                         height: 12.46.h,
-                                                        color:
-                                                            AppColors.whiteColor,
+                                                        color: AppColors
+                                                            .whiteColor,
                                                       )
                                                     : SvgPicture.asset(
                                                         AppAssets.add,
@@ -513,6 +555,181 @@ class _ProductsInCompanyScreenState extends State<ProductsInCompanyScreen> {
       },
     );
   }
+
+  void navigatePop() {
+    Navigator.pop(context);
+  }
+
+  void navigateToJoinScreen(BuildContext context, String item) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) {
+          return TermsAndConditions(
+            companyId: item,
+            flow: 'Join',
+            hasJoined: false,
+            initialScreen: widget.initialScreen,
+            onCancelButtonInFinalScreen: () {
+              navigatePopToCompanyProfile(
+                context,
+                widget.logo,
+                widget.display_name,
+                Navigator.pop(context),
+              );
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .clearTermsAndConditionsState();
+            },
+            onSuccessButton: () {
+              BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .notJoinedFunction(context);
+              BlocProvider.of<HomeCubit>(context).getRecommended();
+              BlocProvider.of<HomeCubit>(context).getAllCompanies();
+              AppConstants.showFlushBar(context, 'You have joined right now');
+              sleep(const Duration(seconds: 3));
+              navigatePopToCompanyProfile(
+                context,
+                widget.logo,
+                widget.display_name,
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    transitionDuration: const Duration(milliseconds: 250),
+                    pageBuilder: (_, __, ___) => CompanyProfileScreen(
+                      logo: widget.logo,
+                      display_name: widget.display_name,
+                      initialScreen: widget.initialScreen,
+                    ),
+                    transitionsBuilder:
+                        (_, Animation<double> animation, __, Widget child) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1, 0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+            initialView: 'NewBrands',
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyBrandsView(),
+                ),
+              );
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .clearTermsAndConditionsState();
+            },
+          );
+        },
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigatePopToHomeScreen(
+    BuildContext context,
+  ) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => const HomeView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigatePopToSeeAllScreen(
+    BuildContext context,
+  ) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => const SeeAllView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigatePopBrands(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => MyBrandsView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigatePopToCompanyProfile(BuildContext context, String logo,
+      String display_name, void navigatePop) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => CompanyProfileScreen(
+          logo: logo,
+          display_name: display_name,
+          initialScreen: widget.initialScreen,
+          onBack: () {
+            Navigator.pop(context);
+          },
+        ),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 }
 
 class CustomContainerInProductsInCompanyScreen extends StatelessWidget {
@@ -575,13 +792,10 @@ class CustomContainerInProductsInCompanyScreen extends StatelessWidget {
 }
 
 class StepperComponent extends StatelessWidget {
-  // index describe the position of our bubble
   int index;
 
-  //currentIndex is index that is gonna change on Tap
   int currentIndex;
 
-  //onTap CallBack
   VoidCallback onTap;
 
   bool isLast;

@@ -7,15 +7,15 @@ class GetWishListModel {
     if (json['wishlist'] != null) {
       wishlist = <Wishlist>[];
       json['wishlist'].forEach((v) {
-        wishlist!.add(new Wishlist.fromJson(v));
+        wishlist!.add(Wishlist.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.wishlist != null) {
-      data['wishlist'] = this.wishlist!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (wishlist != null) {
+      data['wishlist'] = wishlist!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -29,8 +29,8 @@ class Wishlist {
   String? productId;
   String? productImageLink;
   String? productTitle;
-  dynamic? regularPrice;
-  dynamic? salePrice;
+  dynamic regularPrice;
+  dynamic salePrice;
   String? currency;
   String? id;
 
@@ -62,18 +62,18 @@ class Wishlist {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['company_id'] = this.companyId;
-    data['company_logo_link'] = this.companyLogoLink;
-    data['company_display_name'] = this.companyDisplayName;
-    data['product_id'] = this.productId;
-    data['product_image_link'] = this.productImageLink;
-    data['product_title'] = this.productTitle;
-    data['regular_price'] = this.regularPrice;
-    data['sale_price'] = this.salePrice;
-    data['currency'] = this.currency;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['company_id'] = companyId;
+    data['company_logo_link'] = companyLogoLink;
+    data['company_display_name'] = companyDisplayName;
+    data['product_id'] = productId;
+    data['product_image_link'] = productImageLink;
+    data['product_title'] = productTitle;
+    data['regular_price'] = regularPrice;
+    data['sale_price'] = salePrice;
+    data['currency'] = currency;
+    data['id'] = id;
     return data;
   }
 }

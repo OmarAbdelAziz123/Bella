@@ -1,14 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
-
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
-import 'package:bella/features/layout/home/data/models/get_wish_list_model.dart';
 import 'package:bella/features/layout/wish_list/data/get_wish_list.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
-
 part 'wish_list_state.dart';
 
 class WishListCubit extends Cubit<WishListState> {
@@ -30,10 +27,14 @@ class WishListCubit extends Cubit<WishListState> {
       response.data['wishlist'].forEach((wish) {
         wishListModel.add(Wishlist2.fromJson(wish));
       });
-      print('Wish LIST LENGTH IN GET IS ${wishListModel.length}');
+      if (kDebugMode) {
+        print('Wish LIST LENGTH IN GET IS ${wishListModel.length}');
+      }
       emit(WishListListSuccessState());
     }).catchError((error) {
-      print('Error in Get Wish List is $error');
+      if (kDebugMode) {
+        print('Error in Get Wish List is $error');
+      }
       emit(WishListErrorState());
     });
   }
@@ -52,10 +53,14 @@ class WishListCubit extends Cubit<WishListState> {
       "id": id,
       "user_id": MyCache.getString(key: CacheKeys.user_Id),
     }).then((response) {
-      print('Wish LIST LENGTH IN DELETE IS ${wishListModel.length}');
+      if (kDebugMode) {
+        print('Wish LIST LENGTH IN DELETE IS ${wishListModel.length}');
+      }
       emit(WishListListSuccessState());
     }).catchError((error) {
-      print('Error in Delete in cart is $error');
+      if (kDebugMode) {
+        print('Error in Delete in cart is $error');
+      }
       emit(WishListErrorState());
     });
   }
@@ -70,7 +75,6 @@ class WishListCubit extends Cubit<WishListState> {
     required dynamic sale_price,
     required String currency,
   }) async {
-    print('Function add to cart is called');
     wishListModel.clear();
     emit(WishListListLoadingState());
     await dioHelper.postData(endPoint: '/api/v1/basket/add_to_basket', body: {
@@ -85,14 +89,20 @@ class WishListCubit extends Cubit<WishListState> {
       "sale_price": sale_price,
       "currency": currency
     }).then((response) {
-      print('Function add to cart is success');
+      if (kDebugMode) {
+        print('Function add to cart is success');
+      }
       response.data['wishlist'].forEach((wish) {
         wishListModel.add(Wishlist2.fromJson(wish));
       });
-      print('Wish LIST LENGTH IN ADD IS ${wishListModel.length}');
+      if (kDebugMode) {
+        print('Wish LIST LENGTH IN ADD IS ${wishListModel.length}');
+      }
       emit(WishListListSuccessState());
     }).catchError((error) {
-      print('Error in add to cart is $error');
+      if (kDebugMode) {
+        print('Error in add to cart is $error');
+      }
       emit(WishListErrorState());
     });
   }

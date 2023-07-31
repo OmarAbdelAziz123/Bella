@@ -6,16 +6,13 @@ import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
 import 'package:bella/features/auth/data/models/DetailsErrorModel.dart';
 import 'package:bella/features/auth/data/models/LoggedModel.dart';
 import 'package:bella/features/layout/home/data/models/read_credit_card_model.dart';
-import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import '../data/data_provider/local/cach_keys.dart';
 import '../data/models/chech_model.dart';
-
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -32,22 +29,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   ReadCreditCardModel readCreditCardModel = ReadCreditCardModel();
 
-  // List<LinkedCards> linkedCard = [];
-
-  // String tok = '';
-
-  // Future<void> testFunc() async {
-  //   emit(TestLoadingState());
-  //   await dioHelper.getData(endPoint: 'https://dummyjson.com/products/').then((value) {
-  //     print(value.data['total']);
-  //     MyCache.putInt(key: CacheKeys.total, value: value.data['total']);
-  //     emit(TestSuccessState());
-  //   }).catchError((error) {
-  //     print(error);
-  //     emit(TestErrorState());
-  //   });
-  // }
-
   Future<void> loginBank(BuildContext context) async {
     emit(LoginBankLoadingState());
     await dioHelper
@@ -55,15 +36,21 @@ class AuthCubit extends Cubit<AuthState> {
             endPoint:
                 'api/v1/bankid/auth/${MyCache.getString(key: CacheKeys.ipAddress)}')
         .then((response) {
-      print('Response in Login Bank $response');
+      if (kDebugMode) {
+        print('Response in Login Bank $response');
+      }
       MyCache.putString(
           key: CacheKeys.orderID, value: response.data['orderRef']);
-      print('-------');
-      print('The Response is ${response.data}');
-      print(response.data['autoStartToken']);
+      if (kDebugMode) {
+        print('-------');
+        print('The Response is ${response.data}');
+        print(response.data['autoStartToken']);
+      }
       MyCache.putString(
           key: CacheKeys.tok, value: response.data['autoStartToken']);
-      print('-------');
+      if (kDebugMode) {
+        print('-------');
+      }
       emit(LoginBankSuccessState(
           loginBank: response.data['autoStartToken'],
           logged: loggedBank(context)));
@@ -86,15 +73,18 @@ class AuthCubit extends Cubit<AuthState> {
                 'api/v1/accounts/user/${MyCache.getString(key: CacheKeys.user_Id)}')
         .then((response) {
       MyCache.putString(key: CacheKeys.userId, value: response.data['id']);
-      // MyCache.putString(key: CacheKeys.emailVerified, value: response.data['email_verified'].toString());
       MyCache.putBoolean(
           key: CacheKeys.emailVerified, value: response.data['email_verified']);
       MyCache.putString(
           key: CacheKeys.firstName, value: response.data['first_name']);
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       emit(CreateIdAndSuccessState());
     }).catchError((error) {
-      print('Error in Create Id and ... is $error');
+      if (kDebugMode) {
+        print('Error in Create Id and ... is $error');
+      }
       emit(CreateIdAndErrorState());
     });
   }
@@ -105,23 +95,33 @@ class AuthCubit extends Cubit<AuthState> {
       'social_security_number':
           MyCache.getString(key: CacheKeys.personalNumber),
     }).then((response) {
-      print('The Response of Check Exist is ${response.data}');
+      if (kDebugMode) {
+        print('The Response of Check Exist is ${response.data}');
+      }
       MyCache.putString(
           key: CacheKeys.user_Id, value: response.data['user_id']);
-      print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
-      print(MyCache.getString(key: CacheKeys.user_Id));
-      print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
+      if (kDebugMode) {
+        print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
+        print(MyCache.getString(key: CacheKeys.user_Id));
+        print('uuuuuuuuuuuuuusssssssssssssssssseeeeeeer id');
+      }
       emit(CheckVerificationCodeSuccessState());
 
       /// Create New Func ///
       getUserDetails();
       isExist = true;
-      print(isExist);
+      if (kDebugMode) {
+        print(isExist);
+      }
     }).catchError((error) {
-      print('Have Error in Check Exist or Not is $error');
+      if (kDebugMode) {
+        print('Have Error in Check Exist or Not is $error');
+      }
       emit(CheckVerificationCodeErrorState());
       isExist = false;
-      print(isExist);
+      if (kDebugMode) {
+        print(isExist);
+      }
     });
   }
 
@@ -130,7 +130,9 @@ class AuthCubit extends Cubit<AuthState> {
         endPoint:
             'api/v1/bankid/collect/${MyCache.getString(key: CacheKeys.orderID)}',
         body: {}).then((response) async {
-      print('Response in Login Bank $response');
+      if (kDebugMode) {
+        print('Response in Login Bank $response');
+      }
       if (response.data['status'] == 'complete') {
         emit(
           LoggedBankSuccessState(
@@ -143,30 +145,38 @@ class AuthCubit extends Cubit<AuthState> {
           key: CacheKeys.personalNumber,
           value: response.data['user']['personalNumber'],
         );
-        print(
+        if (kDebugMode) {
+          print(
             'The Personal Number is ${MyCache.getString(key: CacheKeys.personalNumber)}');
+        }
 
         /// Full Name
         MyCache.putString(
           key: CacheKeys.fullName,
           value: response.data['user']['name'],
         );
-        print('The Full Name is ${MyCache.getString(key: CacheKeys.fullName)}');
+        if (kDebugMode) {
+          print('The Full Name is ${MyCache.getString(key: CacheKeys.fullName)}');
+        }
 
         /// First Name
         MyCache.putString(
           key: CacheKeys.firstName,
           value: response.data['user']['givenName'],
         );
-        print(
+        if (kDebugMode) {
+          print(
             'The First Name is ${MyCache.getString(key: CacheKeys.firstName)}');
+        }
 
         /// Last Name
         MyCache.putString(
           key: CacheKeys.lastName,
           value: response.data['user']['surname'],
         );
-        print('The Last Name is ${MyCache.getString(key: CacheKeys.lastName)}');
+        if (kDebugMode) {
+          print('The Last Name is ${MyCache.getString(key: CacheKeys.lastName)}');
+        }
 
         /// Success 200
 
@@ -181,11 +191,9 @@ class AuthCubit extends Cubit<AuthState> {
           Navigator.pushReplacementNamed(context, 'signup-screen');
         }
       } else if (response.data['status'] == 'pending') {
-        // sleep(const Duration(seconds: 2));
         await BlocProvider.of<AuthCubit>(context).loggedBank(context);
       } else if (response.data['status'] == 'failed') {
         sleep(const Duration(seconds: 2));
-        // Navigator.pushNamed(context, 'check-screen');
         Navigator.pushNamed(context, 'on-boarding-screen');
         AppConstants.showMyDialogError(context);
       }
@@ -207,37 +215,40 @@ class AuthCubit extends Cubit<AuthState> {
     }).then((response) {
       MyCache.putString(key: CacheKeys.phone_number, value: phone);
       MyCache.putString(key: CacheKeys.email, value: email);
-      print('Phone is ${MyCache.getString(key: CacheKeys.phone_number)}');
-      print('Email is ${MyCache.getString(key: CacheKeys.email)}');
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       emit(RegisterSuccessState());
     }).catchError((error) {
-      print('Have Error in Register is $error');
+      if (kDebugMode) {
+        print('Have Error in Register is $error');
+      }
       emit(RegisterErrorState());
     });
   }
 
   Future<void> createVerificationCode(String mobileNumber) async {
     emit(CreateVerificationCodeLoadingState());
-    print('Before');
-    print(mobileNumber);
     await dioHelper.postData(
         endPoint: '/api/v1/accounts/create_phone_verification',
         body: {
           'phone_number': '+20$mobileNumber',
         }).then((response) {
-      print('IN');
-      print('IN');
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       if (response.statusCode == 200) {
         emit(CreateVerificationCodeSuccessState());
       } else if (response.statusCode == 400) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
         emit(CreateVerificationCodeErrorState());
       }
     }).catchError((error) {
-      print('After');
-      print('Error in Create Verification is $error');
+      if (kDebugMode) {
+        print('Error in Create Verification is $error');
+      }
       emit(CreateVerificationCodeErrorState());
     });
   }
@@ -250,18 +261,16 @@ class AuthCubit extends Cubit<AuthState> {
       'otp_code': otbNumber,
       'mobile_number': mobileNumber,
     }).then((response) {
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       checkVerificationCodeModel =
           CheckVerificationCodeModel.fromJson(response.data);
-      // if(checkVerificationCodeModel == 'approved') {
-      //   Navigator.pushReplacementNamed(context, 'layout-screen');
-      //   emit(CheckVerificationCodeSuccessState());
-      // } else if(checkVerificationCodeModel == 'pending') {
-      //   emit(CheckVerificationCodeErrorState());
-      // }
       emit(CheckVerificationCodeSuccessState());
     }).catchError((error) {
-      print('Error in Check Verification is $error');
+      if (kDebugMode) {
+        print('Error in Check Verification is $error');
+      }
       emit(CheckVerificationCodeErrorState());
     });
   }
@@ -283,20 +292,26 @@ class AuthCubit extends Cubit<AuthState> {
       "email": email,
       "phone_number": phone_number,
     }).then((response) {
-      print(response.data);
-      print('--------------------');
-      print(response.data['email_verified']);
+      if (kDebugMode) {
+        print(response.data);
+        print('--------------------');
+        print(response.data['email_verified']);
+      }
       MyCache.putBoolean(
           key: CacheKeys.emailVerified, value: response.data['email_verified']);
       MyCache.putString(
           key: CacheKeys.userId, value: response.data['id'].toString());
-      print(MyCache.getBoolean(
-          key: CacheKeys.emailVerified, defaultValue: false));
-      print(MyCache.getString(key: CacheKeys.userId));
-      print('--------------------');
+      if (kDebugMode) {
+        print(MyCache.getBoolean(
+            key: CacheKeys.emailVerified, defaultValue: false));
+        print(MyCache.getString(key: CacheKeys.userId));
+        print('--------------------');
+      }
       emit(CreateSuccessState());
     }).catchError((error) {
-      print('Error in Create is $error');
+      if (kDebugMode) {
+        print('Error in Create is $error');
+      }
       emit(CreateErrorState());
     });
   }
@@ -308,16 +323,17 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AddCreditCardLoadingState());
     await dioHelper.postData(endPoint: 'api/v1/credit_card/', body: {
       "user_id": MyCache.getString(key: CacheKeys.userId),
-      // "user_id": MyCache.getString(key: CacheKeys.userId),
       "credit_card_number": credit_card_number,
-      // "credit_card_number": credit_card_number,
       "expiry_date": expiry_date,
-      // "expiry_date": expiry_date,
     }).then((response) {
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       emit(AddCreditCardSuccessState());
     }).catchError((error) {
-      print('Error in Add Credit Card is $error');
+      if (kDebugMode) {
+        print('Error in Add Credit Card is $error');
+      }
       emit(AddCreditCardErrorState());
     });
   }
@@ -329,11 +345,15 @@ class AuthCubit extends Cubit<AuthState> {
             endPoint:
                 'api/v1/credit_card/${MyCache.getString(key: CacheKeys.userId)}')
         .then((response) {
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       readCreditCardModel = ReadCreditCardModel.fromJson(response.data);
       emit(ReadCreditCardSuccessState());
     }).catchError((error) {
-      print('Error in Read Credit card is $error');
+      if (kDebugMode) {
+        print('Error in Read Credit card is $error');
+      }
       emit(ReadCreditCardErrorState());
     });
   }

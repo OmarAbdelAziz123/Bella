@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/login_button_widget.dart';
@@ -8,10 +7,10 @@ import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -23,60 +22,6 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen>
     with TickerProviderStateMixin {
-  // Widget dotPageView() {
-  //   return Builder(
-  //     builder: (context) {
-  //       return Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           for (int i = 0; i < images.length; i++)
-  //             Container(
-  //               margin: EdgeInsets.symmetric(horizontal: 4.w),
-  //               width: 84.w,
-  //               height: 4.h,
-  //               decoration: BoxDecoration(
-  //                 color: i == pageNumber ? AppColors.black3Color : AppColors.black3Color.withOpacity(0.20),
-  //                 borderRadius: BorderRadius.circular(400.r),
-  //               ),
-  //             ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  Widget dotPageView(PageController pageController) {
-    return Builder(
-      builder: (context) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int i = 0; i < images.length; i++)
-              GestureDetector(
-                onTap: () {
-                  pageController.animateToPage(
-                    i,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 4.w),
-                  width: 84.w,
-                  height: 4.h,
-                  decoration: BoxDecoration(
-                    color: i <= pageNumber
-                        ? AppColors.black3Color
-                        : AppColors.black3Color.withOpacity(0.20),
-                    borderRadius: BorderRadius.circular(400.r),
-                  ),
-                ),
-              ),
-          ],
-        );
-      },
-    );
-  }
 
   int pageNumber = 0;
 
@@ -85,7 +30,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   @override
   void initState() {
     super.initState();
-    // start a timer to automatically slide to the next page after 2 seconds
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if (pageNumber == 0) {
         nextPage.animateToPage(1,
@@ -113,12 +57,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
           AppConstants.launchURL(state.loginBank);
           sleep(const Duration(seconds: 2));
         } else if (state is LoginBankErrorState) {
-          print('error');
+          if (kDebugMode) {
+            print('error');
+          }
         }
       },
       builder: (context, state) {
-        var cubit = AuthCubit.get(context);
-
         return Scaffold(
           backgroundColor: AppColors.bgColor,
           body: SafeArea(
@@ -129,7 +73,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 Expanded(
                   child: NotificationListener<OverscrollIndicatorNotification>(
                     onNotification: (overscroll) {
-                      overscroll.disallowGlow();
+                      overscroll.disallowIndicator();
                       return false;
                     },
                     child: PageView.builder(
@@ -162,7 +106,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                                   ),
                                 ),
                               ),
-                              // Text(texts[index], height: 280.h, s),
                               SizedBox(height: 42.h),
                               pageNumber == 0
                                   ? Container()
@@ -285,6 +228,39 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Widget dotPageView(PageController pageController) {
+    return Builder(
+      builder: (context) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < images.length; i++)
+              GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(
+                    i,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  width: 84.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: i <= pageNumber
+                        ? AppColors.black3Color
+                        : AppColors.black3Color.withOpacity(0.20),
+                    borderRadius: BorderRadius.circular(400.r),
+                  ),
+                ),
+              ),
+          ],
         );
       },
     );

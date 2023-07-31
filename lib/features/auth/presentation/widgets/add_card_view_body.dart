@@ -1,9 +1,9 @@
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
-import 'package:bella/features/auth/presentation/widgets/widgets/text_form_fiel_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCardViewBody extends StatefulWidget {
-  AddCardViewBody({Key? key}) : super(key: key);
+  const AddCardViewBody({Key? key}) : super(key: key);
 
   @override
   State<AddCardViewBody> createState() => _AddCardViewBodyState();
@@ -32,15 +32,18 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
 
   bool visible = false;
 
-  //Navigator.pushReplacementNamed(
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AddCreditCardSuccessState) {
-          print('Success');
+          if (kDebugMode) {
+            print('Success');
+          }
         } else if (state is AddCreditCardErrorState) {
-          print('Error');
+          if (kDebugMode) {
+            print('Error');
+          }
         }
       },
       builder: (context, state) {
@@ -73,59 +76,6 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                 ),
               ),
               SizedBox(height: 14.h),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-              //   child: TextFormField(
-              //       controller: creditCardController,
-              //       cursorColor: AppColors.primaryColor,
-              //       keyboardType: TextInputType.number,
-              //       style: AppFonts.bodyDefault
-              //           .copyWith(color: AppColors.black3Color, height: 1.5.h),
-              //       decoration: InputDecoration(
-              //         contentPadding:
-              //             EdgeInsets.only(left: 16.w, top: 20.h, bottom: 20.h),
-              //         filled: true,
-              //         fillColor: AppColors.whiteColor.withOpacity(0.9),
-              //         hintText: '4539 5534 0002 0169',
-              //         hintStyle: AppFonts.bodyDefault.copyWith(
-              //           color: AppColors.black2Color,
-              //         ),
-              //         focusedBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10.r),
-              //           borderSide: BorderSide(
-              //             color: AppColors.primaryColor,
-              //             width: 1.w,
-              //           ),
-              //         ),
-              //         border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10.r),
-              //           borderSide: BorderSide(
-              //             color: AppColors.greyColor,
-              //             width: 1.w,
-              //           ),
-              //         ),
-              //         enabledBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10.r),
-              //           borderSide: BorderSide(
-              //             color: AppColors.greyColor,
-              //             width: 1.w,
-              //           ),
-              //         ),
-              //         errorBorder: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(10.r),
-              //           borderSide: BorderSide(
-              //             color: AppColors.errorColor,
-              //             width: 1.w,
-              //           ),
-              //         ),
-              //       ),
-              //       onChanged: (value) {
-              //         if (value.length == 14) {
-              //           // when two digits are entered, set the focus to the year TextFormField
-              //           yearFocusNode.requestFocus();
-              //         }
-              //       }),
-              // ),
               /// Card Number
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -145,6 +95,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                         return 'Please enter a valid card number';
                       }
                     }
+                    return null;
                   },
                   decoration: InputDecoration(
                     contentPadding:
@@ -184,23 +135,9 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                       ),
                     ),
                   ),
-                  // onChanged: (value) {
-                  //   String formattedValue = value.replaceAll(RegExp(r'\D'), '');
-                  //   // Remove all non-digits
-                  //   if (formattedValue.length > 0) {
-                  //     formattedValue = formattedValue.replaceAllMapped(
-                  //       RegExp(r'.{4}'),
-                  //           (match) => '${match.group(0)} ',
-                  //     ); // Add a space after every 4 digits
-                  //   }
-                  //   creditCardController.value = TextEditingValue(
-                  //     text: formattedValue,
-                  //     selection: TextSelection.collapsed(offset: formattedValue.length),
-                  //   );
-                  // },
                   onChanged: (value) {
                     String formattedValue = value.replaceAll(RegExp(r'\D'), '');
-                    if (formattedValue.length > 0) {
+                    if (formattedValue.isNotEmpty) {
                       formattedValue = formattedValue.replaceAllMapped(
                         RegExp(r'.{4}'),
                             (match) => '${match.group(0)} ',
@@ -353,28 +290,9 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                     if (key.currentState!.validate()) {
                       cubit.addCreditCard(
                           credit_card_number: creditCardController.text,
-                          expiry_date: '$monthController/$yearController');
+                          expiry_date: yearController.text);
                       Navigator.pushNamed(context, 'well-done-screen');
-                    //   setState(() {});
-                    //   if (verifyKey.currentState!.validate()) {
-                    //     BlocProvider.of<AuthCubit>(context).createFun(
-                    //       social_security_number: personalNumber,
-                    //       email: email,
-                    //       first_name: firstName,
-                    //       full_name: fullName,
-                    //       phone_number: phoneNumber,
-                    //       surname: lastName,
-                    //     );
-                    //     setState(() {
-                    //       showErrorText = true;
-                    //     });
-                    //   } else {
-                    //     setState(() {
-                    //       showErrorText = false;
-                    //     });
-                    //   }
                     }
-
                   },
                 ),
               ),

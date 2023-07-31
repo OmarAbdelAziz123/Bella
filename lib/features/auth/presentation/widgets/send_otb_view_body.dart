@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks, null_check_always_fails
+// ignore_for_file: unrelated_type_equality_checks, null_check_always_fails, must_be_immutable
 import 'dart:async';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-import 'check_view_body.dart';
 
 class SendOTBViewBody extends StatefulWidget {
   SendOTBViewBody({Key? key}) : super(key: key);
@@ -119,10 +118,8 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
           key: verifyKey,
           child: Center(
             child: SizedBox(
-              // height: MediaQuery.of(context).size.height / 1.15,
               child: Column(
                 children: [
-                  // SizedBox(height: 13.h),
                   Text(
                     'Verify your mobile number',
                     style: AppFonts.titleSubsection,
@@ -227,8 +224,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                         }
                         Navigator.pushReplacementNamed(
                             context, 'add-card-screen');
-                        // Navigator.pushReplacementNamed(
-                        //     context, 'well-done-screen');
                       },
                     ),
                   ),
@@ -270,17 +265,6 @@ class _SendOTBViewBodyState extends State<SendOTBViewBody> {
                                 ? 'Resend code ($_counter) '
                                 : 'Resend code ',
                             overflow: TextOverflow.clip,
-                            // style: GoogleFonts.inter(
-                            //   height: 1.h,
-                            //   fontWeight: FontWeight.bold,
-                            //   decoration: _isButtonDisabled
-                            //       ? TextDecoration.none
-                            //       : TextDecoration.underline,
-                            //   color: _isButtonDisabled
-                            //       ? AppColors.black3Color
-                            //       : AppColors.primaryColor,
-                            //   fontSize: 18.sp,
-                            // ),
                             style: AppFonts.bodyLarge.copyWith(
                               color: _isButtonDisabled
                                   ? AppColors.blackColor

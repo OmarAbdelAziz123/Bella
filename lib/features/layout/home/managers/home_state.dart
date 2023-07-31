@@ -69,3 +69,10 @@ class CompanyProfileLoadingState extends HomeState {}
 class CompanyProfileSuccessState extends HomeState {}
 
 class CompanyProfileErrorState extends HomeState {}
+
+/// Reset
+class ResetLoadingState extends HomeState {}
+
+class ResetSuccessState extends HomeState {}
+
+class ResetErrorState extends HomeState {}

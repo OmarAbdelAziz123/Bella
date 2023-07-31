@@ -1,11 +1,8 @@
-import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
-import 'package:bella/features/auth/presentation/widgets/widgets/login_button_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WellDoneViewBody extends StatelessWidget {
   const WellDoneViewBody({Key? key}) : super(key: key);

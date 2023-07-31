@@ -40,7 +40,6 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       const Duration(seconds: 1),
       () {
         Navigator.pushReplacementNamed(context, 'on-boarding-screen');
-        // Navigator.pushReplacementNamed(context, 'check-screen');
       },
     );
   }

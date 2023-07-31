@@ -1,14 +1,10 @@
-import 'package:bella/features/layout/home/presentation/widgets/products_in_company_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/company_profile_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
-import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_recommended_products.dart';
-import 'package:bella/features/layout/home/presentation/widgets/widgets/hero_container.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
-import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CompanyDetailsViewBody extends StatefulWidget {
   const CompanyDetailsViewBody({Key? key}) : super(key: key);
@@ -105,25 +101,6 @@ class _CompanyDetailsViewBodyState extends State<CompanyDetailsViewBody> {
             ),
           ],
         ),
-        // CustomRecommendedProducts(
-        //   logoOfCompany: AppAssets.starbucks,
-        //   imageOfProduct: AppAssets.img1,
-        //   title: 'Holiday Blend',
-        //   description: 'Roast',
-        //   currency: 'kr',
-        //   regularPrice: 170,
-        //   salePrice: 120,
-        //   onTap: () {},
-        //   customMemberOnly: const CustomMemberOnly(),
-        //   onTapAddToCart: () {},
-        //   widget: SvgPicture.asset(
-        //     AppAssets.add,
-        //     width: 12.46.w,
-        //     height: 12.46.h,
-        //     color: AppColors.primaryColor,
-        //   ),
-        //   buttonColor: AppColors.whiteColor,
-        // ),
         Container(
           height: 284.h,
           width: 170.w,
@@ -159,7 +136,6 @@ class _CompanyDetailsViewBodyState extends State<CompanyDetailsViewBody> {
                     ),
                     Positioned(
                       top: 19.h,
-                      // bottom: 19.h,
                       right: 14.w,
                       left: 14.w,
                       child: Image.asset(
@@ -208,7 +184,6 @@ class _CompanyDetailsViewBodyState extends State<CompanyDetailsViewBody> {
                           ],
                         ),
                         padding: EdgeInsets.symmetric(
-                          // horizontal: 7.w,
                           vertical: 8.4.w,
                         ),
                         child: widget,
@@ -217,10 +192,10 @@ class _CompanyDetailsViewBodyState extends State<CompanyDetailsViewBody> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: 12.h,
-                        // bottom: 2.h,
-                        left: 12.w,
-                        right: 12.h),
+                      top: 12.h,
+                      left: 12.w,
+                      right: 12.h,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -253,13 +228,6 @@ class _CompanyDetailsViewBodyState extends State<CompanyDetailsViewBody> {
                           children: [
                             Text(
                               '170 kr',
-                              // style: GoogleFonts.inter(
-                              //   color: AppColors.grey9Color,
-                              //   decoration: TextDecoration.lineThrough,
-                              //   height: 1.h,
-                              //   fontWeight: FontWeight.w400,
-                              //   fontSize: 12.sp,
-                              // ),
                               style: AppFonts.strickedText.copyWith(
                                 color: AppColors.grey9Color,
                                 fontSize: 12.sp,

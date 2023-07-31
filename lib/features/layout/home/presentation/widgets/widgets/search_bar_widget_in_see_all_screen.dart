@@ -63,10 +63,6 @@ class SearchBarWidgetInSeeAllScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 13.h),
             child: SvgPicture.asset(AppAssets.searchIcon, width:18.w, height: 18.h, ),
           ),
-          // suffixIcon: Container(
-          //   padding: EdgeInsets.symmetric(vertical: 1.6.h),
-          //   child: SvgPicture.asset(AppAssets.actionsInSearchIcon),
-          // ),
         ),
       ),
     );

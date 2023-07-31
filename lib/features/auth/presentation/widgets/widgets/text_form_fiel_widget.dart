@@ -2,7 +2,6 @@ import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final String hintText;
@@ -16,7 +15,6 @@ class TextFormFieldWidget extends StatelessWidget {
       style: AppFonts.bodyDefault.copyWith(
         color: AppColors.black2Color,
       ),
-      // style: TextStyle(fontSize: 14.sp, color: AppColors.black3Color),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.whiteColor.withOpacity(0.9),

@@ -8,8 +8,8 @@ class CheckModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['has_joined'] = this.hasJoined;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['has_joined'] = hasJoined;
     return data;
   }
 }

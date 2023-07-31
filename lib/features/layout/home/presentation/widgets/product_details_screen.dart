@@ -37,26 +37,10 @@ class ProductDetailsScreen extends StatelessWidget {
               AppAssets.container_close,
               width: 17.9.w,
               height: 11.3.h,
-              // color: Colors.black,
             ),
           ),
         ),
         actions: [
-          //     Container(
-          //       width: 40.h,
-          //       height: 40.h,
-          //       // padding: EdgeInsets.only(right: 20.w, top: 10.h, bottom: 8.h),
-          //       decoration: BoxDecoration(
-          //         // shape: BoxShape.circle,
-          //         borderRadius: BorderRadius.circular(40.r),
-          //       ),
-          //       child: AppConstants.showNetworkImage(
-          //         image: product!.company_logo!,
-          //         width: 40.h,
-          //         height: 40.h,
-          //         fit: BoxFit.cover,
-          //       ),
-          //     ),
           CircleAvatar(
             radius: 40.r,
             backgroundColor: AppColors.bgColor,
@@ -95,7 +79,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ? const CustomMemberOnly()
                   : Container(),
               SizedBox(height: 8.h),
-              CustomContainerInProductDetails(),
+              const CustomContainerInProductDetails(),
               SizedBox(height: 32.h),
               Text(
                 product!.title!,

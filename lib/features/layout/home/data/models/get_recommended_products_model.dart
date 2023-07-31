@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class GetRecommendedProductsModel {
   List<RecommendedProducts>? recommendedProducts;
 
@@ -7,16 +9,16 @@ class GetRecommendedProductsModel {
     if (json['recommended_products'] != null) {
       recommendedProducts = <RecommendedProducts>[];
       json['recommended_products'].forEach((v) {
-        recommendedProducts!.add(new RecommendedProducts.fromJson(v));
+        recommendedProducts!.add(RecommendedProducts.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.recommendedProducts != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (recommendedProducts != null) {
       data['recommended_products'] =
-          this.recommendedProducts!.map((v) => v.toJson()).toList();
+          recommendedProducts!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -78,7 +80,7 @@ class RecommendedProducts {
     description = json['description'];
     categories = json['categories'].cast<String>();
     pricing =
-    json['pricing'] != null ? new Pricing.fromJson(json['pricing']) : null;
+    json['pricing'] != null ? Pricing.fromJson(json['pricing']) : null;
     membersOnly = json['members_only'];
     availability = json['availability'];
     validFrom = json['valid_from'];
@@ -97,31 +99,31 @@ class RecommendedProducts {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['company_id'] = this.companyId;
-    data['store_id'] = this.storeId;
-    data['image_links'] = this.imageLinks;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['categories'] = this.categories;
-    if (this.pricing != null) {
-      data['pricing'] = this.pricing!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['company_id'] = companyId;
+    data['store_id'] = storeId;
+    data['image_links'] = imageLinks;
+    data['title'] = title;
+    data['description'] = description;
+    data['categories'] = categories;
+    if (pricing != null) {
+      data['pricing'] = pricing!.toJson();
     }
-    data['members_only'] = this.membersOnly;
-    data['availability'] = this.availability;
-    data['valid_from'] = this.validFrom;
-    data['valid_to'] = this.validTo;
-    data['channels'] = this.channels;
-    data['type'] = this.type;
-    data['company_display_name'] = this.company_display_name;
-    data['company_logo'] = this.company_logo;
-    data['id'] = this.id;
-    data['_rid'] = this.sRid;
-    data['_self'] = this.sSelf;
-    data['_etag'] = this.sEtag;
-    data['_attachments'] = this.sAttachments;
-    data['_ts'] = this.iTs;
-    data['valid_from '] = this.validFrom;
+    data['members_only'] = membersOnly;
+    data['availability'] = availability;
+    data['valid_from'] = validFrom;
+    data['valid_to'] = validTo;
+    data['channels'] = channels;
+    data['type'] = type;
+    data['company_display_name'] = company_display_name;
+    data['company_logo'] = company_logo;
+    data['id'] = id;
+    data['_rid'] = sRid;
+    data['_self'] = sSelf;
+    data['_etag'] = sEtag;
+    data['_attachments'] = sAttachments;
+    data['_ts'] = iTs;
+    data['valid_from '] = validFrom;
     return data;
   }
 }
@@ -140,10 +142,10 @@ class Pricing {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['regular_price'] = this.regularPrice;
-    data['sale_price'] = this.salePrice;
-    data['currency'] = this.currency;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['regular_price'] = regularPrice;
+    data['sale_price'] = salePrice;
+    data['currency'] = currency;
     return data;
   }
 }

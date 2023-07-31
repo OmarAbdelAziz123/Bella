@@ -1,7 +1,5 @@
 import 'package:bella/features/auth/managers/auth_cubit.dart';
-import 'package:bella/features/auth/presentation/widgets/add_card_view_body.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
-import 'package:bella/features/layout/home/presentation/widgets/my_cards_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
@@ -60,12 +58,10 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AddCreditCardSuccessState) {
-            print('Success');
             BlocProvider.of<AuthCubit>(context).readCreditCard();
             navigateToMyCard(context, controller.text,
                 '${monthController.text}${yearController.text}');
           } else if (state is AddCreditCardErrorState) {
-            print('Error');
           }
         },
         builder: (context, state) {
@@ -168,7 +164,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                     onChanged: (value) {
                       String formattedValue =
                           value.replaceAll(RegExp(r'\D'), '');
-                      if (formattedValue.length > 0) {
+                      if (formattedValue.isNotEmpty) {
                         formattedValue = formattedValue.replaceAllMapped(
                           RegExp(r'.{4}'),
                           (match) => '${match.group(0)} ',
@@ -355,7 +351,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => MyCardView(),
+        pageBuilder: (_, __, ___) => const MyCardView(),
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(

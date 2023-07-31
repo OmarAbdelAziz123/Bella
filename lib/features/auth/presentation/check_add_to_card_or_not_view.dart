@@ -7,7 +7,7 @@ class CheckAddToCardOrNotView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.bgColor,
       body: CheckAddToCardOrNotViewBody(),
     );

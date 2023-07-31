@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 class GetRecommendedModel {
   List<RecommendedCompanies>? recommendedCompanies;
 
@@ -7,16 +8,16 @@ class GetRecommendedModel {
     if (json['companies'] != null) {
       recommendedCompanies = <RecommendedCompanies>[];
       json['companies'].forEach((v) {
-        recommendedCompanies!.add(new RecommendedCompanies.fromJson(v));
+        recommendedCompanies!.add(RecommendedCompanies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.recommendedCompanies != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (recommendedCompanies != null) {
       data['companies'] =
-          this.recommendedCompanies!.map((v) => v.toJson()).toList();
+          recommendedCompanies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -48,13 +49,13 @@ class RecommendedCompanies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['display_name'] = this.displayName;
-    data['logo'] = this.logo;
-    data['category'] = this.category;
-    data['country_code'] = this.countryCode;
-    data['terms_and_conditions'] = this.termsAndConditions;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['display_name'] = displayName;
+    data['logo'] = logo;
+    data['category'] = category;
+    data['country_code'] = countryCode;
+    data['terms_and_conditions'] = termsAndConditions;
     return data;
   }
 }

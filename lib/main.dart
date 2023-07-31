@@ -5,6 +5,7 @@ import 'package:bella/bloc_observer.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/utils/styles/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,16 +30,16 @@ void main() async {
           for (var address in interface.addresses) {
             if (address is InternetAddress && !address.isLinkLocal) {
               MyCache.putString(key: CacheKeys.ipAddress, value: address.address);
-              // if (kDebugMode) {
               //   print('IP address: ${MyCache.getString(key: CacheKeys.ipAddress)}');
-              // }
               return;
             }
           }
         }
       }
     } catch (e) {
-      print('Error getting IP address: $e');
+      if (kDebugMode) {
+        print('Error getting IP address: $e');
+      }
     }
   });
   await MyCache.init();

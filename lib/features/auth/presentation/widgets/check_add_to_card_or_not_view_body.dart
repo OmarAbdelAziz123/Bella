@@ -50,26 +50,6 @@ class CheckAddToCardOrNotViewBody extends StatelessWidget {
             ),
             width: 353.w,
             onTap: () {
-              // if (verifyKey.currentState!.validate()) {
-              //   setState(() {});
-              //   if (verifyKey.currentState!.validate()) {
-              //     BlocProvider.of<AuthCubit>(context).createFun(
-              //       social_security_number: personalNumber,
-              //       email: email,
-              //       first_name: firstName,
-              //       full_name: fullName,
-              //       phone_number: phoneNumber,
-              //       surname: lastName,
-              //     );
-              //     setState(() {
-              //       showErrorText = true;
-              //     });
-              //   } else {
-              //     setState(() {
-              //       showErrorText = false;
-              //     });
-              //   }
-              // }
               Navigator.pushReplacementNamed(context, 'add-card-screen');
             },
           ),
@@ -87,26 +67,6 @@ class CheckAddToCardOrNotViewBody extends StatelessWidget {
             ),
             width: 353.w,
             onTap: () {
-              // if (verifyKey.currentState!.validate()) {
-              //   setState(() {});
-              //   if (verifyKey.currentState!.validate()) {
-              //     BlocProvider.of<AuthCubit>(context).createFun(
-              //       social_security_number: personalNumber,
-              //       email: email,
-              //       first_name: firstName,
-              //       full_name: fullName,
-              //       phone_number: phoneNumber,
-              //       surname: lastName,
-              //     );
-              //     setState(() {
-              //       showErrorText = true;
-              //     });
-              //   } else {
-              //     setState(() {
-              //       showErrorText = false;
-              //     });
-              //   }
-              // }
               Navigator.pushReplacementNamed(context, 'layout-screen');
             },
             color: AppColors.bgColor,

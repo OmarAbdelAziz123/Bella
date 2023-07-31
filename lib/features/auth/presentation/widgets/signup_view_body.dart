@@ -1,17 +1,14 @@
 // ignore_for_file: unrelated_type_equality_checks
-import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
-import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupViewBody extends StatefulWidget {
@@ -54,32 +51,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
       listener: (context, state) {
         if (state is RegisterSuccessState) {
           Navigator.pushNamed(context, 'send-otb-screen');
-          // if(state is CreateVerificationCodeSuccessState) {
-          //   BlocProvider.of<AuthCubit>(context)
-          //       .createVerificationCode('01027324902');
-          //   // '${MyCache.getString(key: CacheKeys.mobile_number)}');
-          //   Navigator.pushReplacementNamed(
-          //       context, 'send-otb-screen');
-          // // Navigator.pushReplacementNamed(context, 'send-otb-screen');
-          // } else if(state is CreateVerificationCodeErrorState) {
-          //   SnackBar snackBar = const SnackBar(
-          //     content: Text('Create have error'),
-          //     backgroundColor: AppColors.errorColor,
-          //   );
-          //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          // }
-
         } else if (state is RegisterErrorState) {
-          // SnackBar snackBar = const SnackBar(
-          //   content: Text('Email or Phone Number are used'),
-          //   backgroundColor: AppColors.errorColor,
-          // );
-          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
           _showSnackbar();
         }
-        // if(state is RegisterSuccessState) {
-        //   Navigator.pushReplacementNamed(context, 'send-otb-screen');
-        // }
       },
       builder: (context, state) {
         return Form(
@@ -88,7 +62,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.h),
               child: SizedBox(
-                // height: MediaQuery.of(context).size.height / 1.15,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -236,9 +209,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(
-                          // bottom: 19.h,
                           left: 16.w,
-                          // top: 20.h,
                         ),
                         filled: true,
                         fillColor: AppColors.whiteColor.withOpacity(0.9),
@@ -361,12 +332,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                 color: AppColors.errorColor,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () {
-            //     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            //   },
-            //   child: SvgPicture.asset(AppAssets.X, height: 14.h),
-            // ),
             SizedBox(width: 5.w),
           ],
         ),

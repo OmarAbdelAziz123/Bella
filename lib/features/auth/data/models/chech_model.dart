@@ -8,8 +8,8 @@ class CheckVerificationCodeModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['verification_status'] = this.verificationStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['verification_status'] = verificationStatus;
     return data;
   }
 }

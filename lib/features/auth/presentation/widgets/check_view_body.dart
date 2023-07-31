@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'dart:io';
 import 'dart:math';
-import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
-import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/login_button_widget.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -12,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:sizer/sizer.dart';
-
 /// Sizes in Design in this screen
 class ScaleSize {
   static double textScaleFactor(BuildContext context,
@@ -26,8 +22,6 @@ class ScaleSize {
 
 class CheckViewBody extends StatefulWidget {
   CheckViewBody({Key? key}) : super(key: key);
-
-  // bool isClicked = false;
 
   int currentIndex = 0;
 
@@ -58,11 +52,9 @@ class _CheckViewBodyState extends State<CheckViewBody> {
         }
       },
       builder: (context, state) {
-        var cubit = AuthCubit.get(context);
         return SingleChildScrollView(
           child: Center(
             child: SizedBox(
-              // height: MediaQuery.of(context).size.height / 1,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +108,6 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                               : Text(
                                   'Log in with BankID',
                                   style: GoogleFonts.darkerGrotesque(
-                                    // height: 1.h,
                                     color: AppColors.whiteColor,
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.bold,
@@ -125,13 +116,8 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                                   textScaleFactor:
                                       ScaleSize.textScaleFactor(context),
                                 ),
-                          // text: 'Log in with BankID',
                           width: 353.h,
                           onTap: () {
-                            // setState(() {
-                            //   widget.isClicked = true;
-                            //   cubit.testFunc();
-                            // });
                              AppConstants.showMyDialog(context);
                             BlocProvider.of<AuthCubit>(context)
                              .loginBank(context);
@@ -139,7 +125,6 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                     ],
                   ),
                   SizedBox(height: 16.h),
-                  // widget.isClicked == true ? Center(child: Text('Hello')) : Container(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -154,15 +139,6 @@ class _CheckViewBodyState extends State<CheckViewBody> {
                       ),
                     ],
                   ),
-                  // state is TestLoadingState
-                  //     ? CircularProgressIndicator()
-                  //     : Text(
-                  //         MyCache.getInt(key: CacheKeys.total).toString(),
-                  //         style: TextStyle(
-                  //           color: AppColors.primaryColor,
-                  //           fontSize: 50.sp,
-                  //         ),
-                  //       ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

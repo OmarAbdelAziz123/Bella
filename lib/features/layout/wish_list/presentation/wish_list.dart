@@ -1,55 +1,5 @@
-// import 'package:bella/features/layout/home/managers/home_cubit.dart';
-// import 'package:bella/features/layout/wish_list/presentation/widgets/custom_wish_list_when_empty.dart';
-// import 'package:bella/features/layout/wish_list/presentation/widgets/lists_view_body.dart';
-// import 'package:bella/utils/styles/colors.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-//
-// class WishListView extends StatelessWidget {
-//   const WishListView({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (context) =>
-//       HomeCubit()
-//         ..getWishList(),
-//       child: BlocBuilder<HomeCubit, HomeState>(
-//         builder: (context, state) {
-//
-//           return Scaffold(
-//             backgroundColor: AppColors.bgColor,
-//             appBar: AppBar(
-//               title: BlocBuilder<HomeCubit, HomeState>(
-//                 builder: (context, state) {
-//                   print('test ${context.watch<HomeCubit>().wishListModel.length}');
-//                   var cubit = BlocProvider.of<HomeCubit>(context);
-//
-//                   return Text(cubit.wishListModel.length.toString());
-//                 },
-//               ),
-//             ),
-//             // body: state is GetWishListLoadingState
-//             //     ? const SafeArea(
-//             //         child: Center(
-//             //           child: CircularProgressIndicator(
-//             //             color: AppColors.primaryColor,
-//             //           ),
-//             //         ),
-//             //       )
-//             //     : cubit.wishListModel.isEmpty
-//             //         ? const CustomWishListWhenEmpty()
-//             //         : const SafeArea(
-//             //             child: WishListViewBody(),
-//             //           ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+// ignore_for_file: must_be_immutable
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
 import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:bella/features/layout/wish_list/presentation/widgets/custom_wish_list_when_empty.dart';
@@ -62,38 +12,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class WishlistView extends StatefulWidget {
+  const WishlistView({super.key});
+
   @override
   State<WishlistView> createState() => _WishlistViewState();
 }
 
 class _WishlistViewState extends State<WishlistView> {
-  // final Map<String, List<WishlistItem>> groupedByCompany = {};
-
   double total = 0;
 
   @override
   void initState() {
-    // for (var item in BlocProvider.of<HomeCubit>(context).wishListModel) {
-    //   String key = item.companyDisplayName ?? '';
-    //   if (groupedByCompany.containsKey(key)) {
-    //     groupedByCompany[key]!.add(item);
-    //   } else {
-    //     groupedByCompany[key] = [item];
-    //   }
-    // }
-    // total = BlocProvider.of<HomeCubit>(context)
-    //     .wishListModel
-    //     .map((item) => item.salePrice)
-    //     .reduce((a, b) => a + b);
-    //
-    // print('Total is $total');
-    // print('IN Success Added');
-    // BlocProvider.of<HomeCubit>(context).getWishList();
-    // print('IN Success Added');
-    // super.initState();
+    super.initState();
   }
 
   @override
@@ -122,7 +54,6 @@ class _WishlistViewState extends State<WishlistView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // SizedBox(height: 80.h),
                                   Text(
                                     'Wishlist',
                                     style: GoogleFonts.inter(
@@ -177,7 +108,7 @@ class _WishlistViewState extends State<WishlistView> {
                                           ListView.builder(
                                             shrinkWrap: true,
                                             physics:
-                                                NeverScrollableScrollPhysics(),
+                                                const NeverScrollableScrollPhysics(),
                                             itemCount: cubit
                                                 .wishListModel[index]
                                                 .products!
@@ -202,7 +133,8 @@ class _WishlistViewState extends State<WishlistView> {
                                                     color: AppColors.whiteColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            15.r),
+                                                      15.r,
+                                                    ),
                                                   ),
                                                   child: Row(
                                                     children: [
@@ -238,8 +170,12 @@ class _WishlistViewState extends State<WishlistView> {
                                                               cubit
                                                                   .wishListModel[
                                                                       index]
-                                                                  .products![index2].productTitle!,
-                                                              overflow: TextOverflow.ellipsis,
+                                                                  .products![
+                                                                      index2]
+                                                                  .productTitle!,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: AppFonts
                                                                   .bodyLargeBold
                                                                   .copyWith(
@@ -255,7 +191,9 @@ class _WishlistViewState extends State<WishlistView> {
                                                                   .products![
                                                                       index2]
                                                                   .productTitle!,
-                                                              overflow: TextOverflow.ellipsis,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: AppFonts
                                                                   .bodyDefault
                                                                   .copyWith(
@@ -269,12 +207,17 @@ class _WishlistViewState extends State<WishlistView> {
                                                           ],
                                                         ),
                                                       ),
-                                                      Spacer(),
+                                                      const Spacer(),
                                                       Padding(
-                                                        padding: EdgeInsets.only(right: 7.w),
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 7.w),
                                                         child: GestureDetector(
                                                           onTap: () async {
-                                                            AppConstants.showFlushBar(context, 'Item has been removed');
+                                                            AppConstants
+                                                                .showFlushBar(
+                                                                    context,
+                                                                    'Item has been removed');
                                                             await cubit
                                                                 .deleteOneItemInCart(
                                                               id: cubit
@@ -298,7 +241,8 @@ class _WishlistViewState extends State<WishlistView> {
                                                                   BorderRadius
                                                                       .circular(
                                                                           300.r),
-                                                              border: Border.all(
+                                                              border:
+                                                                  Border.all(
                                                                 color: AppColors
                                                                     .grey12Color,
                                                                 width: 1.4.w,
@@ -310,8 +254,10 @@ class _WishlistViewState extends State<WishlistView> {
                                                                     MainAxisAlignment
                                                                         .spaceEvenly,
                                                                 children: [
-                                                                  SvgPicture.asset(
-                                                                    AppAssets.minuse,
+                                                                  SvgPicture
+                                                                      .asset(
+                                                                    AppAssets
+                                                                        .minuse,
                                                                     color: AppColors
                                                                         .black3Color,
                                                                   ),
@@ -541,60 +487,5 @@ class CustomRowShowCompanyName extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class WishListCompanyComponent extends StatelessWidget {
-  String nameOfCompany;
-
-  // List<Wishlist2> list;
-  void Function()? onTap;
-
-  WishListCompanyComponent({
-    Key? key,
-    required this.nameOfCompany,
-    // required this.list,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // List<Widget> _buildChildrenList() {
-    //   List<Widget> children = [];
-    //   double total = 0;
-
-    // total = list.map((item) => item.salePrice).reduce((a, b) => a + b);
-
-    //   children.add(
-    //     CustomRowShowCompanyName(
-    //       nameOfCompany: nameOfCompany,
-    //       savingAmount: total,
-    //     ),
-    //   );
-    //   children.add(SizedBox(height: 16.h));
-    //   for (var product in list) {
-    //     children.add(
-    //       BlocBuilder<HomeCubit, HomeState>(
-    //         builder: (context, state) {
-    //           var cubit = BlocProvider.of<HomeCubit>(context);
-    //           return CustomContainerInCartView(
-    //             onTap: () async {
-    //               cubit.deleteOneItemInCart(id: product.id);
-    //               // await Future.delayed(Duration(seconds: 3));
-    //               // Provider.of<WishlistProvider>(context, listen: false)
-    //               //     .fetchWishlistItems();
-    //             },
-    //             productTitle: product.products![product].productTitle!,
-    //             productImageLink: product.productImageLink,
-    //           );
-    //         },
-    //       ),
-    //     );
-    //   }
-    //   return children;
-    // }
-
-    return Column(
-        // children: ,
-        );
   }
 }

@@ -10,7 +10,7 @@ import 'package:bella/features/layout/wish_list/presentation/wish_list.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +20,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 int currentIndex = 0;
 
 class LayoutView extends StatefulWidget {
+
   LayoutView({Key? key}) : super(key: key);
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -31,7 +32,7 @@ class LayoutView extends StatefulWidget {
 class _LayoutViewState extends State<LayoutView> {
   List<Widget> tabs = [
     const HomeView(),
-    const MyBrandsView(),
+    MyBrandsView(),
     const ScanView(),
     const OffersView(),
     WishlistView(),
@@ -40,18 +41,9 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   void initState() {
     super.initState();
-    // context.read<WishlistProvider>().fetchWishlistItems();
     BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
     BlocProvider.of<MyBrandsCubit>(context).notJoinedFunction(context);
-    // BlocProvider.of<HomeCubit>(context).getRecommended();
     BlocProvider.of<HomeCubit>(context).getAllCompanies();
-    // BlocProvider.of<WishListCubit>(context).getWishList();
-  }
-
-  @override
-  void dispose() {
-    // qrViewController?.dispose();
-    super.dispose();
   }
 
   var getResult = 'QR Code Result';
@@ -71,11 +63,6 @@ class _LayoutViewState extends State<LayoutView> {
           }
           if (index == 2) {
             BlocProvider.of<ScanCubit>(context).scanQRCode();
-          }
-          if (index == 4) {
-            print('In Layout');
-            // await BlocProvider.of<HomeCubit>(context).getWishList();
-            // print('Wish list in cubit is ${BlocProvider.of<HomeCubit>(context).wishListModel.length}');
           }
           setState(() {
             currentIndex = index;
@@ -144,7 +131,7 @@ class _LayoutViewState extends State<LayoutView> {
             );
           case 1:
             return CupertinoTabView(
-              builder: (context) => const MyBrandsView(),
+              builder: (context) => MyBrandsView(),
             );
           case 2:
             return CupertinoTabView(
@@ -174,8 +161,10 @@ class _LayoutViewState extends State<LayoutView> {
       setState(() {
         getResult = qrCode;
       });
-      print("QRCode_Result:--");
-      print(qrCode);
+      if (kDebugMode) {
+        print("QRCode_Result:--");
+        print(qrCode);
+      }
     } on PlatformException {
       getResult = 'Failed to scan QR Code.';
     }

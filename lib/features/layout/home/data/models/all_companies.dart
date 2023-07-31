@@ -9,16 +9,16 @@ class AllCompaniesModel {
     if (json['companies'] != null) {
       allCompanies = <AllCompanies>[];
       json['companies'].forEach((v) {
-        allCompanies!.add(new AllCompanies.fromJson(v));
+        allCompanies!.add(AllCompanies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.allCompanies != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (allCompanies != null) {
       data['companies'] =
-          this.allCompanies!.map((v) => v.toJson()).toList();
+          allCompanies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -51,13 +51,13 @@ class AllCompanies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['display_name'] = this.displayName;
-    data['logo'] = this.logo;
-    data['category'] = this.category;
-    data['country'] = this.country_code;
-    data['terms_and_conditions'] = this.terms_and_conditions;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['display_name'] = displayName;
+    data['logo'] = logo;
+    data['category'] = category;
+    data['country'] = country_code;
+    data['terms_and_conditions'] = terms_and_conditions;
     return data;
   }
 }

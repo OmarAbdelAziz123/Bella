@@ -17,7 +17,9 @@ class CompanyDetailsView extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      body: SafeArea(child: CompanyDetailsViewBody()),
+      body: const SafeArea(
+        child: CompanyDetailsViewBody(),
+      ),
     );
   }
 }

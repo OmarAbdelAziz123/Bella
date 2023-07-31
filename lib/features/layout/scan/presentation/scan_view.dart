@@ -5,7 +5,6 @@ import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class ScanView extends StatelessWidget {
@@ -15,14 +14,11 @@ class ScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<ScanCubit, ScanState>(
       listener: (context, state) {
         if (state is San2SuccessState) {
           BlocProvider.of<ScanCubit>(context).getScanFunction(context);
-        } else if (state is San2ErrorState) {
-          print('Error in Scan');
-        }
+        } else if (state is San2ErrorState) {}
       },
       builder: (context, state) {
         return Scaffold(
@@ -32,7 +28,9 @@ class ScanView extends StatelessWidget {
               children: [
                 ColorFiltered(
                   colorFilter: const ColorFilter.mode(
-                      AppColors.primaryColor, BlendMode.srcIn),
+                    AppColors.primaryColor,
+                    BlendMode.srcIn,
+                  ),
                   child: Lottie.asset(
                     AppAssets.scanSquare,
                     height: 350.h,

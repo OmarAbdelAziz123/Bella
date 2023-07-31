@@ -1,46 +1,57 @@
-class CompanyProfile {
-  int? balance;
-  String? unit;
-  int? start;
-  int? end;
-  String? validTo;
-  String? programType;
-  List<Milestones>? milestones;
+// ignore_for_file: non_constant_identifier_names
 
-  CompanyProfile(
-      {this.balance,
-        this.unit,
-        this.start,
-        this.end,
-        this.validTo,
-        this.programType,
-        this.milestones});
+class CompanyProfile {
+  int? balance = 0;
+  bool? has_joined = false;
+  String? unit = '';
+  int? start = 0;
+  int? end = 0;
+  String? validTo = '';
+  String? programType = '';
+  bool? has_loyalty_program = false;
+  List<Milestones>? milestones = [];
+
+  CompanyProfile({
+    this.balance,
+    this.unit,
+    this.start,
+    this.has_joined,
+    this.end,
+    this.validTo,
+    this.programType,
+    this.has_loyalty_program,
+    this.milestones,
+  });
 
   CompanyProfile.fromJson(Map<String, dynamic> json) {
     balance = json['balance'];
     unit = json['unit'];
-    start = json['start'];
-    end = json['end'];
+    has_joined = json['has_joined'];
+    start = json['start'] ?? 0;
+    end = json['end'] ?? 0;
     validTo = json['valid_to'];
     programType = json['program_type'];
+    has_loyalty_program = json['has_loyalty_program'];
     if (json['milestones'] != null) {
       milestones = <Milestones>[];
       json['milestones'].forEach((v) {
-        milestones!.add(new Milestones.fromJson(v));
+        milestones!.add(Milestones.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['balance'] = this.balance;
-    data['unit'] = this.unit;
-    data['start'] = this.start;
-    data['end'] = this.end;
-    data['valid_to'] = this.validTo;
-    data['program_type'] = this.programType;
-    if (this.milestones != null) {
-      data['milestones'] = this.milestones!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['balance'] = balance;
+    data['unit'] = unit;
+    data['has_joined'] = has_joined;
+    data['start'] = start;
+    data['end'] = end;
+    data['valid_to'] = validTo;
+    data['program_type'] = programType;
+    data['has_loyalty_program'] = has_loyalty_program;
+    if (milestones != null) {
+      data['milestones'] = milestones!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -60,10 +71,10 @@ class Milestones {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['limit'] = this.limit;
-    data['reached'] = this.reached;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['limit'] = limit;
+    data['reached'] = reached;
     return data;
   }
 }

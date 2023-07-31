@@ -1,11 +1,6 @@
-// ignore_for_file: must_be_immutable
-
-import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
-import 'package:bella/features/auth/data/data_provider/local/cache.dart';
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
-import 'package:bella/features/layout/home/presentation/see_all__view.dart';
 import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
-import 'package:bella/features/layout/my_brands/presentation/final_view_in_join/final_view_in_join.dart';
 import 'package:bella/features/layout/scan/managers/scan_cubit.dart';
 import 'package:bella/features/layout/scan/presentation/final_view_in_scan.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -15,17 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TermsAndConditions extends StatefulWidget {
   String? companyId;
-  dynamic? onTap;
+  dynamic onTap;
   void Function()? onCancelButtonInFinalScreen;
+  dynamic onSuccessButton;
   String? flow;
   String? initialView;
-
-  // String initialScreen;
+  String? initialScreen;
   bool? hasJoined;
 
   TermsAndConditions({
@@ -34,9 +27,10 @@ class TermsAndConditions extends StatefulWidget {
     this.onTap,
     this.flow,
     this.initialView,
-    // this.initialScreen,
     this.onCancelButtonInFinalScreen,
+    this.onSuccessButton,
     this.hasJoined,
+    this.initialScreen,
   }) : super(key: key);
 
   @override
@@ -46,14 +40,12 @@ class TermsAndConditions extends StatefulWidget {
 class _TermsAndConditionsState extends State<TermsAndConditions> {
   final ScrollController controller = ScrollController();
   bool _isButtonEnabled = false;
+  bool userHasJoined = false;
 
   @override
   void initState() {
     super.initState();
     controller.addListener(_scrollListener);
-    print('COMPANY ID');
-    print(MyCache.getString(key: CacheKeys.comp_id));
-    print('COMPANY ID');
     BlocProvider.of<MyBrandsCubit>(context).getTermsAndConditions();
   }
 
@@ -75,9 +67,6 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
   Widget build(BuildContext termsAndConditionsContext) {
     return BlocConsumer<MyBrandsCubit, MyBrandsState>(
       listener: (context, state) {
-        // if(state is GetTermsAndConditionsLoadingState)  {
-        //   BlocProvider.of<MyBrandsCubit>(context).clearTermsAndConditionsState();
-        // }
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<MyBrandsCubit>(context);
@@ -90,34 +79,29 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             height: 160.h,
             width: 393.w,
             padding: EdgeInsets.only(top: 15.h),
-            decoration: const BoxDecoration(
-              color: AppColors.whiteColor,
+            decoration: BoxDecoration(
+              color: userHasJoined == false ? AppColors.whiteColor : Colors.transparent,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 BlocConsumer<ScanCubit, ScanState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     if (state is PostJoinCompanySuccessState) {
-                      print('My Print 1');
-                      BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
-                      BlocProvider.of<MyBrandsCubit>(context)
+                      userHasJoined = true;
+                      await BlocProvider.of<MyBrandsCubit>(context)
+                          .joinedFunction();
+                      await BlocProvider.of<MyBrandsCubit>(context)
                           .notJoinedFunction(context);
-                      BlocProvider.of<HomeCubit>(context).getRecommended();
-                      BlocProvider.of<HomeCubit>(context).getAllCompanies();
-                      print('My Print2');
+                      await BlocProvider.of<HomeCubit>(context)
+                          .getRecommended();
+                      await BlocProvider.of<HomeCubit>(context)
+                          .getAllCompanies();
+                      await BlocProvider.of<HomeCubit>(context)
+                          .companyProfileFunc();
                       if (widget.flow == 'Join') {
-                        Navigator.push(
-                          termsAndConditionsContext,
-                          MaterialPageRoute(
-                            builder: (context) => FinalViewInJoin(
-                              initialView: widget.initialView!,
-                              // onCloseButtonInFinalInJoin: widget.onCancelButtonInFinalScreen,
-                            ),
-                          ),
-                        );
-                      }
-                      else {
+                        Navigator.pop(context);
+                      } else {
                         Navigator.push(
                           termsAndConditionsContext,
                           MaterialPageRoute(
@@ -136,10 +120,9 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                           ? () {
                               BlocProvider.of<ScanCubit>(context)
                                   .postJoinCompany();
-                              print('Click');
                             }
                           : null,
-                      child: Container(
+                      child: userHasJoined == true ? Container() : Container(
                         width: 353.w,
                         height: 52.h,
                         decoration: BoxDecoration(
@@ -174,7 +157,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                 ),
                 GestureDetector(
                   onTap: widget.onCancelButtonInFinalScreen,
-                  child: Container(
+                  child: userHasJoined == true ? Container() : Container(
                     margin: EdgeInsets.only(bottom: 55.h),
                     width: 353.w,
                     height: 52.h,
@@ -182,7 +165,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                       color: AppColors.whiteColor,
                       borderRadius: BorderRadius.circular(70.r),
                     ),
-                    child: Center(
+                    child:  Center(
                       child: Text(
                         'Cancel',
                         style: AppFonts.bodyLargeBold.copyWith(
@@ -227,152 +210,193 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           ),
           body: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (overscroll) {
-              overscroll.disallowGlow();
+              overscroll.disallowIndicator();
               return false;
             },
-            child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 22.w),
-                child: Column(
-                  children: [
-                    Column(
+            child: BlocConsumer<ScanCubit, ScanState>(
+              listener: (context, state) {
+              },
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 22.w),
+                    child: Column(
                       children: [
-                        SizedBox(height: 24.h),
-
-                        ///
-                        Row(
+                        userHasJoined == true
+                        ? Column(
                           children: [
-                            Container(
-                              width: 45.h,
-                              height: 45.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 3.r,
-                                    color:
-                                        AppColors.blackColor.withOpacity(0.14),
-                                    offset: const Offset(0, 0.66),
-                                  ),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(40.r),
-                                child: Image.network(
-                                  cubit.logo ?? AppAssets.errorIcon,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(AppAssets.errorIcon);
-                                  },
-                                  height: 64.h,
-                                  width: 64.w,
+                            SizedBox(height: 40.h),
+
+                            Image.asset(AppAssets.hand),
+                            SizedBox(height: 53.h),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 29.w),
+                              child: Text(
+                                'Joined \n Successfully'.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily:
+                                  'Futura LT Condensed Extra Bold',
+                                  color: AppColors.black3Color,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 50.sp,
+                                  letterSpacing: -3.sp,
                                 ),
-                              ),
-                            ),
-                            SizedBox(width: 15.w),
-                            Text(
-                              cubit.display_name ?? 'Loading',
-                              style: AppFonts.bodyLargeBold.copyWith(
-                                color: AppColors.blackColor,
                               ),
                             ),
                           ],
-                        ),
-                        SizedBox(height: 29.h),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                            highlightColor: AppColors.primaryColor,
-                            scrollbarTheme: ScrollbarThemeData(
-                              isAlwaysShown: true,
-                              trackBorderColor: MaterialStateProperty.all(
-                                  AppColors.primaryColor),
-                              // trackBorderWidth: 2.0,
-                              thumbColor: MaterialStateProperty.all(
-                                  AppColors.primaryColor),
-                              trackColor: MaterialStateProperty.all(
-                                  AppColors.blackColor),
-                              // mainAxisMargin: 200,
-                            ),
-                          ),
-                          child: Scrollbar(
-                            controller: controller,
-                            thickness: 6.w,
-                            radius: Radius.circular(300.r),
-                            interactive: true,
-                            isAlwaysShown: true,
-                            child: SizedBox(
-                              height: 500.h,
-                              child: NotificationListener<
-                                  OverscrollIndicatorNotification>(
-                                onNotification: (overscroll) {
-                                  overscroll.disallowGlow();
-                                  return false;
-                                },
-                                child: ListView.separated(
-                                  controller: controller,
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(right: 26.w),
-                                  shrinkWrap: true,
-                                  itemCount: 1,
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(height: 20.h);
-                                  },
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Terms and Conditions',
-                                          style: AppFonts.titleBody.copyWith(
-                                            color: AppColors.blackColor,
-                                          ),
-                                        ),
-                                        SizedBox(height: 23.h),
-                                        Column(
-                                          children: [
-                                            state is GetTermsAndConditionsLoadingState
-                                                ? Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      SizedBox(height: 170.h),
-                                                      const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: AppColors
-                                                              .primaryColor,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : Text(
-                                                    cubit.termsAndConditions ??
-                                                        'Loading',
-                                                    style: AppFonts.bodyLarge,
-                                                  ),
+                        )
+                            : Column(
+                                children: [
+                                  SizedBox(height: 24.h),
+
+                                  ///
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 45.h,
+                                        height: 45.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40.r),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 3.r,
+                                              color: AppColors.blackColor
+                                                  .withOpacity(0.14),
+                                              offset: const Offset(0, 0.66),
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(40.r),
+                                          child: Image.network(
+                                            cubit.logo ?? AppAssets.errorIcon,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Image.asset(
+                                                  AppAssets.errorIcon);
+                                            },
+                                            height: 64.h,
+                                            width: 64.w,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 15.w),
+                                      Text(
+                                        cubit.display_name,
+                                        style: AppFonts.bodyLargeBold.copyWith(
+                                          color: AppColors.blackColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 29.h),
+                                  Theme(
+                                    data: Theme.of(context).copyWith(
+                                      highlightColor: AppColors.primaryColor,
+                                      scrollbarTheme: ScrollbarThemeData(
+                                        isAlwaysShown: true,
+                                        trackBorderColor:
+                                            MaterialStateProperty.all(
+                                                AppColors.primaryColor),
+                                        thumbColor: MaterialStateProperty.all(
+                                            AppColors.primaryColor),
+                                        trackColor: MaterialStateProperty.all(
+                                            AppColors.blackColor),
+                                      ),
+                                    ),
+                                    child: Scrollbar(
+                                      controller: controller,
+                                      thickness: 6.w,
+                                      radius: Radius.circular(300.r),
+                                      interactive: true,
+                                      isAlwaysShown: true,
+                                      child: SizedBox(
+                                        height: 500.h,
+                                        child: NotificationListener<
+                                            OverscrollIndicatorNotification>(
+                                          onNotification: (overscroll) {
+                                            overscroll.disallowIndicator();
+                                            return false;
+                                          },
+                                          child: ListView.separated(
+                                            controller: controller,
+                                            padding:
+                                                EdgeInsets.only(right: 26.w),
+                                            shrinkWrap: true,
+                                            itemCount: 1,
+                                            separatorBuilder: (context, index) {
+                                              return SizedBox(height: 20.h);
+                                            },
+                                            itemBuilder: (context, index) {
+                                              return Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Terms and Conditions',
+                                                    style: AppFonts.titleBody
+                                                        .copyWith(
+                                                      color:
+                                                          AppColors.blackColor,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 23.h),
+                                                  Column(
+                                                    children: [
+                                                      state is GetTermsAndConditionsLoadingState
+                                                          ? Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                SizedBox(
+                                                                    height:
+                                                                        170.h),
+                                                                const Center(
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: AppColors
+                                                                        .primaryColor,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : Text(
+                                                              cubit.termsAndConditions,
+                                                              style: AppFonts
+                                                                  .bodyLarge,
+                                                            ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 80.h),
+                                ],
                               ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 80.h),
                       ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           ),
         );
       },
     );
+  }
+
+  void navigatePop(BuildContext context) {
+    Navigator.pop(context);
   }
 }

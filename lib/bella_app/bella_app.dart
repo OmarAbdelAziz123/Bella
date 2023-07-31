@@ -30,9 +30,7 @@ class BellaApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Bella App',
             onGenerateRoute: RouteGenerator.getRoute,
-            // initialRoute: 'layout-screen',
             initialRoute: 'splash-screen',
-            // home: Test(),
           ),
         );
       },

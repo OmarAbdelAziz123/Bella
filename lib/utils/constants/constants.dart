@@ -17,7 +17,6 @@ class AppConstants {
   static const String baseUrl = 'https://business-webapi.azurewebsites.net/';
 
   /// End Points
-  ///
 
   static TextStyle getTextStyle({
     required FontWeight fontWeight,

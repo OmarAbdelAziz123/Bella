@@ -18,11 +18,11 @@ class LoginBank {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['orderRef'] = this.orderRef;
-    data['autoStartToken'] = this.autoStartToken;
-    data['qrStartToken'] = this.qrStartToken;
-    data['qrStartSecret'] = this.qrStartSecret;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['orderRef'] = orderRef;
+    data['autoStartToken'] = autoStartToken;
+    data['qrStartToken'] = qrStartToken;
+    data['qrStartSecret'] = qrStartSecret;
     return data;
   }
 }

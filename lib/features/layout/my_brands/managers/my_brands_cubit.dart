@@ -1,12 +1,12 @@
-import 'dart:developer';
+// ignore_for_file: non_constant_identifier_names
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
 import 'package:bella/features/layout/home/data/models/see_all_model.dart';
 import 'package:bella/features/layout/my_brands/data/models/not_joined_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 part 'my_brands_state.dart';
 
 class MyBrandsCubit extends Cubit<MyBrandsState> {
@@ -29,18 +29,21 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
             endPoint:
                 'api/v1/companies/joined/${MyCache.getString(key: CacheKeys.user_Id)}')
         .then((response) {
-      print(MyCache.getString(key: CacheKeys.user_Id));
+      if (kDebugMode) {
+        print(MyCache.getString(key: CacheKeys.user_Id));
+      }
       allJoined = SeeAllModel.fromJson(response.data);
       emit(JoinedSuccessState());
     }).catchError((error) {
-      print('Error in Get Joined is $error');
+      if (kDebugMode) {
+        print('Error in Get Joined is $error');
+      }
       emit(JoinedErrorState());
     });
   }
 
   Future<void> notJoinedFunction(BuildContext context) async {
     emit(NotJoinedLoadingState());
-    // notJoined.clear();
     await dioHelper
         .getData(
             endPoint:
@@ -49,7 +52,9 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
       allNotJoined = NotJoinedModel.fromJson(response.data);
       emit(NotJoinedSuccessState());
     }).catchError((error) {
-      print('Error in Get Not Joined is $error');
+      if (kDebugMode) {
+        print('Error in Get Not Joined is $error');
+      }
       emit(NotJoinedErrorState());
     });
   }
@@ -67,7 +72,9 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
         emit(CheckHasJoinedOrNotSuccessInFalseState());
       }
     }).catchError((error) {
-      print('Error in Check Hase Joined or Not is $error');
+      if (kDebugMode) {
+        print('Error in Check Hase Joined or Not is $error');
+      }
       emit(CheckHasJoinedOrNotErrorState());
     });
   }
@@ -79,14 +86,20 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
             endPoint:
                 'api/v1/companies/${MyCache.getString(key: CacheKeys.comp_id)}/terms-and-conditions')
         .then((response) {
-      print(response.data);
+      if (kDebugMode) {
+        print(response.data);
+      }
       logo = response.data['logo'];
       display_name = response.data['display_name'];
       termsAndConditions = response.data['terms_and_conditions'];
-      print(termsAndConditions);
+      if (kDebugMode) {
+        print(termsAndConditions);
+      }
       emit(GetTermsAndConditionsSuccessState());
     }).catchError((error) {
-      print('Error in Join in Home is $error');
+      if (kDebugMode) {
+        print('Error in Join in Home is $error');
+      }
       emit(GetTermsAndConditionsErrorState());
     });
   }

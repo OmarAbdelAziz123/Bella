@@ -2,7 +2,6 @@ import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomContainerInProductDetails extends StatelessWidget {
   const CustomContainerInProductDetails({Key? key}) : super(key: key);

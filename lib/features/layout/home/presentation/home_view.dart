@@ -1,10 +1,6 @@
-import 'package:bella/features/layout/home/presentation/profie_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/home_view_body.dart';
-import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);

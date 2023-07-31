@@ -26,7 +26,6 @@ class MyCardsScreen extends StatefulWidget {
 class _MyCardsScreenState extends State<MyCardsScreen> {
   @override
   void initState() {
-    print('Expiry Date is in My Card Screen= ${widget.expiryDate.toString()}');
     super.initState();
   }
 
@@ -86,19 +85,9 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
         ),
         elevation: 0,
         backgroundColor: AppColors.bgColor,
-        // centerTitle: true,
-        //       title: Padding(
-        //       padding: EdgeInsets.only(top: 28.h),
-        //   child: Text(
-        //     'Almost done!',
-        //     textAlign: TextAlign.center,
-        //     style: AppFonts.titleScreen,
-        //   ),
-        // ),
       ),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          // TODO: implement listener
         },
         builder: (context, state) {
           var cubit = BlocProvider.of<AuthCubit>(context);
@@ -165,7 +154,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                                       Positioned(
                                         top: 87.78.h,
                                         left: 20.96.h,
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 21.h,
                                           width: 212.w,
                                           child: Text(
@@ -248,7 +237,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                                           Positioned(
                                             top: 87.78.h,
                                             left: 20.96.h,
-                                            child: Container(
+                                            child: SizedBox(
                                               height: 21.h,
                                               width: 212.w,
                                               child: Text(
@@ -335,7 +324,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                                               Positioned(
                                                 top: 87.78.h,
                                                 left: 20.96.h,
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: 21.h,
                                                   width: 212.w,
                                                   child: Text(
@@ -419,7 +408,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                                               Positioned(
                                                 top: 87.78.h,
                                                 left: 20.96.h,
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: 21.h,
                                                   width: 212.w,
                                                   child: Text(
@@ -471,7 +460,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                         },
                       ),
                     ),
-                    // SizedBox(height: 41.h),
                     SizedBox(height: 20.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -495,7 +483,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                         ),
                         width: 353.w,
                         onTap: () {
-                          // navigateToMyCard(context);
                         },
                       ),
                     ),

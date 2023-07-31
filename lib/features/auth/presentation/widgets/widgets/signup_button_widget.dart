@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,6 @@ class SignupButtonWidget extends StatelessWidget {
           children: [
             Text(
               text,
-
               style: GoogleFonts.darkerGrotesque(
                 height: 0.11.h,
                 color: AppColors.primaryColor,

@@ -86,7 +86,9 @@ class OffersViewBody extends StatelessWidget {
                             spreadRadius: 0.1,
                             blurRadius: 1,
                             offset: const Offset(
-                                0.5, 0.5), // changes position of shadow
+                              0.5,
+                              0.5,
+                            ), // changes position of shadow
                           ),
                         ],
                       ),
@@ -672,7 +674,7 @@ class OffersViewBody extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       width: 118.w,
                                       child: Text(
                                         '20 kr',
@@ -684,8 +686,6 @@ class OffersViewBody extends StatelessWidget {
                                     Container(
                                       width: 24,
                                       height: 24.h,
-                                      // margin:
-                                      //     EdgeInsets.only(top: 15.32.h, right: 15.w),
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 5.w,
                                         vertical: 3.h,
@@ -740,8 +740,9 @@ class OffersViewBody extends StatelessWidget {
                                   child: Text(
                                     'Collect',
                                     style: AppFonts.linkDefault.copyWith(
-                                        color: AppColors.whiteColor,
-                                        fontSize: 12.sp),
+                                      color: AppColors.whiteColor,
+                                      fontSize: 12.sp,
+                                    ),
                                   ),
                                 ),
                               ),

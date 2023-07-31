@@ -1,8 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:bella/utils/constants/constants.dart';
 
 class AppAssets {
   /// SVG
-  // static const String banner = '${AppConstants.baseImage}/banner.svg';
   static const String arrowBack = '${AppConstants.baseImage}/arrowBack.svg';
   static const String creditCard = '${AppConstants.baseImage}/credit-card.svg';
   static const String hand = '${AppConstants.baseImage}/hand.png';
@@ -53,7 +54,6 @@ class AppAssets {
   static const String searchIcon = '${AppConstants.baseImage}/search.svg';
   static const String icon_insearch = '${AppConstants.baseImage}/icon_insearch.svg';
   static const String actionsInSearchIcon = '${AppConstants.baseImage}/actions-in-search.svg';
-  // static const String main_container = '${AppConstants.baseImage}/main_container.svg';
   static const String arrow = '${AppConstants.baseImage}/arrow.svg';
   static const String file = '${AppConstants.baseImage}/File.svg';
   static const String settings = '${AppConstants.baseImage}/Settings.svg';
@@ -136,18 +136,13 @@ class AppAssets {
 
 
   /// NEWS IMAGES
-  // static const String bonozLogo = '${AppConstants.baseImage}/Bonoz Logo.svg';
   static const String bonozLogo = '${AppConstants.baseImage}/Bonoz Logo.svg';
   static const String bonoz = '${AppConstants.baseImage}/bonoz.svg';
   static const String Horizontal = '${AppConstants.baseImage}/Horizontal.svg';
   static const String bella22 = '${AppConstants.baseImage}/bella2.svg';
-  // static const String hands = '${AppConstants.baseImage}/hands.svg';
   static const String hands = '${AppConstants.baseImage}/hands.png';
-  // static const String waleet = '${AppConstants.baseImage}/waleet.svg';
   static const String waleet = '${AppConstants.baseImage}/waleet.png';
-  // static const String money = '${AppConstants.baseImage}/money.svg';
   static const String money = '${AppConstants.baseImage}/money.png';
-  // static const String voot = '${AppConstants.baseImage}/voot.svg';
   static const String voot = '${AppConstants.baseImage}/voot.png';
   static const String oneAppText = '${AppConstants.baseImage}/One app all things discount & offers.png';
   static const String sayByeText = '${AppConstants.baseImage}/say bye to your membership cards.png';

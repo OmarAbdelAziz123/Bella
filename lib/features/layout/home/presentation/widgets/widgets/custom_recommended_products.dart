@@ -1,13 +1,9 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomRecommendedProducts extends StatelessWidget {
   final dynamic logoOfCompany, imageOfProduct, title, description, currency;
@@ -17,8 +13,6 @@ class CustomRecommendedProducts extends StatelessWidget {
   void Function()? onTapAddToCart;
   Widget widget;
   Color buttonColor;
-
-  // bool _isAddedToCart = false;
 
   CustomRecommendedProducts({
     Key? key,
@@ -138,7 +132,6 @@ class CustomRecommendedProducts extends StatelessWidget {
                         ],
                       ),
                       padding: EdgeInsets.symmetric(
-                        // horizontal: 7.w,
                         vertical: 8.4.w,
                       ),
                       child: widget,
@@ -147,10 +140,10 @@ class CustomRecommendedProducts extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 12.h,
-                      // bottom: 2.h,
-                      left: 12.w,
-                      right: 12.h),
+                    top: 12.h,
+                    left: 12.w,
+                    right: 12.h,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -183,13 +176,6 @@ class CustomRecommendedProducts extends StatelessWidget {
                         children: [
                           Text(
                             '$regularPrice $currency',
-                            // style: GoogleFonts.inter(
-                            //   color: AppColors.grey9Color,
-                            //   decoration: TextDecoration.lineThrough,
-                            //   height: 1.h,
-                            //   fontWeight: FontWeight.w400,
-                            //   fontSize: 12.sp,
-                            // ),
                             style: AppFonts.strickedText.copyWith(
                               color: AppColors.grey9Color,
                               fontSize: 12.sp,

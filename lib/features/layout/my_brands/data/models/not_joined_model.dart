@@ -7,15 +7,15 @@ class NotJoinedModel {
     if (json['companies'] != null) {
       companies = <CompaniesNotJoined>[];
       json['companies'].forEach((v) {
-        companies!.add(new CompaniesNotJoined.fromJson(v));
+        companies!.add(CompaniesNotJoined.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.companies != null) {
-      data['companies'] = this.companies!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (companies != null) {
+      data['companies'] = companies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -27,7 +27,6 @@ class CompaniesNotJoined {
   String? logo;
   String? category;
   String? countryCode;
-  // String? termsAndConditions;
 
   CompaniesNotJoined(
       {this.id,
@@ -35,7 +34,6 @@ class CompaniesNotJoined {
         this.logo,
         this.category,
         this.countryCode,
-        // this.termsAndConditions
       });
 
   CompaniesNotJoined.fromJson(Map<String, dynamic> json) {
@@ -44,17 +42,15 @@ class CompaniesNotJoined {
     logo = json['logo'];
     category = json['category'];
     countryCode = json['country_code'];
-    // termsAndConditions = json['terms_and_conditions'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['display_name'] = this.displayName;
-    data['logo'] = this.logo;
-    data['category'] = this.category;
-    data['country_code'] = this.countryCode;
-    // data['terms_and_conditions'] = this.termsAndConditions;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['display_name'] = displayName;
+    data['logo'] = logo;
+    data['category'] = category;
+    data['country_code'] = countryCode;
     return data;
   }
 }

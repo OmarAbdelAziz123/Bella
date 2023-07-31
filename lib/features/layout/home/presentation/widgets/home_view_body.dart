@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
-import 'package:another_flushbar/flushbar.dart';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/layout/home/data/models/get_recommended_products_model.dart';
@@ -8,7 +7,7 @@ import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/profie_view.dart';
 import 'package:bella/features/layout/home/presentation/see_all__view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/product_details_screen.dart';
-import 'package:bella/features/layout/home/presentation/widgets/products_in_company_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/company_profile_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/banner/banner.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
@@ -28,7 +27,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeViewBody extends StatefulWidget {
-  const HomeViewBody({Key? key}) : super(key: key);
+  String initialScreen = 'Home';
+
+  HomeViewBody({Key? key}) : super(key: key);
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -36,8 +37,6 @@ class HomeViewBody extends StatefulWidget {
 
 class _HomeViewBodyState extends State<HomeViewBody> {
   PageController? pageController;
-
-  final int _selectedItemIndex = -1;
 
   Color colorOfIconAddToCart = Colors.black;
 
@@ -55,15 +54,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<WishListCubit, WishListState>(
       builder: (context, state) {
-        var wishListCubit = BlocProvider.of<WishListCubit>(context);
-
         return BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             var cubit = HomeCubit.get(context);
 
             return NotificationListener<OverscrollIndicatorNotification>(
               onNotification: (overscroll) {
-                overscroll.disallowGlow();
+                overscroll.disallowIndicator();
                 return false;
               },
               child: SingleChildScrollView(
@@ -77,8 +74,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             bottom: 25.h,
                             right: 20.w,
                             left: 20.w,
-                            // horizontal: 20.w,
-                            // vertical: 18.h,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,9 +81,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                               SvgPicture.asset(AppAssets.BellaIcon),
                               GestureDetector(
                                 onTap: () {
-                                  navigatetoProfileScreen(context);
+                                  navigateToProfileScreen(context);
                                 },
-                                child: Container(
+                                child: SizedBox(
                                   width: 30.h,
                                   height: 26.h,
                                   child: SvgPicture.asset(
@@ -125,7 +120,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           child: NotificationListener<
                               OverscrollIndicatorNotification>(
                             onNotification: (overscroll) {
-                              overscroll.disallowGlow();
+                              overscroll.disallowIndicator();
                               return false;
                             },
                             child: ListView.builder(
@@ -163,7 +158,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         SizedBox(height: 20.h),
                       ],
                     ),
-                    Container(
+                    cubit.recommended == null ? Container() : Container(
                       height: 324.h,
                       width: double.infinity,
                       padding: EdgeInsets.only(
@@ -218,14 +213,15 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           cubit.recommended == null
                               ? Expanded(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 110.h),
-                                    child:SizedBox(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 110.h),
+                                    child: SizedBox(
                                       width: 25.w,
                                       height: 24.h,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 4.w,
                                         valueColor:
-                                        const AlwaysStoppedAnimation<Color>(
+                                            const AlwaysStoppedAnimation<Color>(
                                           AppColors.primaryColor,
                                         ),
                                       ),
@@ -259,10 +255,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                                 key: CacheKeys.comp_id,
                                                 value: recommendedCompany.id
                                                     .toString());
-                                            print('COMPANY ID');
-                                            print(MyCache.getString(
-                                                key: CacheKeys.comp_id));
-                                            print('COMPANY ID');
                                             navigateToJoinScreen(
                                               recommendedCompany.id.toString(),
                                             );
@@ -273,11 +265,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                                 key: CacheKeys.comp_id,
                                                 value: recommendedCompany.id
                                                     .toString());
-                                            print(recommendedCompany.id
-                                                .toString());
-                                            navigateToProductsInCompany(
-                                              recommendedCompany.logo!,
-                                              recommendedCompany.displayName!,
+                                            navigateToCompanyProfile(
+                                              displayName: recommendedCompany
+                                                  .displayName!,
+                                              logo: recommendedCompany.logo!,
                                             );
                                           },
                                         );
@@ -311,8 +302,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         itemBuilder: (context, index) {
                           var product = cubit.getRecommendedProductsModel!
                               .recommendedProducts![index];
-
-                          bool isSelected = index == _selectedItemIndex;
 
                           return BlocBuilder<WishListCubit, WishListState>(
                             builder: (context, state) {
@@ -404,7 +393,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
-  void navigatetoProfileScreen(BuildContext context) {
+  void navigateToProfileScreen(BuildContext context) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -482,15 +471,41 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     );
   }
 
-  void navigateToProductsInCompany(String logo, String display_name) {
-    Navigator.push(
+  void navigatePopToHomeScreen(
+    BuildContext context,
+  ) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (_, __, ___) => const HomeView(),
+        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  void navigateToCompanyProfile(
+      {String? logo, String? displayName, String? initialScreen}) {
+    Navigator.pushReplacement(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
         pageBuilder: (_, __, ___) {
-          return ProductsInCompanyScreen(
-            display_name: display_name,
-            logo: logo,
+          return CompanyProfileScreen(
+            display_name: displayName!,
+            logo: logo!,
+            initialScreen: 'Home',
+            onBack: () {
+              navigatePopToHomeScreen(context);
+            },
           );
         },
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
@@ -518,10 +533,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             flow: 'Join',
             hasJoined: false,
             initialView: 'Home',
+            initialScreen: 'Home',
             onCancelButtonInFinalScreen: () {
               Navigator.pop(context);
+              // navigateToCompanyProfile();
               BlocProvider.of<MyBrandsCubit>(context)
                   .clearTermsAndConditionsState();
+            },
+            onSuccessButton: () {
+              BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
+              BlocProvider.of<MyBrandsCubit>(context)
+                  .notJoinedFunction(context);
+              BlocProvider.of<HomeCubit>(context).getRecommended();
+              BlocProvider.of<HomeCubit>(context).getAllCompanies();
+              AppConstants.showFlushBar(context, 'You have joined right now');
+              navigatePop(context);
             },
             onTap: () {
               Navigator.pop(context);

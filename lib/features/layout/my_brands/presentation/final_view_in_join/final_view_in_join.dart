@@ -15,7 +15,11 @@ import 'package:google_fonts/google_fonts.dart';
 class FinalViewInJoin extends StatefulWidget {
   String initialView = 'Home';
 
-  FinalViewInJoin({Key? key, required this.initialView}) : super(key: key);
+  FinalViewInJoin({
+    Key? key,
+    required this.initialView,
+
+  }) : super(key: key);
 
   @override
   State<FinalViewInJoin> createState() => _FinalViewInJoinState();
@@ -117,14 +121,7 @@ class _FinalViewInJoinState extends State<FinalViewInJoin>
                         ),
                       );
                     } else if (widget.initialView == 'NewBrands') {
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const MyBrandsView(),
-                      //   ),
-                      // );
+                      // onCloseFunc;
                     }
                   },
                   child: Container(

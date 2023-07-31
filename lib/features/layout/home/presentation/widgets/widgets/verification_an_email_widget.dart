@@ -6,7 +6,6 @@ import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class VerificationAnEmailWidget extends StatelessWidget {
   const VerificationAnEmailWidget({Key? key}) : super(key: key);

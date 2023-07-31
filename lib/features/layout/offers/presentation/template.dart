@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';

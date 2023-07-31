@@ -1,4 +1,3 @@
-import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/features/on_boardings/presentation/on_boarding_screen.dart';
@@ -57,7 +56,7 @@ class ProfileViewBody extends StatelessWidget {
           ),
           SizedBox(height: 30.h),
           ListView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: [
               const VerificationAnEmailWidget(),
@@ -84,7 +83,6 @@ class ProfileViewBody extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // BlocProvider.of<AuthCubit>(context).readCreditCard();
                   navigateToMyCard(context);
                 },
                 child: ListTile(
@@ -139,12 +137,6 @@ class ProfileViewBody extends StatelessWidget {
                 ),
                 title: Text(
                   'Settings',
-                  // style: GoogleFonts.darkerGrotesque(
-                  //   color: AppColors.black3Color,
-                  //   fontWeight: FontWeight.bold,
-                  //   height: 1.h,
-                  //   fontSize: 18.sp,
-                  // ),
                   style: AppFonts.bodyLargeBold,
                 ),
                 trailing: SvgPicture.asset(
@@ -218,7 +210,7 @@ class ProfileViewBody extends StatelessWidget {
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => OnBoardingScreen(),
+        pageBuilder: (_, __, ___) => const OnBoardingScreen(),
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -237,7 +229,7 @@ class ProfileViewBody extends StatelessWidget {
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => MyCardView(),
+        pageBuilder: (_, __, ___) => const MyCardView(),
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(

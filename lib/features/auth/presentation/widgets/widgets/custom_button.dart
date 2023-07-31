@@ -1,10 +1,8 @@
-import 'package:bella/features/auth/presentation/widgets/check_view_body.dart';
-import 'package:bella/utils/constants/app_assets.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
   void Function()? onTap;
@@ -20,8 +18,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: onTap,
@@ -60,8 +56,6 @@ class CustomButtonOutlined extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: onTap,
