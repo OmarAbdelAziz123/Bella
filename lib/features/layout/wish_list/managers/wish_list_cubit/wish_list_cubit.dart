@@ -14,7 +14,7 @@ class WishListCubit extends Cubit<WishListState> {
   DioHelper dioHelper = DioHelper();
 
   List<Wishlist2> wishListModel = [];
-
+  List<Wishlist2> wishListModelCopy = [];
 
   Future<void> getWishList() async {
     wishListModel.clear();
@@ -39,23 +39,34 @@ class WishListCubit extends Cubit<WishListState> {
     });
   }
 
-  Future<void> deleteOneItemInCart({required String id, required String companyDisplayName}) async {
-    var tempList = List<Wishlist2>.from(wishListModel);
-    for (var item in tempList) {
-      if (item.companyDisplayName == companyDisplayName && item.products!.length == 1) {
-        wishListModel.remove(item);
-      } else {
-        item.products!.removeWhere((product) => product.id == id);
-      }
+  Future<void> deleteOneItemInCart(
+      {required String productId, required String companyDisplayName, required String onTapSource}) async {
+    print('User Id is ${MyCache.getString(key: CacheKeys.userId)}');
+    print(productId);
+
+    String? objectId;
+
+    if(onTapSource == 'WishListScreen') {
+      objectId = productId;
+    } else {
+      objectId = getObjectIdInWishlist(productId: productId);
     }
+
     await dioHelper
         .deleteData(endPoint: 'api/v1/basket/delete_from_basket', body: {
-      "id": id,
+      "id": objectId,
       "user_id": MyCache.getString(key: CacheKeys.user_Id),
     }).then((response) {
       if (kDebugMode) {
         print('Wish LIST LENGTH IN DELETE IS ${wishListModel.length}');
       }
+      wishListModelCopy.clear();
+      response.data['wishlist'].forEach((wish) {
+        wishListModelCopy.add(Wishlist2.fromJson(wish));
+      });
+
+      wishListModel = wishListModelCopy;
+
       emit(WishListListSuccessState());
     }).catchError((error) {
       if (kDebugMode) {
@@ -71,11 +82,12 @@ class WishListCubit extends Cubit<WishListState> {
     required String product_id,
     required String product_image_link,
     required String product_title,
-    required dynamic regular_price,
-    required dynamic sale_price,
+    required double regular_price,
+    required double sale_price,
     required String currency,
+    required double saving_in_SEK,
   }) async {
-    wishListModel.clear();
+    wishListModelCopy.clear();
     emit(WishListListLoadingState());
     await dioHelper.postData(endPoint: '/api/v1/basket/add_to_basket', body: {
       "user_id": MyCache.getString(key: CacheKeys.user_Id),
@@ -87,17 +99,19 @@ class WishListCubit extends Cubit<WishListState> {
       "product_title": product_title,
       "regular_price": regular_price,
       "sale_price": sale_price,
-      "currency": currency
+      "saving_in_SEK": saving_in_SEK,
+      "currency": currency,
     }).then((response) {
       if (kDebugMode) {
         print('Function add to cart is success');
       }
       response.data['wishlist'].forEach((wish) {
-        wishListModel.add(Wishlist2.fromJson(wish));
+        wishListModelCopy.add(Wishlist2.fromJson(wish));
       });
       if (kDebugMode) {
         print('Wish LIST LENGTH IN ADD IS ${wishListModel.length}');
       }
+      wishListModel = wishListModelCopy;
       emit(WishListListSuccessState());
     }).catchError((error) {
       if (kDebugMode) {
@@ -120,13 +134,27 @@ class WishListCubit extends Cubit<WishListState> {
     bool found = false;
 
     for (var item in wishListModel) {
-      for(var product in item.products!) {
-        if(productId == product.productId) {
+      for (var product in item.products!) {
+        if (productId == product.productId) {
           found = true;
           break;
         }
       }
     }
     return found;
+  }
+
+  String getObjectIdInWishlist({required String productId}) {
+    var objectId = "";
+
+    for (var item in wishListModel) {
+      for (var product in item.products!) {
+        if (productId == product.productId) {
+          objectId = product.id!;
+          break;
+        }
+      }
+    }
+    return objectId;
   }
 }

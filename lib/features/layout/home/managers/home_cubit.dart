@@ -1,4 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
+import 'dart:developer';
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
@@ -21,10 +22,16 @@ class HomeCubit extends Cubit<HomeState> {
 
   SeeAllModel? allCompanies;
   GetRecommendedModel? recommended;
+
   GetRecommendedProductsModel? getRecommendedProductsModel;
+  List<RecommendedProducts> loadMoreRecommendedProducts = [];
+  List<RecommendedProducts> productsByCategory = [];
+
   GetCompanyProductsModel? getCompanyProductsModel;
   ErrorModel? errorModel;
   CompanyProfile? companyProfile;
+
+  int index = 0;
 
   /// Get Recommended
   Future<void> getRecommended() async {
@@ -47,19 +54,22 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-  Future<void> getRecommendedProducts() async {
+  Future<void> getRecommendedProducts({int? pageNumber, int? pageSize}) async {
     emit(GetAllRecommendedProductsLoadingState());
-    await dioHelper
+    dioHelper
         .getData(
             endPoint: 'api/v1/timeline/recommended_products/${{
       MyCache.getString(key: CacheKeys.userId)
-    }}')
+    }}?page_number=$pageNumber&limit=$pageSize')
         .then((response) {
-      if (kDebugMode) {
-        print(response.data);
-      }
       getRecommendedProductsModel =
           GetRecommendedProductsModel.fromJson(response.data);
+
+      for (var element in getRecommendedProductsModel!.recommendedProducts!) {
+        loadMoreRecommendedProducts.add(element);
+      }
+
+      log('In Get Recommended Products Function');
       emit(GetAllRecommendedProductsSuccessState());
     }).catchError((error) {
       if (kDebugMode) {
@@ -110,21 +120,6 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-  Future<void> getCompanyProfile() async {
-    emit(GetAllCompaniesLoadingState());
-    await dioHelper.getData(endPoint: 'api/v1/companies/join').then((response) {
-      if (kDebugMode) {
-        print(response.data);
-      }
-      emit(GetAllCompaniesSuccessState());
-    }).catchError((error) {
-      if (kDebugMode) {
-        print('Error in Get Company Profile is $error');
-      }
-      emit(GetCompanyProfileErrorState());
-    });
-  }
-
   Future<void> companyProfileFunc() async {
     emit(CompanyProfileLoadingState());
     await dioHelper
@@ -149,5 +144,38 @@ class HomeCubit extends Cubit<HomeState> {
     emit(ResetLoadingState());
     companyProfile = CompanyProfile();
     emit(ResetSuccessState());
+  }
+
+  Future<void> getProductsByCategory({
+    String? categoryName,
+    int? pageNumber,
+    int? limit,
+  }) async {
+    emit(GetProductsByCategpryLoadingState());
+    var url =
+        'api/v1/products/${MyCache.getString(key: CacheKeys.comp_id)}/category/$categoryName?page_number=$pageNumber&limit=$limit';
+    log(url);
+    await dioHelper.getData(endPoint: url).then(
+      (response) {
+        getRecommendedProductsModel =
+            GetRecommendedProductsModel.fromJson(response.data);
+
+        for (var element in getRecommendedProductsModel!.recommendedProducts!) {
+          productsByCategory.add(element);
+        }
+
+        log('------------');
+        log(productsByCategory.length.toString());
+
+        emit(GetProductsByCategprySuccessState());
+      },
+    ).catchError((error) {
+      print('error in products by category is $error');
+      emit(GetProductsByCategpryErrorState());
+    });
+  }
+
+  Future<void> resetProductsByCategory() async {
+    productsByCategory.clear();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
+import 'package:bella/features/layout/home/home_navigation_functions/home_navigation_functions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/add_card_in_home_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -29,39 +30,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
     super.initState();
   }
 
-  void navigateToScreen5(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const AddCardInHomeView(),
-        transitionsBuilder: (_, animation, __, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(-1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const MyCardView(),
-        transitionsBuilder: (_, animation, __, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(-1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +38,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
         leading: GestureDetector(
           onTap: () {
             // Navigator.pop(context);
-            navigateToScreen5(context);
+            HomeNavigationClass.navigateToScreen5(context);
           },
           child: Padding(
             padding: EdgeInsets.only(

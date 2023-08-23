@@ -13,6 +13,7 @@ class CustomRecommendedProducts extends StatelessWidget {
   void Function()? onTapAddToCart;
   Widget widget;
   Color buttonColor;
+  String campaign_type;
 
   CustomRecommendedProducts({
     Key? key,
@@ -28,6 +29,7 @@ class CustomRecommendedProducts extends StatelessWidget {
     required this.onTapAddToCart,
     required this.widget,
     required this.buttonColor,
+    required this.campaign_type,
   }) : super(key: key);
 
   @override
@@ -76,7 +78,27 @@ class CustomRecommendedProducts extends StatelessWidget {
                       image: imageOfProduct,
                       width: 142.h,
                       height: 142.h,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                  Positioned(
+                    top: 10.h,
+                    left: 10.5.w,
+                    child: Container(
+                      width: 77.25.w,
+                      height: 18.h,
+                      padding: EdgeInsets.symmetric(horizontal: 7.62.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7.r),
+                        color: AppColors.newColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          campaign_type,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppFonts.productTag,
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -187,7 +209,7 @@ class CustomRecommendedProducts extends StatelessWidget {
                           Text(
                             '$salePrice $currency',
                             style: AppFonts.productPrice.copyWith(
-                              color: AppColors.black7Color,
+                              color: AppColors.error2Color,
                               height: 1.h,
                               letterSpacing: -1.sp,
                             ),

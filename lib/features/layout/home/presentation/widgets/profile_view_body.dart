@@ -1,3 +1,4 @@
+import 'package:bella/features/layout/home/home_navigation_functions/home_navigation_functions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/features/on_boardings/presentation/on_boarding_screen.dart';
@@ -83,7 +84,7 @@ class ProfileViewBody extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  navigateToMyCard(context);
+                  HomeNavigationClass.navigateToMyCard2(context);
                 },
                 child: ListTile(
                   leading: Container(
@@ -176,7 +177,7 @@ class ProfileViewBody extends StatelessWidget {
               // SizedBox(height: 0.6.h),
               GestureDetector(
                 onTap: () {
-                  logout(context);
+                  HomeNavigationClass.logout(context);
                 },
                 child: ListTile(
                   leading: Container(
@@ -205,41 +206,5 @@ class ProfileViewBody extends StatelessWidget {
     );
   }
 
-  void logout(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => const OnBoardingScreen(),
-        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(-1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
 
-  void navigateToMyCard(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => const MyCardView(),
-        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
 }

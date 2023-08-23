@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
 import 'package:bella/features/layout/wish_list/managers/wish_list_cubit/wish_list_cubit.dart';
 import 'package:bella/features/layout/wish_list/presentation/widgets/custom_wish_list_when_empty.dart';
@@ -35,6 +34,7 @@ class _WishlistViewState extends State<WishlistView> {
       body: BlocBuilder<WishListCubit, WishListState>(
         builder: (context, state) {
           var cubit = BlocProvider.of<WishListCubit>(context);
+
           return state is WishListListLoadingState
               ? const Center(
                   child: CircularProgressIndicator(
@@ -63,22 +63,22 @@ class _WishlistViewState extends State<WishlistView> {
                                       color: AppColors.black3Color,
                                     ),
                                   ),
-                                  SizedBox(height: 30.h),
-                                  SearchBarWidget(
-                                    hintText: 'Search',
-                                    suffixIcon: Container(
-                                      padding: EdgeInsets.only(
-                                        right: 6.w,
-                                        left: 11.w,
-                                        top: 13.h,
-                                        bottom: 13.h,
-                                      ),
-                                      child: SvgPicture.asset(
-                                        AppAssets.icon_insearch,
-                                        // color: AppColors.,
-                                      ),
-                                    ),
-                                  ),
+                                  // SizedBox(height: 30.h),
+                                  // SearchBarWidget(
+                                  //   hintText: 'Search',
+                                  //   suffixIcon: Container(
+                                  //     padding: EdgeInsets.only(
+                                  //       right: 6.w,
+                                  //       left: 11.w,
+                                  //       top: 13.h,
+                                  //       bottom: 13.h,
+                                  //     ),
+                                  //     child: SvgPicture.asset(
+                                  //       AppAssets.icon_insearch,
+                                  // color: AppColors.,
+                                  // ),
+                                  // ),
+                                  // ),
                                   ListView.separated(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -95,12 +95,25 @@ class _WishlistViewState extends State<WishlistView> {
                                                     .companyDisplayName!,
                                                 style: AppFonts.productName,
                                               ),
-                                              Text(
-                                                'Save: ${cubit.wishListModel[index].sum} kr',
-                                                style: AppFonts.productName
-                                                    .copyWith(
-                                                  color: AppColors.blackColor,
-                                                ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Save: ',
+                                                    style: AppFonts.productName
+                                                        .copyWith(
+                                                      color:
+                                                          AppColors.blackColor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${cubit.wishListModel[index].sum!.toStringAsFixed(2)} ${cubit.wishListModel[0].products![0].currency ?? 'kr'}',
+                                                    style: AppFonts.productName
+                                                        .copyWith(
+                                                      color:
+                                                          AppColors.error2Color,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
@@ -216,11 +229,12 @@ class _WishlistViewState extends State<WishlistView> {
                                                           onTap: () async {
                                                             AppConstants
                                                                 .showFlushBar(
-                                                                    context,
-                                                                    'Item has been removed');
+                                                              context,
+                                                              'Item has been removed',
+                                                            );
                                                             await cubit
                                                                 .deleteOneItemInCart(
-                                                              id: cubit
+                                                              productId: cubit
                                                                   .wishListModel[
                                                                       index]
                                                                   .products![
@@ -230,6 +244,7 @@ class _WishlistViewState extends State<WishlistView> {
                                                                   .wishListModel[
                                                                       index]
                                                                   .companyDisplayName!,
+                                                              onTapSource: 'WishListScreen',
                                                             );
                                                           },
                                                           child: Container(
@@ -323,10 +338,10 @@ class _WishlistViewState extends State<WishlistView> {
                                       maxWidth: 300.w,
                                     ),
                                     child: Text(
-                                      '${cubit.getTotal()} ${cubit.wishListModel[0].products![0].currency}',
+                                      '${cubit.getTotal().toStringAsFixed(2)} ${cubit.wishListModel[0].products![0].currency ?? 'kr'}',
                                       overflow: TextOverflow.ellipsis,
                                       style: AppFonts.bodyLargeBold.copyWith(
-                                        color: AppColors.blackColor,
+                                        color: AppColors.error2Color,
                                       ),
                                     ),
                                   ),

@@ -40,6 +40,13 @@ class GetAllRecommendedProductsSuccessState extends HomeState {}
 
 class GetAllRecommendedProductsErrorState extends HomeState {}
 
+/// Get Products By Company
+class GetProductsByCompanyLoadingState extends HomeState {}
+
+class GetProductsByCompanySuccessState extends HomeState {}
+
+class GetProductsByCompanyErrorState extends HomeState {}
+
 /// Get Company Products
 class GetCompanyProductsLoadingState extends HomeState {}
 
@@ -76,3 +83,10 @@ class ResetLoadingState extends HomeState {}
 class ResetSuccessState extends HomeState {}
 
 class ResetErrorState extends HomeState {}
+
+/// Get Products By Category
+class GetProductsByCategpryLoadingState extends HomeState {}
+
+class GetProductsByCategprySuccessState extends HomeState {}
+
+class GetProductsByCategpryErrorState extends HomeState {}

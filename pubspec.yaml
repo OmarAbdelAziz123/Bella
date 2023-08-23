@@ -18,11 +18,13 @@ dependencies:
   # Show Message
   fluttertoast: ^8.2.1
 
+  # Make Infinite Scroll
+  infinite_scroll_pagination: ^3.2.0
+
   # To Check All Devices
   device_preview: ^1.1.0
 
   # To Make All Sizes Responsive
-  sizer: ^2.0.15
   flutter_screenutil: any
 
   # To Call Backend

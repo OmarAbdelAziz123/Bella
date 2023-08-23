@@ -1,5 +1,6 @@
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
+import 'package:bella/features/layout/home/home_navigation_functions/home_navigation_functions.dart';
 import 'package:bella/features/layout/home/presentation/profie_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/add_card_in_home_view.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -73,7 +74,7 @@ class _MyCardViewState extends State<MyCardView> {
             ),
             width: 353.w,
             onTap: () {
-              navigateToAddCard(context);
+              HomeNavigationClass.navigateToAddCard(context);
             },
           ),
         ),
@@ -131,7 +132,7 @@ class _MyCardViewState extends State<MyCardView> {
                                 ),
                                 width: 353.w,
                                 onTap: () {
-                                  navigateToAddCard(context);
+                                  HomeNavigationClass.navigateToAddCard(context);
                                 },
                               ),
                             ],
@@ -151,7 +152,7 @@ class _MyCardViewState extends State<MyCardView> {
                                 elevation: 0,
                                 leading: GestureDetector(
                                   onTap: () {
-                                    navigateToProfile(context);
+                                    HomeNavigationClass.navigateToProfile(context);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(
@@ -742,37 +743,4 @@ class _MyCardViewState extends State<MyCardView> {
     );
   }
 
-  void navigateToProfile(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const ProfileView(),
-        transitionsBuilder: (_, animation, __, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(-1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
-
-  void navigateToAddCard(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 500),
-        pageBuilder: (_, __, ___) => const AddCardInHomeView(),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
-      ),
-    );
-  }
 }

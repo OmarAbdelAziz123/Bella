@@ -396,7 +396,5 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
     );
   }
 
-  void navigatePop(BuildContext context) {
-    Navigator.pop(context);
-  }
+
 }

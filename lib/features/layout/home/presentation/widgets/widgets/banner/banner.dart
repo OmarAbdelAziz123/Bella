@@ -34,7 +34,7 @@ class _CustomPageViewState extends State<CustomPageView> {
     return Column(
       children: [
         SizedBox(
-          height: 136.h,
+          height: 120.h,
           width: double.infinity,
           child: CarouselSlider(
             key: _sliderKey,
@@ -61,7 +61,7 @@ class _CustomPageViewState extends State<CustomPageView> {
             ),
           ),
         ),
-        SizedBox(height: 1.h),
+        SizedBox(height: 10.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: images.asMap().entries.map((entry) {

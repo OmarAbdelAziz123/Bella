@@ -1,4 +1,3 @@
-import 'package:bella/features/layout/home/presentation/widgets/widgets/search_bar_widget.dart';
 import 'package:bella/features/layout/offers/presentation/offers_view.dart';
 import 'package:bella/features/layout/offers/presentation/template.dart';
 import 'package:bella/utils/constants/app_assets.dart';
@@ -51,64 +50,64 @@ class OffersViewBody extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10.h),
-          Container(
-            height: 50.h,
-            width: 353.w,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.blackColor.withOpacity(0.15),
-                  spreadRadius: 0,
-                  blurRadius: 14,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: SearchBarWidget(hintText: 'Search'),
-          ),
-          SizedBox(height: 23.h),
-          SizedBox(
-            height: 111.h,
-            child: ListView.builder(
-              padding: EdgeInsets.only(left: 20.w),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Container(
-                      width: 70.w,
-                      height: 70.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.bgColor.withOpacity(0.8),
-                            spreadRadius: 0.1,
-                            blurRadius: 1,
-                            offset: const Offset(
-                              0.5,
-                              0.5,
-                            ), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Image.asset(
-                        AppAssets.starbucks,
-                        width: 70.w,
-                        height: 70.h,
-                      ),
-                    ),
-                    // SizedBox(height: .h),
-                    Text(
-                      'Starbucks',
-                      style: AppFonts.capsolButton,
-                    ),
-                  ],
-                );
-              },
-              itemCount: 8,
-            ),
-          ),
+          // Container(
+          //   height: 50.h,
+          //   width: 353.w,
+          //   decoration: BoxDecoration(
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: AppColors.blackColor.withOpacity(0.15),
+          //         spreadRadius: 0,
+          //         blurRadius: 14,
+          //         offset: const Offset(0, 4),
+          //       ),
+          //     ],
+          //   ),
+          //   child: SearchBarWidget(hintText: 'Search'),
+          // ),
+          // SizedBox(height: 23.h),
+          // SizedBox(
+          //   height: 111.h,
+          //   child: ListView.builder(
+          //     padding: EdgeInsets.only(left: 20.w),
+          //     scrollDirection: Axis.horizontal,
+          //     itemBuilder: (context, index) {
+          //       return Column(
+          //         children: [
+          //           Container(
+          //             width: 70.w,
+          //             height: 70.h,
+          //             decoration: BoxDecoration(
+          //               borderRadius: BorderRadius.circular(40.r),
+          //               boxShadow: [
+          //                 BoxShadow(
+          //                   color: AppColors.bgColor.withOpacity(0.8),
+          //                   spreadRadius: 0.1,
+          //                   blurRadius: 1,
+          //                   offset: const Offset(
+          //                     0.5,
+          //                     0.5,
+          //                   ), // changes position of shadow
+          //                 ),
+          //               ],
+          //             ),
+          //             child: Image.asset(
+          //               AppAssets.starbucks,
+          //               width: 70.w,
+          //               height: 70.h,
+          //             ),
+          //           ),
+          //           // SizedBox(height: .h),
+          //           Text(
+          //             'Starbucks',
+          //             style: AppFonts.capsolButton,
+          //           ),
+          //         ],
+          //       );
+          //     },
+          //     itemCount: 8,
+          //   ),
+          // ),
           SizedBox(height: 10.h),
           Padding(
             padding: EdgeInsets.only(left: 20.w),

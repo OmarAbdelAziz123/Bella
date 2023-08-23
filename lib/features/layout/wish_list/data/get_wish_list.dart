@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class WishListModel {
   List<Wishlist2>? wishlist;
 
@@ -24,7 +26,7 @@ class WishListModel {
 class Wishlist2 {
   String? companyDisplayName;
   List<Products>? products;
-  dynamic sum;
+  dynamic? sum;
 
   Wishlist2({this.companyDisplayName, this.products, this.sum});
 
@@ -58,10 +60,11 @@ class Products {
   String? productId;
   String? productImageLink;
   String? productTitle;
-  dynamic regularPrice;
-  dynamic salePrice;
+  dynamic? regularPrice;
+  dynamic? salePrice;
   String? currency;
   String? id;
+  dynamic? saving_in_SEK;
 
   Products({
     this.userId,
@@ -75,6 +78,7 @@ class Products {
     this.salePrice,
     this.currency,
     this.id,
+    this.saving_in_SEK,
   });
 
   Products.fromJson(Map<String, dynamic> json) {
@@ -89,6 +93,7 @@ class Products {
     salePrice = json['sale_price'];
     currency = json['currency'];
     id = json['id'];
+    saving_in_SEK = json['saving_in_SEK'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,6 +109,7 @@ class Products {
     data['sale_price'] = salePrice;
     data['currency'] = currency;
     data['id'] = id;
+    data['saving_in_SEK'] = saving_in_SEK;
     return data;
   }
 }

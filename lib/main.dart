@@ -13,15 +13,18 @@ import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-    statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarIconBrightness: Brightness.dark,
-    systemNavigationBarDividerColor: AppColors.black2Color,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.dark.copyWith(
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarDividerColor: AppColors.black2Color,
+    ),
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   /// To Get IP Address
   Timer.periodic(const Duration(seconds: 5), (timer) async {
     try {
@@ -29,7 +32,8 @@ void main() async {
         if (!interface.name.contains('lo')) {
           for (var address in interface.addresses) {
             if (address is InternetAddress && !address.isLinkLocal) {
-              MyCache.putString(key: CacheKeys.ipAddress, value: address.address);
+              MyCache.putString(
+                  key: CacheKeys.ipAddress, value: address.address);
               //   print('IP address: ${MyCache.getString(key: CacheKeys.ipAddress)}');
               return;
             }

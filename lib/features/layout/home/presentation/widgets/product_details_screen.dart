@@ -47,7 +47,7 @@ class ProductDetailsScreen extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(40.r),
               child: AppConstants.showNetworkImage(
-                image: product!.company_logo!,
+                image: product!.companyLogo!,
                 width: 40.h,
                 height: 40.h,
                 fit: BoxFit.cover,
@@ -63,7 +63,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               Center(
                 child: Image.network(
-                  product!.imageLinks![0],
+                  product!.imageLink!,
                   color: Colors.grey.withOpacity(0.1),
                   colorBlendMode: BlendMode.srcOver,
                   errorBuilder: (context, error, stackTrace) {
@@ -82,7 +82,7 @@ class ProductDetailsScreen extends StatelessWidget {
               const CustomContainerInProductDetails(),
               SizedBox(height: 32.h),
               Text(
-                product!.title!,
+                product!.name!,
                 textAlign: TextAlign.center,
                 style: AppFonts.titleSection.copyWith(
                   color: AppColors.blackColor,
@@ -90,7 +90,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
               Text(
-                product!.title!,
+                product!.name!,
                 textAlign: TextAlign.center,
                 style: AppFonts.titleBody.copyWith(
                   color: AppColors.blackColor,
@@ -112,8 +112,8 @@ class ProductDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${product!.pricing!.regularPrice} ${product!.pricing!
-                              .currency!}',
+                          '${product!.oldPrice!.price} ${product!.newPrice!
+                              .unit}',
                           style: AppFonts.strickedTextBig.copyWith(
                             color: AppColors.darkGreyColor,
                             decoration: TextDecoration.lineThrough,
@@ -121,8 +121,8 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                          '${product!.pricing!.salePrice} ${product!.pricing!
-                              .currency!}',
+                          '${product!.newPrice!.price} ${product!.newPrice!
+                              .unit}',
                           style: AppFonts.productNameBig.copyWith(
                             color: AppColors.black7Color,
                             height: 1.h,
@@ -141,23 +141,25 @@ class ProductDetailsScreen extends StatelessWidget {
                               AppConstants.showFlushBar(
                                   context, 'Item has been removed');
                               await wishListCubit.deleteOneItemInCart(
-                                id: product!.id!,
-                                companyDisplayName: product!.company_display_name!,
+                                productId: product!.id!,
+                                companyDisplayName: product!.companyDisplayName!,
+                                onTapSource: 'ProductDetailsScreen',
                               );
                             } else {
                               AppConstants.showFlushBar(
                                   context, 'Item added to wishlist');
                               await wishListCubit.addToCart(
-                                company_logo_link: product!.company_logo!,
+                                company_logo_link: product!.companyLogo!,
                                 company_display_name:
-                                product!.company_display_name!,
+                                product!.companyDisplayName!,
                                 product_id: product!.id!,
-                                product_image_link: product!.imageLinks![0],
-                                product_title: product!.title!,
+                                product_image_link: product!.imageLink!,
+                                product_title: product!.name!,
                                 regular_price:
-                                product!.pricing!.regularPrice,
-                                sale_price: product!.pricing!.salePrice,
-                                currency: product!.pricing!.currency,
+                                product!.oldPrice!.price,
+                                sale_price: product!.newPrice!.price!,
+                                currency: product!.newPrice!.unit ?? 'kr',
+                                saving_in_SEK: product!.savingInSEK!,
                               );
                             }
                           },

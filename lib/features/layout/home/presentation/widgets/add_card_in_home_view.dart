@@ -1,6 +1,6 @@
 import 'package:bella/features/auth/managers/auth_cubit.dart';
 import 'package:bella/features/auth/presentation/widgets/widgets/custom_button.dart';
-import 'package:bella/features/layout/home/presentation/widgets/my_id_view.dart';
+import 'package:bella/features/layout/home/home_navigation_functions/home_navigation_functions.dart';
 import 'package:bella/utils/constants/app_assets.dart';
 import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
@@ -59,7 +59,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
         listener: (context, state) {
           if (state is AddCreditCardSuccessState) {
             BlocProvider.of<AuthCubit>(context).readCreditCard();
-            navigateToMyCard(context, controller.text,
+            HomeNavigationClass.navigateToMyCard(context, controller.text,
                 '${monthController.text}${yearController.text}');
           } else if (state is AddCreditCardErrorState) {
           }
@@ -346,24 +346,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
     );
   }
 
-  void navigateToMyCard(BuildContext context, String cardNumber, expiryDate) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) => const MyCardView(),
-        transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1, 0),
-              end: Offset.zero,
-            ).animate(animation),
-            child: child,
-          );
-        },
-      ),
-    );
-  }
 }
 
 class _DateFormatter extends TextInputFormatter {

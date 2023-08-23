@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 class GetRecommendedProductsModel {
   List<RecommendedProducts>? recommendedProducts;
 
@@ -25,127 +23,150 @@ class GetRecommendedProductsModel {
 }
 
 class RecommendedProducts {
-  String? companyId;
-  List<String>? storeId;
-  List<String>? imageLinks;
-  String? title;
+  String? name;
+  String? imageLink;
+  String? campaignText;
   String? description;
-  List<String>? categories;
-  Pricing? pricing;
+  NewPrice? newPrice;
+  OldPrice? oldPrice;
   bool? membersOnly;
-  bool? availability;
-  String? validFrom;
-  String? validTo;
-  List<String>? channels;
+  String? category;
+  dynamic productCount;
+  String? offerType;
+  String? campaignType;
+  double? savingInSEK;
+  String? priceDecreasePercentage;
   String? type;
-  String? company_display_name;
-  String? company_logo;
+  String? companyId;
+  String? companyDisplayName;
+  String? companyLogo;
   String? id;
   String? sRid;
   String? sSelf;
   String? sEtag;
   String? sAttachments;
   dynamic iTs;
-  String? validfrom;
 
   RecommendedProducts(
-      {this.companyId,
-        this.storeId,
-        this.imageLinks,
-        this.title,
-        this.description,
-        this.categories,
-        this.pricing,
-        this.membersOnly,
-        this.availability,
-        this.validFrom,
-        this.validTo,
-        this.channels,
-        this.type,
-        this.company_display_name,
-        this.company_logo,
-        this.id,
-        this.sRid,
-        this.sSelf,
-        this.sEtag,
-        this.sAttachments,
-        this.iTs,
-        this.validfrom});
+      {this.name,
+      this.imageLink,
+      this.campaignText,
+      this.description,
+      this.newPrice,
+      this.oldPrice,
+      this.membersOnly,
+      this.category,
+      this.productCount,
+      this.offerType,
+      this.campaignType,
+      this.savingInSEK,
+      this.priceDecreasePercentage,
+      this.type,
+      this.companyId,
+      this.companyDisplayName,
+      this.companyLogo,
+      this.id,
+      this.sRid,
+      this.sSelf,
+      this.sEtag,
+      this.sAttachments,
+      this.iTs});
 
   RecommendedProducts.fromJson(Map<String, dynamic> json) {
-    companyId = json['company_id'];
-    storeId = json['store_id'].cast<String>();
-    imageLinks = json['image_links'].cast<String>();
-    title = json['title'];
-    description = json['description'];
-    categories = json['categories'].cast<String>();
-    pricing =
-    json['pricing'] != null ? Pricing.fromJson(json['pricing']) : null;
+    name = json['name'] ?? '...';
+    imageLink = json['image_link'];
+    campaignText = json['campaign_text'] ?? '...';
+    description = json['description'] ?? '...';
+    newPrice =
+        json['new_price'] != null ? NewPrice.fromJson(json['new_price']) : null;
+    oldPrice =
+        json['old_price'] != null ? OldPrice.fromJson(json['old_price']) : null;
     membersOnly = json['members_only'];
-    availability = json['availability'];
-    validFrom = json['valid_from'];
-    validTo = json['valid_to'];
-    channels = json['channels'].cast<String>();
-    type = json['type'];
-    company_display_name = json['company_display_name'];
-    company_logo = json['company_logo'];
-    id = json['id'];
-    sRid = json['_rid'];
-    sSelf = json['_self'];
-    sEtag = json['_etag'];
-    sAttachments = json['_attachments'];
-    iTs = json['_ts'];
-    validFrom = json['valid_from '];
+    category = json['category'] ?? '';
+    productCount = json['product_count'] ?? '';
+    offerType = json['offer_type'] ?? '';
+    campaignType = json['campaign_type'] ?? '...';
+    savingInSEK = json['saving_in_SEK'] ?? 0.0;
+    priceDecreasePercentage = json['price_decrease_percentage'] ?? '';
+    type = json['type'] ?? '';
+    companyId = json['company_id'] ?? '';
+    companyDisplayName = json['company_display_name'] ?? '';
+    companyLogo = json['company_logo'] ?? '';
+    id = json['id'] ?? '';
+    sRid = json['_rid'] ?? '';
+    sSelf = json['_self'] ?? '';
+    sEtag = json['_etag'] ?? '';
+    sAttachments = json['_attachments'] ?? '';
+    iTs = json['_ts'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['company_id'] = companyId;
-    data['store_id'] = storeId;
-    data['image_links'] = imageLinks;
-    data['title'] = title;
+    data['name'] = name;
+    data['image_link'] = imageLink;
+    data['campaign_text'] = campaignText;
     data['description'] = description;
-    data['categories'] = categories;
-    if (pricing != null) {
-      data['pricing'] = pricing!.toJson();
+    if (newPrice != null) {
+      data['new_price'] = newPrice!.toJson();
+    }
+    if (oldPrice != null) {
+      data['old_price'] = oldPrice!.toJson();
     }
     data['members_only'] = membersOnly;
-    data['availability'] = availability;
-    data['valid_from'] = validFrom;
-    data['valid_to'] = validTo;
-    data['channels'] = channels;
+    data['category'] = category;
+    data['product_count'] = productCount;
+    data['offer_type'] = offerType;
+    data['campaign_type'] = campaignType;
+    data['saving_in_SEK'] = savingInSEK;
+    data['price_decrease_percentage'] = priceDecreasePercentage;
     data['type'] = type;
-    data['company_display_name'] = company_display_name;
-    data['company_logo'] = company_logo;
+    data['company_id'] = companyId;
+    data['company_display_name'] = companyDisplayName;
+    data['company_logo'] = companyLogo;
     data['id'] = id;
     data['_rid'] = sRid;
     data['_self'] = sSelf;
     data['_etag'] = sEtag;
     data['_attachments'] = sAttachments;
     data['_ts'] = iTs;
-    data['valid_from '] = validFrom;
     return data;
   }
 }
 
-class Pricing {
-  dynamic regularPrice;
-  dynamic salePrice;
-  dynamic currency;
+class NewPrice {
+  double? price;
+  dynamic unit;
 
-  Pricing({this.regularPrice, this.salePrice, this.currency});
+  NewPrice({this.price, this.unit});
 
-  Pricing.fromJson(Map<String, dynamic> json) {
-    regularPrice = json['regular_price'];
-    salePrice = json['sale_price'];
-    currency = json['currency'];
+  NewPrice.fromJson(Map<String, dynamic> json) {
+    price = json['price'] ?? 0;
+    unit = json['unit'] ?? 'kr';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['regular_price'] = regularPrice;
-    data['sale_price'] = salePrice;
-    data['currency'] = currency;
+    data['price'] = price;
+    data['unit'] = unit;
+    return data;
+  }
+}
+
+class OldPrice {
+  dynamic price;
+  dynamic unit;
+
+  OldPrice({this.price, this.unit});
+
+  OldPrice.fromJson(Map<String, dynamic> json) {
+    price = json['price'] ?? 0;
+    unit = json['unit'] ?? 'kr';
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['price'] = price;
+    data['unit'] = unit;
     return data;
   }
 }
