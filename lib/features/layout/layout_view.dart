@@ -3,6 +3,7 @@ import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
 import 'package:bella/features/layout/my_brands/presentation/my_brands/my_brands_view.dart';
+import 'package:bella/features/layout/offers/managers/myoffers_cubit.dart';
 import 'package:bella/features/layout/offers/presentation/offers_view.dart';
 import 'package:bella/features/layout/scan/managers/scan_cubit.dart';
 import 'package:bella/features/layout/scan/presentation/scan_view.dart';
@@ -188,6 +189,8 @@ class _LayoutViewState extends State<LayoutView> {
     BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
     BlocProvider.of<MyBrandsCubit>(context).notJoinedFunction(context);
     BlocProvider.of<HomeCubit>(context).getAllCompanies();
+    /// Call My Offers
+    BlocProvider.of<MyoffersCubit>(context).getAllPersonalOffersByUsers();
   }
 
   var getResult = 'QR Code Result';

@@ -83,19 +83,17 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
         List<String> yourList = List.generate(15, (index) => 'Item $index');
 
         void navigateToCouponsScreenInCompanyProfileScreen({
-          required Color bgColor,
           required String companyLogo,
-          required Widget widgetInCenter,
-          required String precentageNumber,
           required String title,
-          required void Function()? onCloseTap,
         }) {
           Navigator.push(
             context,
             PageRouteBuilder(
               transitionDuration: const Duration(milliseconds: 250),
-              pageBuilder: (_, __, ___) =>
-                  CouponsScreenInCompanyProfileScreen(),
+              pageBuilder: (_, __, ___) => CouponsScreenInCompanyProfileScreen(
+                companyLogo: companyLogo,
+                title: title,
+              ),
               transitionsBuilder:
                   (_, Animation<double> animation, __, Widget child) {
                 return SlideTransition(
@@ -177,7 +175,7 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                   overscroll.disallowIndicator();
                   return false;
                 },
-                child: cubit.companyProfile!.productCategories!.isEmpty
+                child: cubit.companyProfile == null
                     ? const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.primaryColor,
@@ -539,30 +537,8 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         navigateToCouponsScreenInCompanyProfileScreen(
-                                          bgColor: AppColors.bgColor,
-                                          companyLogo: AppAssets.starbucks,
-                                          widgetInCenter: Align(
-                                            alignment: Alignment.center,
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  AppAssets.barcode,
-                                                  height: 124.h,
-                                                  width: 126.w,
-                                                ),
-                                                SizedBox(height: 5.h),
-                                                Text(
-                                                  'Förfalle Om 2 dagar',
-                                                  style: AppFonts.bodySmallBold,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          precentageNumber: 'Gåva',
-                                          title: 'På varfritt meny',
-                                          onCloseTap: () {
-                                            navigatePop();
-                                          },
+                                          companyLogo: widget.logo,
+                                          title: widget.display_name,
                                         );
                                       },
                                       child: Container(
