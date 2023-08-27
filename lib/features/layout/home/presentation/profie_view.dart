@@ -1,3 +1,5 @@
+import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
+import 'package:bella/features/auth/data/data_provider/local/cache.dart';
 import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/verification_an_email_widget.dart';
 import 'package:bella/features/on_boardings/presentation/on_boarding_screen.dart';
@@ -114,14 +116,14 @@ class _ProfileViewState extends State<ProfileView> {
                       ],
                     ),
                     SizedBox(height: 16.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Mark AL-Jumaily',
-                          style: AppFonts.titleBody,
-                        ),
-                      ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        MyCache.getString(key: CacheKeys.fullName),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: AppFonts.titleBody,
+                      ),
                     ),
                     SizedBox(height: 30.h),
                     ListView(

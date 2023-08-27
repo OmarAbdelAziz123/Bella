@@ -342,10 +342,10 @@ class AppConstants {
     required BoxFit fit,
   }) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(0.r),
+      borderRadius: BorderRadius.circular(40.r),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(0.r),
+          borderRadius: BorderRadius.circular(40.r),
         ),
         child: Image.network(
           image,

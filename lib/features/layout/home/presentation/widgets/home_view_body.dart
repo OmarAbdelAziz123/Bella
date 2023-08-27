@@ -497,22 +497,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                             if (wishListCubit
                                                 .checkProductInWishList(
                                                     productId: product.id!)) {
-                                              print('Delete');
                                               await wishListCubit
                                                   .deleteOneItemInCart(
-                                                // id: wishListCubit
-                                                // .wishListModel[index]
-                                                // .products![index]
-                                                // .id!,
-                                                // id: wishListCubit
-                                                //     .wishListModelCopy[index]
-                                                //     .products![index]
-                                                //     .productId!,
                                                 productId: product.id!,
-                                                // companyDisplayName:
-                                                //     wishListCubit
-                                                //         .wishListModel[index]
-                                                //         .companyDisplayName!,
                                                 companyDisplayName:
                                                     product.companyDisplayName!,
                                                 onTapSource: 'HomeScreen',
@@ -520,7 +507,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                                               AppConstants.showFlushBar(context,
                                                   'Item has been removed');
                                             } else {
-                                              print('Add To Card');
                                               await wishListCubit.addToCart(
                                                 company_logo_link:
                                                     product.companyLogo!,

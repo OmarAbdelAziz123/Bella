@@ -6,6 +6,7 @@ import 'package:bella/features/layout/wish_list/data/get_wish_list.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'wish_list_state.dart';
 
 class WishListCubit extends Cubit<WishListState> {
@@ -39,14 +40,14 @@ class WishListCubit extends Cubit<WishListState> {
     });
   }
 
-  Future<void> deleteOneItemInCart(
-      {required String productId, required String companyDisplayName, required String onTapSource}) async {
-    print('User Id is ${MyCache.getString(key: CacheKeys.userId)}');
-    print(productId);
-
+  Future<void> deleteOneItemInCart({
+    required String productId,
+    required String companyDisplayName,
+    required String onTapSource,
+  }) async {
     String? objectId;
 
-    if(onTapSource == 'WishListScreen') {
+    if (onTapSource == 'WishListScreen') {
       objectId = productId;
     } else {
       objectId = getObjectIdInWishlist(productId: productId);
@@ -87,7 +88,7 @@ class WishListCubit extends Cubit<WishListState> {
     required String currency,
     required double saving_in_SEK,
   }) async {
-    wishListModelCopy.clear();
+    // wishListModelCopy.clear();
     emit(WishListListLoadingState());
     await dioHelper.postData(endPoint: '/api/v1/basket/add_to_basket', body: {
       "user_id": MyCache.getString(key: CacheKeys.user_Id),
@@ -102,16 +103,24 @@ class WishListCubit extends Cubit<WishListState> {
       "saving_in_SEK": saving_in_SEK,
       "currency": currency,
     }).then((response) {
-      if (kDebugMode) {
-        print('Function add to cart is success');
-      }
+      // if (kDebugMode) {
+      //   print('Function add to cart is success');
+      // }
+
+      wishListModelCopy.clear();
       response.data['wishlist'].forEach((wish) {
         wishListModelCopy.add(Wishlist2.fromJson(wish));
       });
-      if (kDebugMode) {
-        print('Wish LIST LENGTH IN ADD IS ${wishListModel.length}');
-      }
+
       wishListModel = wishListModelCopy;
+
+      // response.data['wishlist'].forEach((wish) {
+      //   wishListModelCopy.add(Wishlist2.fromJson(wish));
+      // });
+      // if (kDebugMode) {
+      //   print('Wish LIST LENGTH IN ADD IS ${wishListModel.length}');
+      // }
+      // wishListModel = wishListModelCopy;
       emit(WishListListSuccessState());
     }).catchError((error) {
       if (kDebugMode) {

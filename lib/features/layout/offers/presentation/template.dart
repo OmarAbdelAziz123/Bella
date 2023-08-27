@@ -38,7 +38,7 @@ class Template extends StatelessWidget {
             children: [
               Container(
                 width: 353.w,
-                height: 600.h,
+                height: personalOffer.type == 'discount_code' ? 582.h : 495.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),
                   color: AppColors.whiteColor,
@@ -68,116 +68,13 @@ class Template extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 37.h),
-                    Align(
-                      alignment: Alignment.center,
-                      // child: widgetInCenter,
-                      child: personalOffer.type == 'discount_code'
-                          ? Align(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  // Image.asset(
-                                  //   AppAssets.copy,
-                                  //   height: 69.h,
-                                  //   width: 269.w,
-                                  // ),
-                                  AppConstants.showNetworkImage(
-                                    image: personalOffer.barcodeLink!,
-                                    height: 69.h,
-                                    width: 269.w,
-                                    fit: BoxFit.scaleDown,
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 16.w, vertical: 8.h),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.bgColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                      child: Text(personalOffer.value!.code!)),
-                                  SizedBox(height: 20.h),
-                                  Text(
-                                    // 'Förfalle Om 2 dagar',
-                                    'Expiry Date',
-                                    style: AppFonts.bodySmallBold,
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  Text(
-                                    personalOffer.validTo!,
-                                    style: AppFonts.bodySmallBold,
-                                  ),
-                                  SizedBox(height: 20.h),
-                                ],
-                              ),
-                            )
-                          : personalOffer.type == 'bonus_check'
-                              ? Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: [
-                                      AppConstants.showNetworkImage(
-                                        image: personalOffer.barcodeLink!,
-                                        height: 69.h,
-                                        width: 269.w,
-                                        fit: BoxFit.scaleDown,
-                                      ),
-                                      SizedBox(height: 20.h),
-                                      Text(
-                                        'Expiry Date',
-                                        style: AppFonts.bodySmallBold,
-                                      ),
-                                      SizedBox(height: 20.h),
-                                      Text(
-                                        personalOffer.validTo!,
-                                        style: AppFonts.bodySmallBold,
-                                      ),
-                                      SizedBox(height: 20.h),
-                                    ],
-                                  ),
-                                )
-                              : personalOffer.type == 'gift_card'
-                                  ? Padding(
-                                      padding: EdgeInsets.only(bottom: 26.h),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          children: [
-                                            AppConstants.showNetworkImage(
-                                              image: personalOffer.barcodeLink!,
-                                              height: 69.h,
-                                              width: 269.w,
-                                              fit: BoxFit.scaleDown,
-                                            ),
-                                            SizedBox(height: 20.h),
-                                            Text(
-                                              'Expiry Date',
-                                              style: AppFonts.bodySmallBold,
-                                            ),
-                                            SizedBox(height: 20.h),
-                                            Text(
-                                              personalOffer.validTo!,
-                                              style: AppFonts.bodySmallBold,
-                                            ),
-                                            SizedBox(height: 20.h),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      color: AppColors.primaryColor,
-                                      height: 10.h,
-                                      width: 10.w,
-                                    ),
-                    ),
+                    SizedBox(height: 25.h),
                     Align(
                       alignment: Alignment.center,
                       child: Container(
                         // width: 81.w,
                         constraints: BoxConstraints(
-                          maxWidth: 150.w,
+                          maxWidth: 140.w,
                           minWidth: 81.w,
                         ),
                         height: 42.h,
@@ -193,49 +90,288 @@ class Template extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 287.w,
-                          child: Text(
-                            personalOffer.description!,
-                            overflow: TextOverflow.clip,
-                            style: AppFonts.titleSubsection,
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 20.h),
+                    Align(
+                      alignment: Alignment.center,
+                      // child: widgetInCenter,
+                      child: personalOffer.type == 'discount_code'
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: Column(
+                                children: [
+                                  AppConstants.showNetworkImage(
+                                    image: personalOffer.barcodeLink!,
+                                    height: 124.h,
+                                    width: 126.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w,
+                                      vertical: 10.5.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.bgColor,
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: Text(
+                                      personalOffer.value!.code!,
+                                      style: AppFonts.productName,
+                                    ),
+                                  ),
+                                  SizedBox(height: 7.h),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        AppAssets.copyIcon,
+                                        width: 24.w,
+                                        height: 24.h,
+                                      ),
+                                      SizedBox(width: 12.w),
+                                      Text(
+                                        'Copy Code',
+                                        style: AppFonts.productName,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 287.w,
+                                        child: Text(
+                                          personalOffer.description!,
+                                          overflow: TextOverflow.clip,
+                                          style: AppFonts.bodyLarge,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Container(
+                                    width: 313.w,
+                                    height: 90.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.r),
+                                      color: AppColors.grey4Color,
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        top: 20.h, left: 20.w, right: 12.w),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AppAssets.home_smile,
+                                              height: 20.h,
+                                              width: 20.w,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              'Redemption: ${personalOffer.restrictions!.parseLocation()}',
+                                              style: AppFonts.bodySmallBold,
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10.h),
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AppAssets.calendar_check,
+                                              height: 20.h,
+                                              width: 20.w,
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              'Expiry date: ${personalOffer.validTo}',
+                                              style: AppFonts.bodySmallBold,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : personalOffer.type == 'bonus_check'
+                              ? Align(
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      AppConstants.showNetworkImage(
+                                        image: personalOffer.barcodeLink!,
+                                        height: 124.h,
+                                        width: 126.w,
+                                        fit: BoxFit.scaleDown,
+                                      ),
+                                      SizedBox(height: 20.h),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 287.w,
+                                            child: Text(
+                                              personalOffer.description!,
+                                              overflow: TextOverflow.clip,
+                                              style: AppFonts.bodyLarge,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20.h),
+                                      Container(
+                                        width: 313.w,
+                                        height: 90.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.r),
+                                          color: AppColors.grey4Color,
+                                        ),
+                                        padding: EdgeInsets.only(
+                                            top: 20.h, left: 20.w, right: 12.w),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  AppAssets.home_smile,
+                                                  height: 20.h,
+                                                  width: 20.w,
+                                                ),
+                                                SizedBox(width: 10.w),
+                                                Text(
+                                                  'Redemption: ${personalOffer.restrictions!.parseLocation()}',
+                                                  style: AppFonts.bodySmallBold,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 10.h),
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  AppAssets.calendar_check,
+                                                  height: 20.h,
+                                                  width: 20.w,
+                                                ),
+                                                SizedBox(width: 10.w),
+                                                Text(
+                                                  'Expiry date: ${personalOffer.validTo}',
+                                                  style: AppFonts.bodySmallBold,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : personalOffer.type == 'gift_card'
+                                  ? Align(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        AppConstants.showNetworkImage(
+                                          image: personalOffer.barcodeLink!,
+                                          height: 124.h,
+                                          width: 126.w,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                        SizedBox(height: 20.h),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 287.w,
+                                              child: Text(
+                                                personalOffer.description!,
+                                                overflow: TextOverflow.clip,
+                                                style: AppFonts.bodyLarge,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 20.h),
+                                        Container(
+                                          width: 313.w,
+                                          height: 90.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10.r),
+                                            color: AppColors.grey4Color,
+                                          ),
+                                          padding: EdgeInsets.only(
+                                              top: 20.h, left: 20.w, right: 12.w),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    AppAssets.home_smile,
+                                                    height: 20.h,
+                                                    width: 20.w,
+                                                  ),
+                                                  SizedBox(width: 10.w),
+                                                  Text(
+                                                    'Redemption: ${personalOffer.restrictions!.parseLocation()}',
+                                                    style: AppFonts.bodySmallBold,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 10.h),
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    AppAssets.calendar_check,
+                                                    height: 20.h,
+                                                    width: 20.w,
+                                                  ),
+                                                  SizedBox(width: 10.w),
+                                                  Text(
+                                                    'Expiry date: ${personalOffer.validTo}',
+                                                    style: AppFonts.bodySmallBold,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                  : Container(
+                                      color: AppColors.primaryColor,
+                                      height: 10.h,
+                                      width: 10.w,
+                                    ),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 40.h),
                   ],
                 ),
               ),
               Positioned(
                 top: -35.h,
-                left: 50.5,
-                right: 50,
-                // child: ClipRRect(
-                //   borderRadius: BorderRadius.circular(40.r),
-                //   child: AppConstants.showNetworkImage(
-                //     image: personalOffer.company!.logo!,
-                //     width: 64.h,
-                //     height: 64.h,
-                //     fit: BoxFit.scaleDown,
-                //   ),
-                // ),
-                child: CircleAvatar(
-                  radius: 40.r,
-                  // child: ,
-                  backgroundImage: NetworkImage(
-                    personalOffer.company!.logo!,
-                    // fit: BoxFit.scaleDown,
+                left: 144.w,
+                right: 144.w,
+                child: SizedBox(
+                  height: 65.h,
+                  width: 65.w,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40.r),
+                    child: AppConstants.showNetworkImage(
+                      image: personalOffer.company!.logo!,
+                      height: 65.h,
+                      width: 65.w,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 15.h),
+          SizedBox(height: personalOffer.type == 'discount_code' ? 25.h : 120.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -251,6 +387,14 @@ class Template extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
                     borderRadius: BorderRadius.circular(300.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.blackColor.withOpacity(0.15),
+                        blurRadius: 14.r,
+                        spreadRadius: 0,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
                   ),
                   child: Row(
                     children: [

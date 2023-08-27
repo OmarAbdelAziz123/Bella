@@ -8,6 +8,7 @@ import 'package:bella/features/layout/home/presentation/home_view.dart';
 import 'package:bella/features/layout/home/presentation/see_all__view.dart';
 import 'package:bella/features/layout/home/presentation/widgets/coupons_screen_in_company_profile_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/products_by_category_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/receipts_screen_in_company_profile_screen.dart';
 import 'package:bella/features/layout/home/presentation/widgets/terms_and_conditions.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/banner/banner.dart';
 import 'package:bella/features/layout/home/presentation/widgets/widgets/custom_member_only.dart';
@@ -91,6 +92,32 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
             PageRouteBuilder(
               transitionDuration: const Duration(milliseconds: 250),
               pageBuilder: (_, __, ___) => CouponsScreenInCompanyProfileScreen(
+                companyLogo: companyLogo,
+                title: title,
+              ),
+              transitionsBuilder:
+                  (_, Animation<double> animation, __, Widget child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+            ),
+          );
+        }
+
+        void navigateToReceiptsScreenInCompanyProfileScreen({
+          required String companyLogo,
+          required String title,
+        }) {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 250),
+              pageBuilder: (_, __, ___) => ReceiptsScreenInCompanyProfileScreen(
                 companyLogo: companyLogo,
                 title: title,
               ),
@@ -593,52 +620,60 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     ),
 
                                     /// Receipts
-                                    Container(
-                                      width: 171.w,
-                                      height: 83.h,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.grey15Color,
-                                        borderRadius:
-                                            BorderRadius.circular(20.r),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(height: 14.h),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 14.w),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Receipts',
-                                                  style: AppFonts.productName,
-                                                ),
-                                                Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 14.sp,
-                                                ),
-                                              ],
+                                    GestureDetector(
+                                      onTap: () {
+                                        navigateToReceiptsScreenInCompanyProfileScreen(
+                                          companyLogo: widget.logo,
+                                          title: widget.display_name,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 171.w,
+                                        height: 83.h,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.grey15Color,
+                                          borderRadius:
+                                              BorderRadius.circular(20.r),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(height: 14.h),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 14.w),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Receipts',
+                                                    style: AppFonts.productName,
+                                                  ),
+                                                  Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    size: 14.sp,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(height: 18.h),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 12.w),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                SvgPicture.asset(
-                                                    AppAssets.receipt,
-                                                    width: 32.w,
-                                                    height: 32.h),
-                                              ],
+                                            SizedBox(height: 18.h),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 12.w),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      AppAssets.receipt,
+                                                      width: 32.w,
+                                                      height: 32.h),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

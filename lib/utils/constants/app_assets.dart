@@ -5,6 +5,11 @@ import 'package:bella/utils/constants/constants.dart';
 class AppAssets {
   /// SVG
   static const String arrowBack = '${AppConstants.baseImage}/arrowBack.svg';
+  static const String Vector123 = '${AppConstants.baseImage}/Vector123.svg';
+  static const String home_smile = '${AppConstants.baseImage}/home-smile.svg';
+  static const String receiptIcon = '${AppConstants.baseImage}/receiptIcon.png';
+  static const String calendar_check = '${AppConstants.baseImage}/calendar-check-01.svg';
+  static const String copyIcon = '${AppConstants.baseImage}/copyIcon.svg';
   static const String coupon = '${AppConstants.baseImage}/coupon.svg';
   static const String receipt = '${AppConstants.baseImage}/receipt.svg';
   static const String listTileIcon = '${AppConstants.baseImage}/listTileIcon.svg';

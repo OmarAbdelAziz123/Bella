@@ -55,7 +55,7 @@ class _MyCardViewState extends State<MyCardView> {
         width: 393.w,
         margin: EdgeInsets.only(bottom: 20.h),
         decoration: const BoxDecoration(
-          color: AppColors.whiteColor,
+          color: AppColors.grey4Color,
         ),
         child: Padding(
           padding: EdgeInsets.only(
@@ -79,6 +79,26 @@ class _MyCardViewState extends State<MyCardView> {
           ),
         ),
       ),
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            // Navigator.pop(context);
+            HomeNavigationClass.navigateToProfile(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 11.h,
+              left: 20.h,
+              bottom: 4.h,
+            ),
+            child: SvgPicture.asset(
+              AppAssets.arrowbackblack,
+            ),
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: AppColors.bgColor,
+      ),
       body: SafeArea(
         child: BlocProvider(
           create: (context) => AuthCubit()..readCreditCard(),
@@ -99,6 +119,7 @@ class _MyCardViewState extends State<MyCardView> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              SizedBox(height: 10.h),
                               Text(
                                 'My Cards',
                                 style: AppFonts.titleScreen,
@@ -122,19 +143,19 @@ class _MyCardViewState extends State<MyCardView> {
                                 style: AppFonts.bodyLarge,
                               ),
                               SizedBox(height: 220.h),
-                              CustomButton(
-                                widget: Text(
-                                  'Add Card',
-                                  style: AppFonts.bodyLargeBold.copyWith(
-                                    color: AppColors.whiteColor,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                width: 353.w,
-                                onTap: () {
-                                  HomeNavigationClass.navigateToAddCard(context);
-                                },
-                              ),
+                              // CustomButton(
+                              //   widget: Text(
+                              //     'Add Card',
+                              //     style: AppFonts.bodyLargeBold.copyWith(
+                              //       color: AppColors.whiteColor,
+                              //     ),
+                              //     textAlign: TextAlign.center,
+                              //   ),
+                              //   width: 353.w,
+                              //   onTap: () {
+                              //     HomeNavigationClass.navigateToAddCard(context);
+                              //   },
+                              // ),
                             ],
                           ),
                         )

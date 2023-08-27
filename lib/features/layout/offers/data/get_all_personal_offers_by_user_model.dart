@@ -55,8 +55,7 @@ class PersonalOffers {
       data['bonus_check'] = bonusCheck!.map((v) => v.toJson()).toList();
     }
     if (discountCodes != null) {
-      data['discount_codes'] =
-          discountCodes!.map((v) => v.toJson()).toList();
+      data['discount_codes'] = discountCodes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -79,25 +78,25 @@ class PersonalOffer {
 
   PersonalOffer(
       {this.id,
-        this.userId,
-        this.title,
-        this.company,
-        this.type,
-        this.value,
-        this.redeemed,
-        this.redemptionDate,
-        this.validTo,
-        this.barcodeLink,
-        this.restrictions,
-        this.status,
-        this.description});
+      this.userId,
+      this.title,
+      this.company,
+      this.type,
+      this.value,
+      this.redeemed,
+      this.redemptionDate,
+      this.validTo,
+      this.barcodeLink,
+      this.restrictions,
+      this.status,
+      this.description});
 
   PersonalOffer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     title = json['title'];
     company =
-    json['company'] != null ? Company.fromJson(json['company']) : null;
+        json['company'] != null ? Company.fromJson(json['company']) : null;
     type = json['type'];
     value = json['value'] != null ? Value.fromJson(json['value']) : null;
     redeemed = json['redeemed'];
@@ -199,5 +198,22 @@ class Restrictions {
     data['locations'] = locations;
     data['terms_and_conditions'] = termsAndConditions;
     return data;
+  }
+
+  String parseLocation() {
+    String location = '';
+    for (var element in locations!) {
+      location = '$location$element';
+    }
+
+    if (location == 'online in_store' || location == 'in_store online') {
+      location = 'Online & In Store';
+    } else if (location == 'in_store') {
+      location = 'In Store';
+    } else if (location == 'online') {
+      location = 'Online';
+    }
+
+    return location;
   }
 }

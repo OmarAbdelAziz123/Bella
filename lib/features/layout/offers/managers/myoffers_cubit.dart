@@ -18,6 +18,7 @@ class MyoffersCubit extends Cubit<MyoffersState> {
 
   Future<void> getAllPersonalOffersByUsers({String? companyId = ''}) async {
     emit(GetAllPersonalOffersByUsersLoadingState());
+    print('Ussssser IDDDDDDDDDD is ${MyCache.getString(key: CacheKeys.userId)}');
     await dioHelper
         .getData(
             endPoint: companyId! == ''

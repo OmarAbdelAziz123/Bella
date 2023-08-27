@@ -90,3 +90,10 @@ class GetProductsByCategpryLoadingState extends HomeState {}
 class GetProductsByCategprySuccessState extends HomeState {}
 
 class GetProductsByCategpryErrorState extends HomeState {}
+
+/// Get All Receipts
+class GetAllReceiptsLoadingState extends HomeState {}
+
+class GetAllReceiptsSuccessState extends HomeState {}
+
+class GetAllReceiptsErrorState extends HomeState {}

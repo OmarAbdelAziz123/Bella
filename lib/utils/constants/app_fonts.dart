@@ -127,7 +127,7 @@ class AppFonts {
   static final TextStyle productPrice = AppConstants.getTextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 14.sp,
-    letterSpacing: -4.sp,
+    letterSpacing: 0.sp,
     height: 0,
     color: AppColors.black3Color,
   );
@@ -189,7 +189,7 @@ class AppFonts {
   );
 
   static final TextStyle smallCapslook = AppConstants.getTextStyle(
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     fontSize: 10.sp,
     letterSpacing: 0.sp,
     height: 0.h,
@@ -199,6 +199,13 @@ class AppFonts {
   static final TextStyle cardNumber = AppConstants.getTextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 18.sp,
+    letterSpacing: 0.sp,
+    height: 0.h,
+    color: AppColors.blackColor,
+  );
+  static final TextStyle receiptItemLine = AppConstants.getTextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 12.sp,
     letterSpacing: 0.sp,
     height: 0.h,
     color: AppColors.blackColor,

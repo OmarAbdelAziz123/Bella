@@ -8,6 +8,7 @@ import 'package:bella/features/layout/home/data/models/error_model.dart';
 import 'package:bella/features/layout/home/data/models/get-recommended.dart';
 import 'package:bella/features/layout/home/data/models/get_company_products_model.dart';
 import 'package:bella/features/layout/home/data/models/get_recommended_products_model.dart';
+import 'package:bella/features/layout/home/data/models/receipts_model.dart';
 import 'package:bella/features/layout/home/data/models/see_all_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,8 @@ class HomeCubit extends Cubit<HomeState> {
   GetCompanyProductsModel? getCompanyProductsModel;
   ErrorModel? errorModel;
   CompanyProfile? companyProfile;
+
+  List<Receipts> receipts = [];
 
   int index = 0;
 
@@ -178,4 +181,19 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> resetProductsByCategory() async {
     productsByCategory.clear();
   }
+  
+  /// Get All Receipts
+ Future<void> getAllReceipts() async {
+    emit(GetAllReceiptsLoadingState());
+    receipts.clear();
+    await dioHelper.getData(endPoint: 'api/v1/receipts/company/444444444444/${MyCache.getString(key: CacheKeys.userId)}').then((value) {
+      value.data['receipts'].forEach((oneReceipt) {
+        receipts.add(Receipts.fromJson(oneReceipt));
+      });
+      emit(GetAllReceiptsSuccessState());
+    }).catchError((error) {
+      print(error);
+      emit(GetAllReceiptsErrorState());
+    });
+ }
 }
