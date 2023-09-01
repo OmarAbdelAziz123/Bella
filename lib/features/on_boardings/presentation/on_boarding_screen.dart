@@ -107,17 +107,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                                 ),
                               ),
                               SizedBox(height: 42.h),
-                              pageNumber == 0
-                                  ? Container()
-                                  : Text(
-                                      'Your account has been created \n successfully!',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16.sp,
-                                        color: AppColors.blackColor,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                              // pageNumber == 0
+                              //     ? Container()
+                              //     : Text(
+                              //         'Your account has been created \n successfully!',
+                              //         textAlign: TextAlign.center,
+                              //         style: GoogleFonts.inter(
+                              //           fontSize: 16.sp,
+                              //           color: AppColors.blackColor,
+                              //           fontWeight: FontWeight.w400,
+                              //         ),
+                              //       ),
                               SizedBox(height: 48.h),
                             ],
                           ),

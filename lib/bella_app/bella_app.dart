@@ -33,7 +33,7 @@ class BellaApp extends StatelessWidget {
             BlocProvider(create: (context) => WishListCubit()..getWishList()),
             BlocProvider(
                 create: (context) =>
-                    MyoffersCubit()..getAllPersonalOffersByUsers()),
+                    MyoffersCubit()..getAllPersonalOffersByUsers(),),
           ],
           child: const MaterialApp(
             debugShowCheckedModeBanner: false,

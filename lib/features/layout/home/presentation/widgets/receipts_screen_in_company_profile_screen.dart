@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bella/features/layout/home/data/models/receipts_model.dart';
 import 'package:bella/features/layout/home/managers/home_cubit.dart';
 import 'package:bella/features/layout/home/presentation/widgets/receipts_details_screen)in_company_profile_screen.dart';

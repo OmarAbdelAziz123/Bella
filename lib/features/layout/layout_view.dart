@@ -187,6 +187,8 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<MyoffersCubit>(context)
+        .getAllPersonalOffersByUsers();
     // Future.delayed(const Duration(seconds: 2));
   }
 
@@ -230,6 +232,7 @@ class _LayoutViewState extends State<LayoutView> {
         tabBar: CupertinoTabBar(
           height: 60.h,
           onTap: (index) async {
+            print(index);
             if (index == 1 &&
                 Navigator.of(context).canPop() &&
                 ModalRoute.of(context)!.settings.name ==
@@ -240,7 +243,21 @@ class _LayoutViewState extends State<LayoutView> {
               // Only allow scanning if feature is enabled
               BlocProvider.of<ScanCubit>(context).scanQRCode();
             }
-            setState(() {
+            // if(index == 3) {
+            //   print('PPPP');
+            // }
+            if (isScanFeatureEnabled) {
+              if(index == 3) {
+                print('PPP');
+              }
+            } else {
+              if(index == 2) {
+                print('CCC');
+                await BlocProvider.of<MyoffersCubit>(context)
+                    .getAllPersonalOffersByUsers();
+              }
+            }
+              setState(() {
               currentIndex = index;
             });
           },
