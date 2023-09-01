@@ -61,8 +61,7 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
             BlocProvider.of<AuthCubit>(context).readCreditCard();
             HomeNavigationClass.navigateToMyCard(context, controller.text,
                 '${monthController.text}${yearController.text}');
-          } else if (state is AddCreditCardErrorState) {
-          }
+          } else if (state is AddCreditCardErrorState) {}
         },
         builder: (context, state) {
           var cubit = BlocProvider.of<AuthCubit>(context);
@@ -118,7 +117,8 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                                 firstDigit != '5' &&
                                 firstDigit != '6') ||
                             (firstDigit == '3' &&
-                                (firstTwoDigits != '34' && firstTwoDigits != '37'))) {
+                                (firstTwoDigits != '34' &&
+                                    firstTwoDigits != '37'))) {
                           return 'Please enter a valid card number';
                         }
                       }
@@ -212,17 +212,20 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                   padding: EdgeInsets.only(left: 21.w),
                   child: Row(
                     children: [
-                      Container(
-                        height: 40.h,
-                        width: 80.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(
-                            color: AppColors.white2Color,
-                            width: 1.w,
-                          ),
-                        ),
+                      // Container(
+                      //   height: 40.h,
+                      //   width: 80.w,
+                      //   decoration: BoxDecoration(
+                      //     color: AppColors.whiteColor,
+                      //     borderRadius: BorderRadius.circular(10.r),
+                      //     border: Border.all(
+                      //       color: AppColors.white2Color,
+                      //       width: 1.w,
+                      //     ),
+                      //   ),
+                      //   child:
+                      Expanded(
+                        flex: 1,
                         child: TextFormField(
                           controller: yearController,
                           focusNode: yearFocusNode,
@@ -232,7 +235,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                             LengthLimitingTextInputFormatter(4),
                             _DateFormatter(),
                           ],
-
                           cursorColor: AppColors.primaryColor,
                           style: AppFonts.bodyDefault.copyWith(
                               color: AppColors.black3Color, height: 1.5.h),
@@ -293,6 +295,11 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
                           },
                         ),
                       ),
+                      Expanded(
+                      flex: 4,
+                        child: Container(),
+                      ),
+                      // ),
                     ],
                   ),
                 ),
@@ -345,7 +352,6 @@ class _AddCardInHomeViewState extends State<AddCardInHomeView> {
       ),
     );
   }
-
 }
 
 class _DateFormatter extends TextInputFormatter {

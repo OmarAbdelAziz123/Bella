@@ -1,6 +1,8 @@
 import 'package:bella/features/auth/data/data_provider/local/cach_keys.dart';
 import 'package:bella/features/auth/data/data_provider/local/cache.dart';
+import 'package:bella/features/layout/home/data/models/company_profile.dart';
 import 'package:bella/features/layout/home/presentation/widgets/receipts_screen.dart';
+import 'package:bella/features/layout/home/presentation/widgets/receipts_screen_in_company_profile_screen.dart';
 import 'package:bella/features/layout/offers/managers/myoffers_cubit.dart';
 import 'package:bella/features/layout/offers/presentation/offers_view.dart';
 import 'package:bella/features/layout/offers/presentation/template.dart';
@@ -738,7 +740,33 @@ class _CouponsScreenInCompanyProfileScreenState
         //     ],
         //   ),
         // ),
-        body: PersonalOfferListComponent(),
+        body: PersonalOfferListComponent(
+          onCloseTap: () {
+            Navigator.pop(context);
+            // Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 250),
+                pageBuilder: (_, __, ___) =>
+                    ReceiptsScreenInCompanyProfileScreen(
+                  companyLogo: widget.companyLogo,
+                  title: widget.title,
+                ),
+                transitionsBuilder:
+                    (_, Animation<double> animation, __, Widget child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1, 0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

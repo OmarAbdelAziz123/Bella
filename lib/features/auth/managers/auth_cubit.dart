@@ -6,6 +6,9 @@ import 'package:bella/features/auth/data/data_provider/remote/dio_helper.dart';
 import 'package:bella/features/auth/data/models/DetailsErrorModel.dart';
 import 'package:bella/features/auth/data/models/LoggedModel.dart';
 import 'package:bella/features/layout/home/data/models/read_credit_card_model.dart';
+import 'package:bella/features/layout/home/managers/home_cubit.dart';
+import 'package:bella/features/layout/my_brands/managers/my_brands_cubit.dart';
+import 'package:bella/features/layout/offers/managers/myoffers_cubit.dart';
 import 'package:bella/utils/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -183,7 +186,12 @@ class AuthCubit extends Cubit<AuthState> {
         await BlocProvider.of<AuthCubit>(context).checkUserExistOrNot();
         if (isExist == true) {
           getUserDetails();
-          Navigator.pushReplacementNamed(context, 'layout-screen');
+          BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
+          BlocProvider.of<MyBrandsCubit>(context).notJoinedFunction(context);
+          BlocProvider.of<HomeCubit>(context).getAllCompanies();
+          /// Call My Offers
+          await BlocProvider.of<MyoffersCubit>(context).getAllPersonalOffersByUsers();
+          Navigator.pushNamedAndRemoveUntil(context, 'layout-screen', (route) => false,);
         }
 
         /// Error 404
@@ -194,7 +202,7 @@ class AuthCubit extends Cubit<AuthState> {
         await BlocProvider.of<AuthCubit>(context).loggedBank(context);
       } else if (response.data['status'] == 'failed') {
         sleep(const Duration(seconds: 2));
-        Navigator.pushNamed(context, 'on-boarding-screen');
+        Navigator.pushNamedAndRemoveUntil(context, 'on-boarding-screen', (route) => false,);
         AppConstants.showMyDialogError(context);
       }
     }).catchError((error) {

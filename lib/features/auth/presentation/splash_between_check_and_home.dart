@@ -44,7 +44,7 @@ class _SplashBetweenCheckAndHomeState extends State<SplashBetweenCheckAndHome> {
 
   void navigationToHome() {
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 2),
       () {
         Navigator.pushReplacementNamed(context, 'layout-screen');
       },

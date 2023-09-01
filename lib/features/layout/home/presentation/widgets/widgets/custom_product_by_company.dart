@@ -191,13 +191,17 @@ class CustomProductByCompany extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.h),
-                Text(
-                  '$newPrice ${unit ?? 'kr'}',
-                  style: AppFonts.productPrice.copyWith(
-                    color: AppColors.black7Color,
-                    height: 1.h,
-                    letterSpacing: -1.sp,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      '$newPrice ${unit ?? 'kr'}',
+                      style: AppFonts.productPrice.copyWith(
+                        color: AppColors.error2Color,
+                        height: 1.h,
+                        letterSpacing: -1.sp,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

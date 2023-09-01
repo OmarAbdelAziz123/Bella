@@ -19,7 +19,7 @@ class MyBrandsView extends StatelessWidget {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Padding(
-            padding: EdgeInsets.only(top: 38.h),
+            padding: EdgeInsets.only(top: 30.h),
             child: Text(
               'Brands',
               style: AppFonts.titleScreen,

@@ -52,6 +52,10 @@ class HomeCubit extends Cubit<HomeState> {
     }).catchError((error) {
       if (kDebugMode) {
         print('Error in Get Recommended is $error');
+        recommended = null;
+        print('--------');
+        print(recommended);
+        print('--------');
       }
       emit(GetRecommendedErrorState());
     });

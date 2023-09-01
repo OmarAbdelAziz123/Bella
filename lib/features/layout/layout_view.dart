@@ -9,8 +9,10 @@ import 'package:bella/features/layout/scan/managers/scan_cubit.dart';
 import 'package:bella/features/layout/scan/presentation/scan_view.dart';
 import 'package:bella/features/layout/wish_list/presentation/wish_list.dart';
 import 'package:bella/utils/constants/app_assets.dart';
+import 'package:bella/utils/constants/app_fonts.dart';
 import 'package:bella/utils/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,7 +20,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 int currentIndex = 0;
 
 class LayoutView extends StatefulWidget {
-
   LayoutView({Key? key}) : super(key: key);
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -186,104 +187,133 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MyBrandsCubit>(context).joinedFunction();
-    BlocProvider.of<MyBrandsCubit>(context).notJoinedFunction(context);
-    BlocProvider.of<HomeCubit>(context).getAllCompanies();
-    /// Call My Offers
-    BlocProvider.of<MyoffersCubit>(context).getAllPersonalOffersByUsers();
+    // Future.delayed(const Duration(seconds: 2));
   }
 
   var getResult = 'QR Code Result';
 
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      backgroundColor: AppColors.bgColor,
-      tabBar: CupertinoTabBar(
-        height: 60.h,
-        onTap: (index) async {
-          if (index == 1 &&
-              Navigator.of(context).canPop() &&
-              ModalRoute.of(context)!.settings.name ==
-                  TermsAndConditions().toString()) {
-            Navigator.of(context).pop();
-          }
-          if (index == 2 && isScanFeatureEnabled) { // Only allow scanning if feature is enabled
-            BlocProvider.of<ScanCubit>(context).scanQRCode();
-          }
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        currentIndex: currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppAssets.homeIcon),
-            activeIcon: SvgPicture.asset(
-              AppAssets.homeIcon,
-              color: AppColors.primaryColor,
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Really ?', style: AppFonts.cardPrice),
+          content:
+              Text('Do you want to close the app ?', style: AppFonts.productName),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text('No', style: AppFonts.bodyLarge),
             ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              AppAssets.myBrandIcon,
-              color: AppColors.blackColor,
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text('Yes', style: AppFonts.bodyLarge),
             ),
-            activeIcon: SvgPicture.asset(
-              AppAssets.myBrandIcon,
-              color: AppColors.primaryColor,
-            ),
-            label: 'Brands',
-          ),
-          if (isScanFeatureEnabled) // Only show Scan screen if enabled
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppAssets.scanIcon),
-              activeIcon: SvgPicture.asset(
-                AppAssets.scanIcon,
-                color: AppColors.primaryColor,
-              ),
-              label: 'Scan',
-            ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              AppAssets.offersIcon,
-              color: AppColors.black2Color,
-            ),
-            activeIcon: SvgPicture.asset(
-              AppAssets.offersIcon,
-              color: AppColors.primaryColor,
-            ),
-            label: 'My Offers',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              AppAssets.listIcon,
-              color: AppColors.black2Color,
-            ),
-            activeIcon: SvgPicture.asset(
-              AppAssets.listIcon,
-              color: AppColors.primaryColor,
-            ),
-            label: 'Wishlist',
-          ),
-        ],
-        activeColor: AppColors.primaryColor,
-        inactiveColor: AppColors.black2Color,
-      ),
-      tabBuilder: (context, index) {
-        List<Widget> filteredTabs = isScanFeatureEnabled
-            ? tabs
-            : tabs.where((tab) => tab.runtimeType != ScanView).toList();
-
-        if (filteredTabs.length <= index) {
-          return const SizedBox();
-        }
-
-        return CupertinoTabView(
-          builder: (context) => filteredTabs[index],
+          ],
         );
       },
+    );
+
+    return exitApp ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () => onBackButtonPressed(context),
+      child: CupertinoTabScaffold(
+        backgroundColor: AppColors.bgColor,
+        tabBar: CupertinoTabBar(
+          height: 60.h,
+          onTap: (index) async {
+            if (index == 1 &&
+                Navigator.of(context).canPop() &&
+                ModalRoute.of(context)!.settings.name ==
+                    TermsAndConditions().toString()) {
+              Navigator.of(context).pop();
+            }
+            if (index == 2 && isScanFeatureEnabled) {
+              // Only allow scanning if feature is enabled
+              BlocProvider.of<ScanCubit>(context).scanQRCode();
+            }
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          currentIndex: currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(AppAssets.homeIcon),
+              activeIcon: SvgPicture.asset(
+                AppAssets.homeIcon,
+                color: AppColors.primaryColor,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                AppAssets.myBrandIcon,
+                color: AppColors.blackColor,
+              ),
+              activeIcon: SvgPicture.asset(
+                AppAssets.myBrandIcon,
+                color: AppColors.primaryColor,
+              ),
+              label: 'Brands',
+            ),
+            if (isScanFeatureEnabled) // Only show Scan screen if enabled
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(AppAssets.scanIcon),
+                activeIcon: SvgPicture.asset(
+                  AppAssets.scanIcon,
+                  color: AppColors.primaryColor,
+                ),
+                label: 'Scan',
+              ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                AppAssets.offersIcon,
+                color: AppColors.black2Color,
+              ),
+              activeIcon: SvgPicture.asset(
+                AppAssets.offersIcon,
+                color: AppColors.primaryColor,
+              ),
+              label: 'My Offers',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                AppAssets.listIcon,
+                color: AppColors.black2Color,
+              ),
+              activeIcon: SvgPicture.asset(
+                AppAssets.listIcon,
+                color: AppColors.primaryColor,
+              ),
+              label: 'Wishlist',
+            ),
+          ],
+          activeColor: AppColors.primaryColor,
+          inactiveColor: AppColors.black2Color,
+        ),
+        tabBuilder: (context, index) {
+          List<Widget> filteredTabs = isScanFeatureEnabled
+              ? tabs
+              : tabs.where((tab) => tab.runtimeType != ScanView).toList();
+
+          if (filteredTabs.length <= index) {
+            return const SizedBox();
+          }
+
+          return CupertinoTabView(
+            builder: (context) => filteredTabs[index],
+          );
+        },
+      ),
     );
   }
 }

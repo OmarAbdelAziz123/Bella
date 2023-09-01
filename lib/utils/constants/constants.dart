@@ -327,7 +327,7 @@ class AppConstants {
       boxShadows: const [
         BoxShadow(
           color: Colors.white38,
-          offset: const Offset(0.0, 2.0),
+          offset: Offset(0.0, 2.0),
           blurRadius: 3.0,
         ),
       ],

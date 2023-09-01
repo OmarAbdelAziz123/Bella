@@ -124,7 +124,7 @@ class ProductDetailsScreen extends StatelessWidget {
                           '${product!.newPrice!.price} ${product!.newPrice!
                               .unit}',
                           style: AppFonts.productNameBig.copyWith(
-                            color: AppColors.black7Color,
+                            color: AppColors.error2Color,
                             height: 1.h,
                           ),
                         ),

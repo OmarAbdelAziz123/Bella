@@ -33,10 +33,12 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
         print(MyCache.getString(key: CacheKeys.user_Id));
       }
       allJoined = SeeAllModel.fromJson(response.data);
+      print('All Joined Length is ${allJoined!.companies!.length}');
       emit(JoinedSuccessState());
     }).catchError((error) {
       if (kDebugMode) {
         print('Error in Get Joined is $error');
+        allJoined = null;
       }
       emit(JoinedErrorState());
     });
@@ -54,6 +56,10 @@ class MyBrandsCubit extends Cubit<MyBrandsState> {
     }).catchError((error) {
       if (kDebugMode) {
         print('Error in Get Not Joined is $error');
+        allNotJoined = null;
+        print('--------');
+        print(allNotJoined);
+        print('--------');
       }
       emit(NotJoinedErrorState());
     });

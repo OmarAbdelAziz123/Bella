@@ -79,25 +79,60 @@ class _MyCardViewState extends State<MyCardView> {
           ),
         ),
       ),
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            // Navigator.pop(context);
-            HomeNavigationClass.navigateToProfile(context);
-          },
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: 11.h,
-              left: 20.h,
-              bottom: 4.h,
+      // appBar: AppBar(
+      //   leading: GestureDetector(
+      //     onTap: () {
+      //       // Navigator.pop(context);
+      //       HomeNavigationClass.navigateToProfile(context);
+      //     },
+      //     child: Padding(
+      //       padding: EdgeInsets.only(
+      //         top: 11.h,
+      //         left: 20.h,
+      //         bottom: 4.h,
+      //       ),
+      //       child: SvgPicture.asset(
+      //         AppAssets.arrowbackblack,
+      //       ),
+      //     ),
+      //   ),
+      //   elevation: 0,
+      //   backgroundColor: AppColors.bgColor,
+      // ),
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 60.h),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: AppColors.bgColor,
+              centerTitle: true,
+              elevation: 0,
+              leading: GestureDetector(
+                onTap: () {
+                  HomeNavigationClass.navigateToProfile(context);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 11.h,
+                    left: 20.h,
+                    bottom: 4.h,
+                  ),
+                  child: SvgPicture.asset(
+                    AppAssets.arrowbackblack,
+                  ),
+                ),
+              ),
+              floating: true,
+              pinned: true,
+              title: !_isScrolled
+                  ? null
+                  : Text(
+                'My Cards',
+                style: AppFonts.titleSubsection,
+              ),
             ),
-            child: SvgPicture.asset(
-              AppAssets.arrowbackblack,
-            ),
-          ),
+          ],
         ),
-        elevation: 0,
-        backgroundColor: AppColors.bgColor,
       ),
       body: SafeArea(
         child: BlocProvider(
@@ -167,34 +202,35 @@ class _MyCardViewState extends State<MyCardView> {
                           child: CustomScrollView(
                             controller: _scrollController,
                             slivers: [
-                              SliverAppBar(
-                                backgroundColor: AppColors.bgColor,
-                                centerTitle: true,
-                                elevation: 0,
-                                leading: GestureDetector(
-                                  onTap: () {
-                                    HomeNavigationClass.navigateToProfile(context);
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 11.h,
-                                      left: 20.h,
-                                      bottom: 4.h,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      AppAssets.arrowbackblack,
-                                    ),
-                                  ),
-                                ),
-                                floating: true,
-                                pinned: true,
-                                title: !_isScrolled
-                                    ? null
-                                    : Text(
-                                        'My Cards',
-                                        style: AppFonts.titleSubsection,
-                                      ),
-                              ),
+                              // SliverAppBar(
+                              //   backgroundColor: AppColors.bgColor,
+                              //   centerTitle: true,
+                              //   elevation: 0,
+                              //   leading: GestureDetector(
+                              //     onTap: () {
+                              //       HomeNavigationClass.navigateToProfile(
+                              //           context);
+                              //     },
+                              //     child: Padding(
+                              //       padding: EdgeInsets.only(
+                              //         top: 11.h,
+                              //         left: 20.h,
+                              //         bottom: 4.h,
+                              //       ),
+                              //       child: SvgPicture.asset(
+                              //         AppAssets.arrowbackblack,
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   floating: true,
+                              //   pinned: true,
+                              //   title: !_isScrolled
+                              //       ? null
+                              //       : Text(
+                              //           'My Cards',
+                              //           style: AppFonts.titleSubsection,
+                              //         ),
+                              // ),
                               SliverPadding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                                 sliver: SliverList(
@@ -204,7 +240,7 @@ class _MyCardViewState extends State<MyCardView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          SizedBox(height: 24.h),
+                                          // SizedBox(height: 24.h),
                                           Text(
                                             'My Cards',
                                             style: AppFonts.titleScreen,
@@ -763,5 +799,4 @@ class _MyCardViewState extends State<MyCardView> {
       ),
     );
   }
-
 }

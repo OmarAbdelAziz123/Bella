@@ -905,7 +905,26 @@ class OffersViewBody extends StatelessWidget {
     //     ),
     //   );
     // }
-    return PersonalOfferListComponent();
+    return PersonalOfferListComponent(onCloseTap: () {
+      Navigator.pop(context);
+      Navigator.pop(context);
+      // Navigator.pushReplacement(
+      //   context,
+      //   PageRouteBuilder(
+      //     transitionDuration: const Duration(milliseconds: 250),
+      //     pageBuilder: (_, __, ___) => const OffersView(),
+      //     transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+      //       return SlideTransition(
+      //         position: Tween<Offset>(
+      //           begin: const Offset(-1, 0),
+      //           end: Offset.zero,
+      //         ).animate(animation),
+      //         child: child,
+      //       );
+      //     },
+      //   ),
+      // );
+    },);
   }
 
 }

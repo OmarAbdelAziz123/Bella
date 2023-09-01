@@ -112,7 +112,7 @@ class _ReceiptsScreenInCompanyProfileScreenState
                       itemBuilder: (context, index) {
                         Receipts item = cubit.receipts[index];
 
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {
                             navigateToReceiptDetailsScreenInCompanyProfileScreen(item);
                           },
