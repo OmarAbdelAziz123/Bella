@@ -58,7 +58,7 @@ class _ReceiptDetailsScreenInCompanyProfileScreenState
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body:  SingleChildScrollView(
         child: Column(
           children: [
             Row(

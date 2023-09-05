@@ -190,10 +190,11 @@ class HomeCubit extends Cubit<HomeState> {
  Future<void> getAllReceipts() async {
     emit(GetAllReceiptsLoadingState());
     receipts.clear();
-    await dioHelper.getData(endPoint: 'api/v1/receipts/company/444444444444/${MyCache.getString(key: CacheKeys.userId)}').then((value) {
+    await dioHelper.getData(endPoint: 'api/v1/receipts/company/${MyCache.getString(key: CacheKeys.comp_id)}/${MyCache.getString(key: CacheKeys.userId)}').then((value) {
       value.data['receipts'].forEach((oneReceipt) {
         receipts.add(Receipts.fromJson(oneReceipt));
       });
+      print(value.data);
       emit(GetAllReceiptsSuccessState());
     }).catchError((error) {
       print(error);

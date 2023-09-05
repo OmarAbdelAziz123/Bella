@@ -561,7 +561,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                 child: Row(
                                   children: [
                                     /// Coupons
-                                    GestureDetector(
+                                    cubit.companyProfile!.hasJoined == false
+                                        ? Container()
+                                        : GestureDetector(
                                       onTap: () {
                                         navigateToCouponsScreenInCompanyProfileScreen(
                                           companyLogo: widget.logo,
@@ -620,7 +622,9 @@ class _CompanyProfileScreenState extends State<CompanyProfileScreen> {
                                     ),
 
                                     /// Receipts
-                                    GestureDetector(
+                                    cubit.companyProfile!.hasJoined == false
+                                        ? Container()
+                                        : GestureDetector(
                                       onTap: () {
                                         navigateToReceiptsScreenInCompanyProfileScreen(
                                           companyLogo: widget.logo,

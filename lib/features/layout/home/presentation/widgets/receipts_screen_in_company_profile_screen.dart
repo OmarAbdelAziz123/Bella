@@ -33,12 +33,11 @@ class _ReceiptsScreenInCompanyProfileScreenState
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (_, __, ___) =>
-            ReceiptDetailsScreenInCompanyProfileScreen(
-              title: widget.title,
-              companyLogo: widget.companyLogo,
-              receipts: receipts,
-            ),
+        pageBuilder: (_, __, ___) => ReceiptDetailsScreenInCompanyProfileScreen(
+          title: widget.title,
+          companyLogo: widget.companyLogo,
+          receipts: receipts,
+        ),
         transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -90,70 +89,97 @@ class _ReceiptsScreenInCompanyProfileScreenState
                 ),
               ],
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Receipts',
-                      style: AppFonts.titleScreen,
+            body: state is GetAllReceiptsLoadingState
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
                     ),
-                    SizedBox(height: 40.h),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: cubit.receipts.length,
-                      separatorBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                              left: 39.w, right: 0, top: 16.h, bottom: 16.h),
-                          child: Image.asset(AppAssets.Vector123),
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        Receipts item = cubit.receipts[index];
-
-                        return InkWell(
-                          onTap: () {
-                            navigateToReceiptDetailsScreenInCompanyProfileScreen(item);
-                          },
-                          child: Row(
+                  )
+                : cubit.receipts.isEmpty
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'No receipts found yet',
+                              style: AppFonts.titleSection,
+                            ),
+                            Text(
+                              'All your receipts will appear here',
+                              style: AppFonts.bodyLarge,
+                            ),
+                          ],
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                AppAssets.receipt,
-                                width: 28.w,
-                                height: 28.h,
+                              Text(
+                                'Receipts',
+                                style: AppFonts.titleScreen,
                               ),
-                              SizedBox(width: 10.w),
-                              SizedBox(
-                                width: 140.w,
-                                child: Text(
-                                  // '20. august',
-                                  item.date!,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppFonts.productName,
-                                ),
-                              ),
-                              SizedBox(width: 34.w),
-                              SizedBox(
-                                width: 140.w,
-                                child: Text(
-                                  // '1283,80 kr',
-                                  '${item.total} kr',
-                                  textAlign: TextAlign.right,
-                                  style: AppFonts.productPrice,
-                                ),
-                              ),
+                              SizedBox(height: 40.h),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                itemCount: cubit.receipts.length,
+                                separatorBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 39.w,
+                                        right: 0,
+                                        top: 16.h,
+                                        bottom: 16.h),
+                                    child: Image.asset(AppAssets.Vector123),
+                                  );
+                                },
+                                itemBuilder: (context, index) {
+                                  Receipts item = cubit.receipts[index];
+
+                                  return InkWell(
+                                    onTap: () {
+                                      navigateToReceiptDetailsScreenInCompanyProfileScreen(
+                                          item);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          AppAssets.receipt,
+                                          width: 28.w,
+                                          height: 28.h,
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        SizedBox(
+                                          width: 140.w,
+                                          child: Text(
+                                            // '20. august',
+                                            item.date!,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppFonts.productName,
+                                          ),
+                                        ),
+                                        SizedBox(width: 34.w),
+                                        SizedBox(
+                                          width: 140.w,
+                                          child: Text(
+                                            // '1283,80 kr',
+                                            '${item.total} kr',
+                                            textAlign: TextAlign.right,
+                                            style: AppFonts.productPrice,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
                             ],
                           ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ),
+                        ),
+                      ),
           );
         },
       ),
